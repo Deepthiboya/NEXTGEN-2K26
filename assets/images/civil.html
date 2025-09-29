@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIVIL Department</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #ff6b00;
+            --primary-light: #ff8c33;
+            --primary-dark: #cc5500;
+            --secondary: #1c1c1c;
+            --secondary-light: #333333;
+            --text-light: #f5f5f5;
+            --text-dark: #1c1c1c;
+            --accent: #ff3b00;
+            --background: #f9f9f9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--secondary);
+            color: var(--text-light);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            color: var(--text-light);
+            font-size: 1.5rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(28, 28, 28, 0.8), rgba(28, 28, 28, 0.8)), url('/api/placeholder/1200/500') no-repeat center center/cover;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-light);
+            padding: 0 20px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero h2 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--text-light);
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: var(--text-light);
+        }
+
+        /* Events Section */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h3 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        .section-header h3::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-header p {
+            max-width: 700px;
+            margin: 20px auto 0;
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .event-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .event-image {
+            height: 200px;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .event-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .event-card:hover .event-image img {
+            transform: scale(1.1);
+        }
+
+        .event-date {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: var(--primary);
+            color: var(--text-light);
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            z-index: 1;
+        }
+
+        .category-badge {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background-color: var(--secondary);
+            color: var(--text-light);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .event-details {
+            padding: 25px;
+        }
+
+        .event-details h4 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+
+        .event-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .event-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .event-meta i {
+            color: var(--primary);
+        }
+
+        .event-description {
+            margin-bottom: 20px;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .event-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Countdown Timer */
+        .countdown {
+            background-color: var(--secondary);
+            color: var(--text-light);
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .countdown h3 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .countdown-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background-color: var(--primary);
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .countdown-label {
+            margin-top: 10px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Speakers Section */
+        .speakers {
+            background-color: #f5f5f5;
+        }
+
+        .speakers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .speaker-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .speaker-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .speaker-image {
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .speaker-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .speaker-card:hover .speaker-image img {
+            transform: scale(1.1);
+        }
+
+        .speaker-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .speaker-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: var(--secondary);
+        }
+
+        .speaker-info p {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: var(--secondary);
+            transition: color 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .social-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Schedule Section */
+        .schedule-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            gap: 10px;
+        }
+
+        .schedule-tab {
+            padding: 10px 20px;
+            background-color: #f0f0f0;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .schedule-tab.active {
+            background-color: var(--primary);
+            color: var(--text-light);
+        }
+
+        .schedule-content {
+            margin-top: 30px;
+        }
+
+        .schedule-item {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .schedule-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .schedule-time {
+            min-width: 100px;
+        }
+
+        .schedule-time span {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .schedule-details {
+            flex: 1;
+        }
+
+        .schedule-details h4 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+
+        .schedule-details p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .schedule-speaker {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .speaker-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .speaker-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .speaker-name {
+            font-weight: 600;
+        }
+
+        .speaker-role {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Sponsors Section */
+        .sponsors {
+            background-color: #f9f9f9;
+        }
+
+        .sponsors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 30px;
+            align-items: center;
+        }
+
+        .sponsor-item {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .sponsor-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .sponsor-item img {
+            max-width: 100%;
+            max-height: 80px;
+            filter: grayscale(100%);
+            transition: filter 0.3s ease;
+        }
+
+        .sponsor-item:hover img {
+            filter: grayscale(0%);
+        }
+
+        /* Contact Section */
+        /* Contact Section */
+        .contact {
+            background-color: var(--secondary);
+            color: var(--text-light);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .contact-icon {
+            background-color: var(--primary);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .contact-details h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .contact-form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-light);
+            color: var(--text-light);
+            padding: 60px 0 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-widget h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .footer-widget h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+
+        .footer-about p {
+            margin-bottom: 20px;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer-links i {
+            color: var(--primary);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .footer-social a {
+            background-color: var(--secondary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .footer-newsletter p {
+            margin-bottom: 20px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .newsletter-form button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 0 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .footer-bottom {
+            background-color: var(--secondary);
+            padding: 20px 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom p {
+            margin: 0;
+        }
+
+        .footer-bottom span {
+            color: var(--primary);
+        }
+
+        /* Back to Top */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99;
+            cursor: pointer;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-5px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                flex-direction: column;
+                background-color: var(--secondary);
+                padding: 30px;
+                align-items: center;
+                transition: left 0.3s ease;
+            }
+
+            .nav-links.show {
+                left: 0;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+
+            .countdown-timer {
+                gap: 15px;
+            }
+
+            .countdown-value {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
+
+            .schedule-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .schedule-time {
+                min-width: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .speakers-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .countdown-timer {
+                gap: 10px;
+            }
+
+            .countdown-value {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .section-header h3 {
+                font-size: 2rem;
+            }
+
+            .schedule-tabs {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .countdown-timer {
+                gap: 5px;
+            }
+
+            .countdown-value {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+
+            .countdown-label {
+                font-size: 0.8rem;
+            }
+
+            .sponsor-item {
+                padding: 15px;
+            }
+
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+
+            .section-header h3 {
+                font-size: 1.8rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-code fa-2x" style="color: var(--primary);"></i>
+                    <h1>CIVIL <span>EVENTS</span></h1>
+                </div>
+
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="#home">About</a>
+
+                    <a href="#events">Events</a>
+                    <a href="#schedule">Schedule</a>
+                    <!-- <a href="#speakers">Judges</a> -->
+                    <!-- <a href="#sponsors">Image Gallery</a> -->
+                    <a href="#contact">Contact Us</a>
+                </div>
+
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Civil <span>Engineering</span></h2>
+            <p>Join us for the biggest tech event of the year featuring workshops, hackathons, technical competitions, and industry experts.</p>
+            <div class="hero-buttons">
+                <a href="#events" class="btn">Explore Events</a>
+                <a href="#contact" class="btn btn-outline">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Countdown Section -->
+    <section class="countdown">
+        <div class="container">
+            <h3>Event Starts In</h3>
+            <div class="countdown-timer">
+                <div class="countdown-item">
+                    <div class="countdown-value" id="days">30</div>
+                    <div class="countdown-label">Days</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value" id="hours">12</div>
+                    <div class="countdown-label">Hours</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value" id="minutes">45</div>
+                    <div class="countdown-label">Minutes</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value" id="seconds">22</div>
+                    <div class="countdown-label">Seconds</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section class="section" id="events">
+        <div class="container">
+            <div class="section-header">
+                <h3>Featured Events</h3>
+                <p>Participate in our exciting events designed to challenge your skills and expand your knowledge.</p>
+            </div>
+
+            <div class="events-grid">
+                <!-- Event 1 -->
+                <div class="event-card">
+                    <div class="event-image">
+                        <img src="csepaperpresentation.jpg" alt="Hackathon Event">
+                        <div class="event-date">Apr 3</div>
+                        <div class="category-badge">Competition</div>
+                    </div>
+                    <div class="event-details">
+                        <h4>Paper Presentation</h4>
+                        <div class="event-meta">
+                            <span><i class="fas fa-clock"></i> 11:00 AM - 01:00 PM</span>
+                            <!-- <span><i class="fas fa-map-marker-alt"></i> Main Hall</span> -->
+                            <span><i class="fas fa-users"></i>1/2</span>
+                            <span><i class="fas fa-trophy"></i>Winner: 2000/- Runner-up: 1000/-
+                            </span>
+                        </div>
+                        <p class="event-description">Showcase your research and presentation skills in the Paper Presentation event! Participants will present their well-structured papers, demonstrating originality, analytical thinking, and effective communication. The event provides a platform to share innovative ideas and gain valuable insights.<br>
+                            📌 Registration Fee: ₹200/- <br>
+                            🏆 Exciting Prizes for Winners!
+                            
+                            Register now and make your mark! 🚀</p>
+                        <div class="event-footer">
+                            <a href="https://forms.gle/gguvDQ9prEvSsqSH9" target="_blank" class="btn">Register Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <div class="event-image">
+                        <img src="bridge blitz.webp" alt="Bridge Blitz">
+                        <div class="event-date">Apr 3</div>
+                        <div class="category-badge">Competition</div>
+                    </div>
+                    <div class="event-details">
+                        <h4>Bridge Blitz</h4>
+                        <div class="event-meta">
+                            <span><i class="fas fa-clock"></i> 11:30 AM - 1:00 PM</span>
+                            <span><i class="fas fa-users"></i> 1/2</span>
+                            <span><i class="fas fa-trophy"></i> Winner: ₹2000/- Runner-up: ₹1000/-</span>
+                        </div>
+                        <p class="event-description">
+                            Get ready for Bridge Blitz, a thrilling structural engineering challenge! 🏗️🔬  
+                            Participants will design and build a bridge using limited materials, testing its strength and durability under load conditions.  
+                            Think you can create the strongest bridge? Prove your engineering skills and take home the prize!  
+                            <br>📌 Registration Fee: ₹200/- <br> 
+                            🏆 Exciting Prizes for Winners!  
+                            <br>Register now and take on the ultimate engineering challenge! 🚀  
+                        </p>
+                        <div class="event-footer">
+                            <a href="https://forms.gle/Ep2ZMajVCMwZonAGA" target="_blank" class="btn">Register Now</a>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div class="event-card">
+                    <div class="event-image">
+                        <img src="cadathon.webp" alt="Cadathon">
+                        <div class="event-date">Apr 3</div>
+                        <div class="category-badge">Competition</div>
+                    </div>
+                    <div class="event-details">
+                        <h4>CADathon</h4>
+                        <div class="event-meta">
+                            <span><i class="fas fa-clock"></i> 12:00 PM - 01:00 PM</span>
+                            <span><i class="fas fa-users"></i> 1/2</span>
+                            <span><i class="fas fa-trophy"></i> Winner: ₹2000/- Runner-up: ₹1000/-</span>
+                        </div>
+                        <p class="event-description">
+                            Step into the world of design and innovation with Cadathon! 🖥️📐  
+                            Participants will tackle challenging CAD (Computer-Aided Design) tasks, putting their creativity and precision to the test.  
+                            Showcase your technical skills and compete against the best designers in a fast-paced environment.  
+                            <br>📌 Registration Fee: ₹200/- <br> 
+                            🏆 Exciting Prizes for Winners!  
+                            Register now and prove your CAD expertise! 🚀  
+                        </p>
+                        <div class="event-footer">
+                            <a href="https://forms.gle/jjuaf6Jeg8Kireva7" target="_blank" class="btn">Register Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="event-card">
+                    <div class="event-image">
+                        <img src="eeequiz.jpeg" alt="Technical Quiz">
+                        <div class="event-date">Apr 3</div>
+                        <div class="category-badge">Competition</div>
+                    </div>
+                    <div class="event-details">
+                        <h4>Technical Quiz</h4>
+                        <div class="event-meta">
+                            <span><i class="fas fa-clock"></i> 02:00 PM - 03:00 PM</span>
+                            <span><i class="fas fa-users"></i>1/2</span>
+                            <span><i class="fas fa-trophy"></i>Winner: 2000/- Runner-up: 1000/-
+                            </span>
+                        </div>
+                        <p class="event-description">Put your knowledge to the test in the Technical Quiz! This event challenges participants with thought-provoking questions, testing their understanding of fundamental and advanced concepts. Compete against the best minds and showcase your problem-solving skills in a fast-paced environment.<br>
+                            📌 Registration Fee: ₹200/- <br>
+                            🏆 Exciting Prizes for Winners!
+                            
+                            Register now and prove your technical expertise! ⚡🔍</p>
+                        <div class="event-footer">
+                            <a href="https://forms.gle/c723LzoWiP3dnLpj9" target="_blank" class="btn">Register Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="event-card">
+                    <div class="event-image">
+                        <img src="cluecraft.jpg" alt="Technical Quiz">
+                        <div class="event-date">Apr 3</div>
+                        <div class="category-badge">Competition</div>
+                    </div>
+                    <div class="event-details">
+                        <h4>Clue Craft</h4>
+                        <div class="event-meta">
+                            <span><i class="fas fa-clock"></i> 02:00 PM - 03:00 PM</span>
+                            <span><i class="fas fa-users"></i>1/2</span>
+                            <span><i class="fas fa-trophy"></i>Winner: 2000/- Runner-up: 1000/-
+                            </span>
+                        </div>
+                        <p class="event-description">Clue Craft is a thrilling treasure hunt designed to engage students from all departments with basic engineering knowledge. It combines the excitement of a classic treasure hunt with the ingenuity of solving engineering-themed puzzles.Highlight student creativity and problem-solving abilities.fostering teamwork, creativity, and a deeper understanding of engineering principles among students from all departments.<br>
+                            📌 Registration Fee: ₹200/- <br>
+                            🏆 Exciting Prizes for Winners!
+                            
+                            Register now and prove your technical expertise! ⚡🔍</p>
+                        <div class="event-footer">
+                            <a href="https://forms.gle/5JEbK1bdmetn8FAV6" target="_blank" class="btn">Register Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                
+<!-- 
+                <div class="event-card">
+                    <div class="event-image">
+                        <img src="/api/placeholder/400/250" alt="Tech Talk">
+                        <div class="event-date">April 18, 2025</div>
+                        <div class="category-badge">Talk</div>
+                    </div>
+                    <div class="event-details">
+                        <h4>Future of Web Development</h4>
+                        <div class="event-meta">
+                            <span><i class="fas fa-clock"></i> 02:00 PM - 04:00 PM</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Auditorium</span>
+                        </div>
+                        <p class="event-description">Discover the latest trends and technologies shaping the future of web development from industry experts.</p>
+                        <div class="event-footer">
+                            <a href="https://forms.google.com/webdev-talk-registration" target="_blank" class="btn">Register Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <div class="event-image">
+                        <img src="/api/placeholder/400/250" alt="Cybersecurity Workshop">
+                        <div class="event-date">April 19, 2025</div>
+                        <div class="category-badge">Workshop</div>
+                    </div>
+                    <div class="event-details">
+                        <h4>Cybersecurity Bootcamp</h4>
+                        <div class="event-meta">
+                            <span><i class="fas fa-clock"></i> 09:00 AM - 05:00 PM</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Lab 303</span>
+                        </div>
+                        <p class="event-description">Learn ethical hacking techniques and cybersecurity best practices in this intensive hands-on bootcamp.</p>
+                        <div class="event-footer">
+                            <a href="https://forms.google.com/cybersecurity-registration" target="_blank" class="btn">Register Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <div class="event-image">
+                        <img src="/api/placeholder/400/250" alt="Project Showcase">
+                        <div class="event-date">April 20, 2025</div>
+                        <div class="category-badge">Showcase</div>
+                    </div>
+                    <div class="event-details">
+                        <h4>Project Showcase & Awards</h4>
+                        <div class="event-meta">
+                            <span><i class="fas fa-clock"></i> 01:00 PM - 06:00 PM</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Main Hall</span>
+                        </div>
+                        <p class="event-description">Present your innovative projects to industry experts and compete for exciting prizes and recognition.</p>
+                        <div class="event-footer">
+                            <a href="https://forms.google.com/showcase-registration" target="_blank" class="btn">Register Now</a>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </section>
+
+        <!-- Schedule Section -->
+        <section class="section" id="schedule">
+            <div class="container">
+                <div class="section-header">
+                    <h3>Event Schedule</h3>
+                    <p>Plan your participation with our detailed event schedule. All times are in local time (GMT+5:30).</p>
+                </div>
+    
+                <div class="schedule-tabs">
+                    <div class="schedule-tab active" data-day="day1">Event Day</div>
+                    
+                </div>
+    
+                <div class="schedule-content" id="day1">
+                    <!-- Schedule Item 1 -->
+                    <div class="schedule-item">
+                        <div class="schedule-time">
+                            <span>10:00 AM - 11:00 AM</span>
+                        </div>
+                        <div class="schedule-details">
+                            <h4>Opening Ceremony</h4>
+                            <p>Welcome address and introduction to the event.</p>
+                            <div class="schedule-speaker">
+                                
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- Schedule Item 2 -->
+                    <div class="schedule-item">
+                        <div class="schedule-time">
+                            <span>11:00 AM - 3:00 PM</span>
+                        </div>
+                        <div class="schedule-details">
+                            <h4>Paper Presentation</h4>
+                            <p>Showcase your research and ideas with impactful presentations!</p>
+                        </div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-time">
+                            <span>11:00 AM - 01:00 PM</span>
+                        </div>
+                        <div class="schedule-details">
+                            <h4>Bridge Blitz</h4>
+                            <p>Innovate, present, and inspire with your groundbreaking projects!</p>
+                        </div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-time">
+                            <span>12:00 AM - 01:00 PM</span>
+                        </div>
+                        <div class="schedule-details">
+                            <h4>Cadathon</h4>
+                            <p>Code, build, and solve real-world challenges in an intense battle of innovation!</p>
+                        </div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-time">
+                            <span>1:00 PM - 2:00 PM</span>
+                        </div>
+                        <div class="schedule-details">
+                            <h4>Lunch Break</h4>
+                            <p>Lunch will be provided for all attendees.</p>
+                        </div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-time">
+                            <span>2:00 PM - 3:00 PM</span>
+                        </div>
+                        <div class="schedule-details">
+                            <h4>Quiz Competition</h4>
+                            <p>Challenge Your Mind, Conquer the Quiz!</p>
+                        </div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-time">
+                            <span>02:00 PM - 03:00 PM</span>
+                        </div>
+                        <div class="schedule-details">
+                            <h4>Clue Craft</h4>
+                            <p>Craft your ideas and thoughts !</p>
+                        </div>
+                    </div>
+                    <!-- Schedule Item 3 -->
+                    
+                    <div class="schedule-item">
+                        <div class="schedule-time">
+                            <span>3:00 PM - 4:20 PM</span>
+                        </div>
+                        <div class="schedule-details">
+                            <h4>Award Cermony</h4>
+                            <p>Celebrating excellence and honoring the brightest minds! 🎖🏆</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+    
+    <!-- Sponsors Section -->
+    <!-- <section class="section sponsors" id="sponsors">
+        <div class="container">
+            <div class="section-header">
+                <h3>Image Gallery</h3>
+                <p>Civil Enginnering - Building a Stronger Tomorrow, One Structure at a Time.</p>
+            </div>
+
+            <div class="sponsors-grid">
+                <div class="sponsor-item">
+                    <img src="/api/placeholder/200/100" alt="pic 1">
+                </div>
+                <div class="sponsor-item">
+                    <img src="/api/placeholder/200/100" alt="pic 2">
+                </div>
+                <div class="sponsor-item">
+                    <img src="/api/placeholder/200/100" alt="pic 3">
+                </div>
+                <div class="sponsor-item">
+                    <img src="/api/placeholder/200/100" alt="pic 4">
+                </div>
+                <div class="sponsor-item">
+                    <img src="/api/placeholder/200/100" alt="pic 5">
+                </div>
+                <div class="sponsor-item">
+                    <img src="/api/placeholder/200/100" alt="pic 6">
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h3 style="color: white;">Contact Us</h3>
+                <p>Got questions? We're here to help. Reach out to us through any of these channels.</p>
+            </div>
+
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Our Location</h4>
+                            <p>Department of Civil Engineering<br>SRIT, Anantapur.</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Faculty Co-ordinators</h4>
+                            <p>Dr. U. Raghu Babu</p>
+                            <p style="font-size: 12px;">Professor</p>                    
+                            <p>Dr. K. Mahaboob Peera</p>
+                            <p style="font-size: 12px;">Associate Professor</p> 
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Email</h4>
+                            <p>raghubabu.ce@srit.ac.in</p>
+                            <p>mahaboobpeerak.civ@srit.ac.in</p>
+
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Phone</h4>
+                            <p>+91 91779 64984<br>+91 89850 91029</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-widget footer-about">
+                    <h3>About Us</h3>
+                    <p>The Department of Civil Engineering focuses on sustainable infrastructure, structural design, and urban planning, inspiring students to innovate through practical projects and technical contests.</p>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/sritatp"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/sritatp"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/sritatp/"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/school/sritatp/"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-widget footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="#home"><i class="fas fa-chevron-right"></i> About</a></li>
+
+                        <li><a href="#events"><i class="fas fa-chevron-right"></i> Events</a></li>
+                        <li><a href="#schedule"><i class="fas fa-chevron-right"></i> Schedule</a></li>
+                        <!-- <li><a href="#speakers"><i class="fas fa-chevron-right"></i> Judges</a></li> -->
+                        <!-- <li><a href="#sponsors"><i class="fas fa-chevron-right"></i> Image Gallery</a></li> -->
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2025 CIVIL Department. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <div class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('show');
+        });
+
+        // Schedule Tabs
+        const scheduleTabs = document.querySelectorAll('.schedule-tab');
+        const scheduleContents = document.querySelectorAll('.schedule-content');
+
+        scheduleTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                scheduleTabs.forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Hide all content
+                scheduleContents.forEach(content => {
+                    content.style.display = 'none';
+                });
+                
+                // Show selected content
+                const day = tab.getAttribute('data-day');
+                document.getElementById(day).style.display = 'block';
+            });
+        });
+
+        // Countdown Timer
+        function updateCountdown() {
+            const eventDate = new Date('April 3, 2025 09:00:00').getTime();
+            const now = new Date().getTime();
+            const timeLeft = eventDate - now;
+
+            if (timeLeft > 0) {
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = days;
+                document.getElementById('hours').textContent = hours;
+                document.getElementById('minutes').textContent = minutes;
+                document.getElementById('seconds').textContent = seconds;
+            } else {
+                document.querySelector('.countdown').innerHTML = '<h3>Event Has Started!</h3>';
+            }
+        }
+
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Back to Top Button
+        const backToTopBtn = document.querySelector('.back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Smooth Scrolling for Navigation Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // Close mobile menu if open
+                    if (navLinks.classList.contains('show')) {
+                        navLinks.classList.remove('show');
+                    }
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Form Submission
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const formData = new FormData(this);
+                
+                // Example: Display success message
+                this.innerHTML = '<div class="form-success"><i class="fas fa-check-circle fa-3x"></i><h3>Message Sent!</h3><p>Thank you for contacting us. We will get back to you soon.</p></div>';
+                
+                // In a real application, you would send this data to a server
+                // Example: fetch('/api/contact', { method: 'POST', body: formData });
+            });
+        }
+
+        // Create day 2 and day 3 schedule content
+        // This is just for demonstration, you would typically have this in the HTML
+        function createScheduleContent() {
+            // Day 2 Content
+            const day2Content = document.createElement('div');
+            day2Content.className = 'schedule-content';
+            day2Content.id = 'day2';
+            day2Content.style.display = 'none';
+            
+            day2Content.innerHTML = `
+                <!-- Day 2 Schedule Item 1 -->
+                <div class="schedule-item">
+                    <div class="schedule-time">
+                        <span>09:00 AM</span>
+                    </div>
+                    <div class="schedule-details">
+                        <h4>Workshop: AI & Machine Learning</h4>
+                        <p>Hands-on workshop on implementing AI and ML algorithms for practical applications.</p>
+                        <div class="schedule-speaker">
+                            <div class="speaker-avatar">
+                                <img src="/api/placeholder/100/100" alt="AI Expert">
+                            </div>
+                            <div>
+                                <div class="speaker-name">Dr. Sarah Johnson</div>
+                                <div class="speaker-role">AI Research Scientist, TechCorp</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 2 Schedule Item 2 -->
+                <div class="schedule-item">
+                    <div class="schedule-time">
+                        <span>12:00 PM</span>
+                    </div>
+                    <div class="schedule-details">
+                        <h4>Lunch Break</h4>
+                        <p>Networking lunch with refreshments provided for all attendees.</p>
+                    </div>
+                </div>
+
+                <!-- Day 2 Schedule Item 3 -->
+                <div class="schedule-item">
+                    <div class="schedule-time">
+                        <span>01:00 PM</span>
+                    </div>
+                    <div class="schedule-details">
+                        <h4>Hackathon Progress Review</h4>
+                        <p>Teams present their progress and get feedback from mentors.</p>
+                    </div>
+                </div>
+
+                <!-- Day 2 Schedule Item 4 -->
+                <div class="schedule-item">
+                    <div class="schedule-time">
+                        <span>03:00 PM</span>
+                    </div>
+                    <div class="schedule-details">
+                        <h4>Industry Panel: Career in Tech</h4>
+                        <p>Insights from industry leaders on career opportunities in the tech sector.</p>
+                        <div class="schedule-speaker">
+                            <div class="speaker-avatar">
+                                <img src="/api/placeholder/100/100" alt="Industry Expert">
+                            </div>
+                            <div>
+                                <div class="speaker-name">Multiple Speakers</div>
+                                <div class="speaker-role">Industry Leaders</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Day 3 Content
+            const day3Content = document.createElement('div');
+            day3Content.className = 'schedule-content';
+            day3Content.id = 'day3';
+            day3Content.style.display = 'none';
+            
+            day3Content.innerHTML = `
+                <!-- Day 3 Schedule Item 1 -->
+                <div class="schedule-item">
+                    <div class="schedule-time">
+                        <span>09:00 AM</span>
+                    </div>
+                    <div class="schedule-details">
+                        <h4>Hackathon Final Submissions</h4>
+                        <p>Teams submit their final projects for judging.</p>
+                    </div>
+                </div>
+
+                <!-- Day 3 Schedule Item 2 -->
+                <div class="schedule-item">
+                    <div class="schedule-time">
+                        <span>11:00 AM</span>
+                    </div>
+                    <div class="schedule-details">
+                        <h4>Project Presentations</h4>
+                        <p>Teams present their hackathon projects to judges and audience.</p>
+                    </div>
+                </div>
+
+                <!-- Day 3 Schedule Item 3 -->
+                <div class="schedule-item">
+                    <div class="schedule-time">
+                        <span>01:00 PM</span>
+                    </div>
+                    <div class="schedule-details">
+                        <h4>Lunch Break</h4>
+                        <p>Networking lunch with refreshments provided for all attendees.</p>
+                    </div>
+                </div>
+
+                <!-- Day 3 Schedule Item 4 -->
+                <div class="schedule-item">
+                    <div class="schedule-time">
+                        <span>02:00 PM</span>
+                    </div>
+                    <div class="schedule-details">
+                        <h4>Awards Ceremony</h4>
+                        <p>Recognition of the best projects and participants.</p>
+                        <div class="schedule-speaker">
+                            <div class="speaker-avatar">
+                                <img src="/api/placeholder/100/100" alt="Dean">
+                            </div>
+                            <div>
+                                <div class="speaker-name">Dr. James Wilson</div>
+                                <div class="speaker-role">Dean, Computer Science Department</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 3 Schedule Item 5 -->
+                <div class="schedule-item">
+                    <div class="schedule-time">
+                        <span>04:00 PM</span>
+                    </div>
+                    <div class="schedule-details">
+                        <h4>Closing Ceremony</h4>
+                        <p>Concluding remarks and vote of thanks.</p>
+                    </div>
+                </div>
+            `;
+            
+            // Append schedule content to the schedule section
+            const scheduleSection = document.getElementById('schedule');
+            const scheduleContainer = scheduleSection.querySelector('.container');
+            scheduleContainer.appendChild(day2Content);
+            scheduleContainer.appendChild(day3Content);
+        }
+
+        // Call the function to create day 2 and day 3 content
+        createScheduleContent();
+    </script>
+</body>
+</html>
