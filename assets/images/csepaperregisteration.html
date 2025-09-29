@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Registration</title>
+    <style>
+        :root {
+            --primary-color: #ff6b00;
+            --secondary-color: #1a1a1a;
+            --light-color: #ffeee0;
+            --accent-color: #ff9a4d;
+            --error-color: #ff3333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: var(--secondary-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            border-bottom: 5px solid var(--primary-color);
+            border-radius: 8px 8px 0 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .event-description {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.2);
+        }
+        
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .qr-section {
+            margin-top: 20px;
+            border: 2px dashed var(--primary-color);
+            padding: 20px;
+            border-radius: 8px;
+            background-color: var(--light-color);
+        }
+        
+        .qr-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .qr-image {
+            width: 150px;
+            height: 150px;
+            background-color: white;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .qr-image img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        .screenshot-section {
+            margin-top: 20px;
+        }
+        
+        .screenshot-preview {
+            width: 100%;
+            height: 200px;
+            border: 2px dashed #ddd;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+        
+        .screenshot-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            display: none;
+        }
+        
+        .file-input-container {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        
+        .file-input-container input[type=file] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .file-input-label {
+            display: inline-block;
+            padding: 12px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .file-input-label:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 30px;
+        }
+        
+        .submit-btn:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            header {
+                padding: 20px 0;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .event-description {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Event Registration</h1>
+            <p class="event-description">Register, show us your strength and what you truly are !!</p>
+        </header>
+        
+        <div class="form-container">
+            <form id="registration-form">
+                <div class="form-group">
+                    <label for="name">Full Name*</label>
+                    <input type="text" id="name" name="name" required>
+                    <div class="error-message" id="name-error">Please enter your full name</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address*</label>
+                    <input type="email" id="email" name="email" required>
+                    <div class="error-message" id="email-error">Please enter a valid email address</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number*</label>
+                    <input type="tel" id="phone" name="phone" required>
+                    <div class="error-message" id="phone-error">Please enter a valid phone number</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="college">College Name*</label>
+                    <input type="text" id="college" name="college" required>
+                    <div class="error-message" id="college-error">Please enter your college name</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="regNumber">Registration Number (Roll No)*</label>
+                    <input type="text" id="regNumber" name="regNumber" required>
+                    <div class="error-message" id="regNumber-error">Please enter your registration number</div>
+                </div>
+                
+                <!-- <div class="qr-section">
+                    <h3>Payment Information</h3>
+                    <p>Scan the QR code below to make your payment</p>
+                    
+                    <div class="qr-container">
+                        <div class="qr-image">
+                            <img src="/api/placeholder/150/150" alt="Payment QR Code">
+                        </div>
+                        <p>After payment, please upload the screenshot:</p>
+                    </div>
+                    
+                    <div class="screenshot-section">
+                        <div class="screenshot-preview">
+                            <img id="screenshot-img" src="" alt="Payment Screenshot">
+                            <span id="screenshot-placeholder">No image selected</span>
+                        </div>
+                        
+                        <div class="file-input-container">
+                            <input type="file" id="screenshot" name="screenshot" accept="image/*" required>
+                            <label for="screenshot" class="file-input-label">Upload Screenshot*</label>
+                        </div>
+                        <div class="error-message" id="screenshot-error">Please upload a payment screenshot</div>
+                    </div>
+                </div> -->
+                
+                <div class="form-group">
+                    <label for="query">Any Queries?</label>
+                    <textarea id="query" name="query" rows="4"></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Register Now</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('registration-form');
+            const screenshotInput = document.getElementById('screenshot');
+            const screenshotImg = document.getElementById('screenshot-img');
+            const screenshotPlaceholder = document.getElementById('screenshot-placeholder');
+            
+            // Handle file input change
+            screenshotInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        screenshotImg.src = e.target.result;
+                        screenshotImg.style.display = 'block';
+                        screenshotPlaceholder.style.display = 'none';
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Form validation
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Reset error messages
+                document.querySelectorAll('.error-message').forEach(el => {
+                    el.style.display = 'none';
+                });
+                
+                let isValid = true;
+                
+                // Validate name
+                const name = document.getElementById('name');
+                if (!name.value.trim()) {
+                    document.getElementById('name-error').style.display = 'block';
+                    isValid = false;
+                }
+                
+                // Validate email
+                const email = document.getElementById('email');
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(email.value)) {
+                    document.getElementById('email-error').style.display = 'block';
+                    isValid = false;
+                }
+                
+                // Validate phone
+                const phone = document.getElementById('phone');
+                if (!phone.value.trim() || phone.value.length < 10) {
+                    document.getElementById('phone-error').style.display = 'block';
+                    isValid = false;
+                }
+                
+                // Validate college
+                const college = document.getElementById('college');
+                if (!college.value.trim()) {
+                    document.getElementById('college-error').style.display = 'block';
+                    isValid = false;
+                }
+                
+                // Validate registration number
+                const regNumber = document.getElementById('regNumber');
+                if (!regNumber.value.trim()) {
+                    document.getElementById('regNumber-error').style.display = 'block';
+                    isValid = false;
+                }
+                
+                // Validate screenshot
+                const screenshot = document.getElementById('screenshot');
+                if (!screenshot.files.length) {
+                    document.getElementById('screenshot-error').style.display = 'block';
+                    isValid = false;
+                }
+                
+                if (isValid) {
+                    // Create form data object
+                    const formData = {
+                        name: name.value,
+                        email: email.value,
+                        phone: document.getElementById('phone').value,
+                        college: document.getElementById('college').value,
+                        regNumber: document.getElementById('regNumber').value,
+                        query: document.getElementById('query').value
+                    };
+                    
+                    // Show loading state
+                    document.querySelector('.submit-btn').textContent = 'Submitting...';
+                    document.querySelector('.submit-btn').disabled = true;
+                    
+                    // Submit to Google Sheet
+                    fetch('https://script.google.com/macros/s/AKfycbxr5PJ55GcY9bPb01Cwsb1_jJeycc7b0Fu3za0z0tuxwFVLlL4NgiksXyC1H9znCQVY/exec', {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        cache: 'no-cache',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: new URLSearchParams(formData).toString()
+                    })
+                    .then(() => {
+                        // Show success message
+                        alert('Registration successful! Your information has been submitted.');
+                        form.reset();
+                        document.getElementById('screenshot-img').style.display = 'none';
+                        document.getElementById('screenshot-placeholder').style.display = 'block';
+                        
+                        // Reset button
+                        document.querySelector('.submit-btn').textContent = 'Register Now';
+                        document.querySelector('.submit-btn').disabled = false;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('There was an error submitting your registration. Please try again.');
+                        
+                        // Reset button
+                        document.querySelector('.submit-btn').textContent = 'Register Now';
+                        document.querySelector('.submit-btn').disabled = false;
+                    });
+                }
+            });
+            
+            // Real-time validation
+            const inputs = form.querySelectorAll('input[required], textarea[required]');
+            inputs.forEach(input => {
+                input.addEventListener('blur', function() {
+                    validateField(this);
+                });
+                
+                input.addEventListener('input', function() {
+                    const errorEl = document.getElementById(`${this.id}-error`);
+                    errorEl.style.display = 'none';
+                });
+            });
+            
+            function validateField(field) {
+                const errorEl = document.getElementById(`${field.id}-error`);
+                
+                if (field.type === 'email') {
+                    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                   if (!emailPattern.test(field.value)) {
+                       errorEl.style.display = 'block';
+                   } else {
+                       errorEl.style.display = 'none';
+                   }
+               } else if (field.type === 'tel') {
+                   if (!field.value.trim() || field.value.length < 10) {
+                       errorEl.style.display = 'block';
+                   } else {
+                       errorEl.style.display = 'none';
+                   }
+               } else if (field.type === 'file') {
+                   if (!field.files.length) {
+                       errorEl.style.display = 'block';
+                   } else {
+                       errorEl.style.display = 'none';
+                   }
+               } else {
+                   if (!field.value.trim()) {
+                       errorEl.style.display = 'block';
+                   } else {
+                       errorEl.style.display = 'none';
+                   }
+               }
+           }
+           
+           // Add hover effects to input fields
+           const formElements = document.querySelectorAll('input, textarea');
+           formElements.forEach(el => {
+               el.addEventListener('mouseover', function() {
+                   if (this.type !== 'file') {
+                       this.style.borderColor = 'var(--accent-color)';
+                   }
+               });
+               
+               el.addEventListener('mouseout', function() {
+                   if (this.type !== 'file' && !this.matches(':focus')) {
+                       this.style.borderColor = '#ddd';
+                   }
+               });
+           });
+       });
+   </script>
+</body>
+</html>
