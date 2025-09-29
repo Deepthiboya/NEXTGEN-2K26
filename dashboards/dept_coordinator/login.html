@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Coordinator Login</title>
+  <style>
+    /* Reset and base */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #f9f9f9;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      color: #333;
+    }
+    .login-container {
+      background: #fff;
+      padding: 3rem 3.5rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.2rem;
+      color: #ff6600;
+      margin-bottom: 2rem;
+      font-weight: 700;
+      letter-spacing: 1.1px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+      text-align: center;
+    }
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 1rem 1.2rem;
+      font-size: 1.15rem;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      color: #555;
+    }
+    input::placeholder {
+      color: #999;
+      font-style: italic;
+    }
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #ff6600;
+      outline: none;
+      box-shadow: 0 0 12px #ff660033;
+      background-color: #fff;
+      color: #333;
+      font-style: normal;
+    }
+    button {
+      background-color: #ff6600;
+      color: white;
+      border: none;
+      font-weight: 700;
+      padding: 1rem 0;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 0 6px 18px #ff660099;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #e65c00;
+    }
+    #error-msg {
+      margin-top: 1.5rem;
+      font-size: 1rem;
+      color: #d9534f;
+      min-height: 1.4em;
+      text-align: center;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>Coordinator Login</h1>
+
+    <form id="login-form" novalidate>
+      <input type="email" id="email" name="email" placeholder="Email" required autofocus />
+      <input type="password" id="password" name="password" placeholder="Password" required />
+
+      <button type="submit">Login</button>
+    </form>
+
+    <p id="error-msg"></p>
+  </div>
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = "https://jkqxisgkngxqlwuojuul.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImprcXhpc2drbmd4cWx3dW9qdXVsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5OTMxODgsImV4cCI6MjA3NDU2OTE4OH0.88ga7OV0KRK44PlAdo3tOZzxARHdSYNBZqp1AIj43vY";
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    document.getElementById("login-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const errorMsg = document.getElementById("error-msg");
+      errorMsg.textContent = "";
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      if (!email || !password) {
+        errorMsg.textContent = "Please enter both email and password.";
+        return;
+      }
+
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+        if (error) {
+          errorMsg.textContent = "Invalid login, try again.";
+          console.error(error);
+          return;
+        }
+
+        window.location.href = "dashboard.html";
+      } catch (err) {
+        console.error(err);
+        errorMsg.textContent = "An unexpected error occurred. Please try again.";
+      }
+    });
+  </script>
+</body>
+</html>
