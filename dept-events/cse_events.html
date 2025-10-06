@@ -371,41 +371,607 @@
 
       /* Focus ring for keyboard users */
       :where(a,button,input,select,textarea):focus{outline:3px solid rgba(24,122,173,.45);outline-offset:2px}
+      /* =============================== */
+/* CSE Tech Mesh Backdrop (scoped) */
+/* =============================== */
+
+/* Activate with: <body class="cse-tech"> and insert 5 layers at top of body:
+   .cse-mesh, .cse-hex, .cse-sheen, .cse-trace, .cse-glints
+*/
+
+.cse-tech {
+  position: relative;
+  overflow-x: clip;
+  background:
+    radial-gradient(1400px 420px at 50% -220px, #0f1b33 10%, transparent 70%),
+    linear-gradient(180deg, #0a0f1a 0%, #0b1222 35%, #0e152a 100%);
+}
+
+/* Contrast-safe palette inside this page */
+.cse-tech {
+  --fg-strong: #eaf4ff;    /* headings */
+  --fg:        #d5e6f7;    /* body */
+  --fg-muted:  #9fb6cb;    /* secondary */
+  --fg-soft:   #87a3b9;    /* helpers/labels */
+  --fg-link:   #7cd3ff;    /* links */
+  --fg-link-h: #ffe08a;    /* link hover */
+  --glass-bg:  rgba(15, 23, 42, 0.55);
+  --glass-brd: rgba(148, 163, 184, 0.18);
+  --glass-glow: 0 24px 60px rgba(86, 204, 242, 0.12);
+}
+
+/* Typography adjustments on dark */
+.cse-tech h1, .cse-tech h2, .cse-tech h3, .cse-tech h4, .cse-tech .section-title {
+  color: var(--fg-strong);
+  text-shadow: 0 6px 22px rgba(0,0,0,0.35);
+}
+.cse-tech, .cse-tech p, .cse-tech li, .cse-tech .section-sub, .cse-tech .hero-sub, .cse-tech .event-description {
+  color: var(--fg);
+}
+.cse-tech .tn-muted, .cse-tech .timeline-desc, .cse-tech .contact-details, .cse-tech label {
+  color: var(--fg-muted);
+}
+.cse-tech a { color: var(--fg-link); text-decoration: none; }
+.cse-tech a:hover { color: var(--fg-link-h); }
+
+/* Buttons stay brand-gradient but ensure readable label */
+.cse-tech .cta-btn,
+.cse-tech .register-btn {
+  color: #0b0b0b; /* black label for bright gradients */
+  text-shadow: none;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+/* Glass effects for cards and timeline content */
+.cse-tech .event-card,
+.cse-tech .timeline,
+.cse-tech .timeline-content,
+.cse-tech .coordinator-card,
+.cse-tech footer .footer {
+  background: linear-gradient(180deg, var(--glass-bg), rgba(15,23,42,0.35));
+  border: 1px solid var(--glass-brd);
+  backdrop-filter: saturate(140%) blur(8px);
+  box-shadow: var(--glass-glow);
+}
+
+/* Event stat chips tuned for dark */
+.cse-tech .event-stats {
+  background: linear-gradient(135deg, rgba(238,247,255,0.08) 0%, rgba(255,247,232,0.08) 100%);
+  box-shadow: inset 0 6px 18px rgba(16,24,40,0.08), 0 4px 12px rgba(16,24,40,0.12);
+}
+.cse-tech .event-stats .stat {
+  background: #0f172a;
+  border: 1px solid rgba(148,163,184,0.18);
+}
+.cse-tech .event-stats .label { color: var(--fg-soft); }
+.cse-tech .event-stats .value { color: var(--fg-strong); }
+.cse-tech .event-stats i {
+  color: #7cd3ff;
+  background: rgba(124, 211, 255, 0.12);
+  box-shadow: 0 4px 10px rgba(124, 211, 255, 0.18);
+}
+
+/* HERO readability */
+.cse-tech .hero .hero-title {
+  color: var(--fg-strong);
+  -webkit-text-stroke: .4px rgba(10,15,26,.35);
+  text-shadow: 0 2px 10px rgba(0,0,0,.35), 0 8px 24px rgba(0,0,0,.35);
+}
+
+/* Stream badges/pills */
+.cse-tech .stream-badges span {
+  color: #0b0b0b;
+  background: linear-gradient(90deg, #ffd382, #9ae8ff);
+  box-shadow: 0 8px 24px rgba(255,209,102,.25);
+}
+
+/* Footer text contrast */
+.cse-tech footer .footer, 
+.cse-tech footer .footer a, 
+.cse-tech footer .copyright {
+  color: var(--fg);
+}
+.cse-tech footer h4 { color: var(--fg-strong); }
+
+/* ============================== */
+/* Animated CSE background layers */
+/* ============================== */
+
+/* 1) Code-Matrix Mesh (no bubbles) */
+.cse-mesh {
+  position: fixed; inset: -10% -10% 0 -10%;
+  z-index: -5; pointer-events: none;
+  background:
+    /* faint code columns (vertical) */
+    repeating-linear-gradient(0deg, rgba(124, 211, 255, .06) 0 2px, transparent 2px 22px),
+    /* faint code rows (horizontal) */
+    repeating-linear-gradient(90deg, rgba(255, 138, 30, .06) 0 2px, transparent 2px 26px),
+    linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+  transform: translateZ(0);
+  animation: cseMeshDrift 34s linear infinite;
+  filter: saturate(115%) contrast(104%);
+}
+@keyframes cseMeshDrift {
+  0%   { transform: translate3d(0,0,0) }
+  50%  { transform: translate3d(1.2%, -1.2%, 0) }
+  100% { transform: translate3d(0,0,0) }
+}
+
+/* 2) Hex lattice for CS (graph/circuit vibe) */
+.cse-hex {
+  position: fixed; inset: -8% -8%;
+  z-index: -4; pointer-events:none;
+  background:
+    conic-gradient(from 0deg at 50% 50%, rgba(255,255,255,0.04) 0 60deg, transparent 60deg) 
+      0 0/ 22px 38px,
+    conic-gradient(from 60deg at 50% 50%, rgba(124, 211, 255, 0.06) 0 60deg, transparent 60deg) 
+      11px 19px/ 22px 38px,
+    radial-gradient(1200px 360px at 50% -260px, rgba(255, 184, 86, .10), transparent 70%);
+  mix-blend-mode: overlay;
+  animation: cseHexFloat 26s ease-in-out infinite alternate;
+}
+@keyframes cseHexFloat {
+  0%   { transform: translate3d(0,0,0) scale(1) }
+  100% { transform: translate3d(-1.2%, 1%, 0) scale(1.015) }
+}
+
+/* 3) Crystalline sheen */
+.cse-sheen {
+  position: fixed; inset: -8%;
+  z-index: -3; pointer-events:none;
+  background:
+    conic-gradient(from 180deg at 70% 40%, rgba(255, 245, 230, 0.05), transparent 60%),
+    conic-gradient(from 0deg at 30% 20%, rgba(212, 239, 255, 0.05), transparent 60%),
+    linear-gradient(135deg, rgba(24, 122, 173, .06), rgba(24, 122, 173, 0) 50%),
+    linear-gradient(225deg, rgba(255, 138, 30, .06), rgba(255, 138, 30, 0) 50%);
+  filter: blur(6px) saturate(130%);
+  mix-blend-mode: screen;
+  animation: cseSheenRoll 24s ease-in-out infinite alternate;
+}
+@keyframes cseSheenRoll {
+  0%   { transform: translate3d(.4%, 0, 0) rotate(0deg) }
+  50%  { transform: translate3d(-1.2%, .6%, 0) rotate(6deg) }
+  100% { transform: translate3d(0, -.6%, 0) rotate(-4deg) }
+}
+
+/* 4) Neon tracers (diagonal path, CS pipeline feel) */
+.cse-trace {
+  position: fixed; inset: 0; z-index: -2; pointer-events:none; overflow:hidden;
+}
+.cse-trace::before,
+.cse-trace::after {
+  content: "";
+  position: absolute; width: 220%; height: 2px; left: -60%;
+  top: 28%;
+  background:
+    linear-gradient(90deg,
+      transparent 0%,
+      rgba(255,138,30,.0) 5%,
+      rgba(255,138,30,.9) 15%,
+      rgba(86,204,242,.95) 25%,
+      rgba(255,209,102,.95) 35%,
+      rgba(86,204,242,.95) 45%,
+      rgba(255,138,30,.9) 55%,
+      rgba(255,138,30,.0) 65%,
+      transparent 100%);
+  filter: drop-shadow(0 0 12px rgba(255, 165, 0, .35));
+  transform: rotate(-16deg);
+  animation: cseTraceRun 11s linear infinite;
+}
+.cse-trace::after {
+  top: 66%;
+  transform: rotate(16deg);
+  animation-duration: 14s;
+  animation-delay: -5s;
+}
+@keyframes cseTraceRun {
+  0%   { transform: translateX(-8%) rotate(var(--angle, -16deg)) }
+  100% { transform: translateX(8%) rotate(var(--angle, -16deg)) }
+}
+
+/* 5) Subtle glints */
+.cse-glints {
+  position: fixed; inset: 0; z-index:-1; pointer-events:none;
+  background:
+    radial-gradient(3px 3px at 18% 22%, rgba(255,255,255,.35), transparent 55%),
+    radial-gradient(2px 2px at 65% 38%, rgba(255,255,255,.25), transparent 55%),
+    radial-gradient(3px 3px at 78% 68%, rgba(255,255,255,.28), transparent 55%),
+    radial-gradient(2px 2px at 34% 76%, rgba(255,255,255,.22), transparent 55%);
+  mix-blend-mode: screen;
+  animation: cseGlintBlink 7s ease-in-out infinite alternate;
+  opacity: .45;
+}
+@keyframes cseGlintBlink {
+  0%   { opacity: .28; transform: translate3d(0,0,0) }
+  100% { opacity: .5;  transform: translate3d(.3%, -.3%, 0) }
+}
+
+/* Mobile & reduced motion */
+@media (max-width: 640px){
+  .cse-mesh { opacity:.55; animation-duration: 40s; }
+  .cse-hex  { opacity:.5; }
+  .cse-sheen{ opacity:.45; animation-duration: 32s; filter: blur(8px); }
+  .cse-trace::before, .cse-trace::after { opacity:.6; }
+}
+@media (prefers-reduced-motion: reduce){
+  .cse-mesh, .cse-hex, .cse-sheen,
+  .cse-trace::before, .cse-trace::after, .cse-glints { animation: none !important; }
+}
+/* ============================== */
+/* Center Hero Revamp (scoped)    */
+/* ============================== */
+
+.nx-hero-v2{
+  position: relative;
+  border-radius: var(--radius-lg);
+  padding: clamp(26px, 5.5vw, 56px);
+  overflow: hidden;
+  /* smooth glow box */
+  box-shadow: 0 18px 60px rgba(86,204,242,.28), inset 0 0 120px rgba(86,204,242,.18);
+  isolation: isolate;
+}
+
+/* 1) Background layers inside hero (no impact outside) */
+.nx-hero-v2 .hx{
+  position:absolute; inset:-10% -10%;
+  pointer-events:none; z-index:0;
+}
+.nx-hero-v2 .hex{
+  background:
+    conic-gradient(from 0deg at 50% 50%, rgba(255,255,255,0.05) 0 60deg, transparent 60deg) 
+      0 0/ 24px 42px,
+    conic-gradient(from 60deg at 50% 50%, rgba(124,211,255,0.08) 0 60deg, transparent 60deg) 
+      12px 21px/ 24px 42px,
+    radial-gradient(1200px 360px at 50% -260px, rgba(255,184,86,.14), transparent 70%);
+  mix-blend-mode: overlay;
+  animation: hxFloat 28s ease-in-out infinite alternate;
+  filter: saturate(120%);
+}
+.nx-hero-v2 .beams{
+  background:
+    radial-gradient(50% 14% at 62% 0%, rgba(255,209,102,.18), transparent 70%),
+    radial-gradient(44% 12% at 18% 0%, rgba(124,211,255,.18), transparent 75%),
+    linear-gradient(135deg, rgba(24,122,173,.18), transparent 60%),
+    linear-gradient(225deg, rgba(255,138,30,.16), transparent 60%);
+  filter: blur(16px) saturate(120%);
+  animation: beamsSweep 22s ease-in-out infinite alternate;
+}
+.nx-hero-v2 .shards{
+  background:
+    conic-gradient(from 180deg at 70% 40%, rgba(255, 245, 230, 0.06), transparent 60%),
+    conic-gradient(from 0deg at 30% 20%, rgba(212, 239, 255, 0.06), transparent 60%);
+  mix-blend-mode: screen;
+  filter: blur(6px);
+  animation: shardsRoll 26s ease-in-out infinite alternate;
+}
+@keyframes hxFloat{ 0%{transform:translate3d(0,0,0)} 100%{transform:translate3d(-1.2%,1%,0)} }
+@keyframes beamsSweep{ 0%{transform:translate3d(0,0,0)} 100%{transform:translate3d(-2%,1%,0)} }
+@keyframes shardsRoll{ 0%{transform:translate3d(.3%,0,0) rotate(0)} 100%{transform:translate3d(-.8%,.5%,0) rotate(6deg)} }
+
+/* 2) Glass panel */
+.nx-hero-card{
+  position: relative; z-index:1;
+  max-width: 980px; margin-inline:auto; text-align:center;
+  background: linear-gradient(180deg, rgba(15,23,42,.55), rgba(15,23,42,.35));
+  border: 1px solid rgba(148,163,184,.18);
+  backdrop-filter: saturate(140%) blur(10px);
+  border-radius: 24px;
+  padding: clamp(22px, 5vw, 40px);
+  box-shadow: 0 24px 60px rgba(86,204,242,.16);
+}
+
+/* 3) Headline */
+.nx-hero-card .nx-title{
+  margin: 0 0 10px;
+  line-height: 1.08;
+  font-family: "Poppins","Plus Jakarta Sans",sans-serif;
+  font-weight: 900;
+  font-size: clamp(36px, 6.6vw, 68px);
+  color: #eaf4ff;
+  text-shadow: 0 2px 10px rgba(0,0,0,.35), 0 8px 24px rgba(0,0,0,.35);
+}
+.nx-hero-card .nx-title .amp{
+  display:block;
+  font-size: .8em;
+  letter-spacing: .06em;
+  color: #9ae8ff;
+}
+.nx-hero-card .nx-title .accent{
+  background: linear-gradient(90deg, #ffd382, #9ae8ff);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+  text-shadow: none;
+}
+
+/* 4) Chips */
+.nx-hero-card .nx-chips{
+  display:flex; justify-content:center; gap:10px; margin: 10px 0 12px;
+}
+.nx-hero-card .chip{
+  display:inline-block; padding: 6px 12px; border-radius:999px;
+  background: linear-gradient(90deg, #ffd382, #9ae8ff);
+  color:#0b0b0b; font-weight: 900;
+  box-shadow: 0 8px 24px rgba(255,209,102,.25);
+}
+
+/* 5) Subtext */
+.nx-hero-card .nx-sub{
+  color: #d5e6f7; margin: 6px auto 14px; max-width: 760px;
+}
+
+/* 6) CTA row */
+.nx-hero-card .nx-cta-row{
+  display:flex; gap:12px; justify-content:center; flex-wrap:wrap;
+}
+.nx-hero-card .cta{
+  display:inline-block; border-radius:999px; padding: 10px 18px; font-weight:900;
+  text-decoration:none; transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+.nx-hero-card .cta-btn{ background: linear-gradient(90deg, var(--orange), var(--blue)); color:#0b0b0b; border:1px solid rgba(0,0,0,.08); box-shadow:0 10px 24px rgba(255,138,30,.35); }
+.nx-hero-card .cta-btn:hover{ transform: translateY(-2px); filter: brightness(1.03); }
+.nx-hero-card .cta.ghost{ color:#eaf4ff; border:1px solid rgba(148,163,184,.35); background: rgba(15,23,42,.35); }
+.nx-hero-card .cta.ghost:hover{ transform: translateY(-2px); box-shadow:0 10px 24px rgba(86,204,242,.25); }
+
+/* 7) Code ticker */
+.nx-hero-card .nx-ticker{
+  position: relative; overflow: hidden; margin-top: 16px; border-radius: 10px;
+  border: 1px solid rgba(148,163,184,.18);
+  background: rgba(15,23,42,.35);
+}
+.nx-hero-card .nx-ticker .track{
+  display:flex; gap: 30px; white-space: nowrap; padding: 8px 14px;
+  color: #9ae8ff; font-weight: 800; letter-spacing: .2px;
+  animation: tickerRun 22s linear infinite;
+}
+.nx-hero-card .nx-ticker .track span{ opacity:.9 }
+@keyframes tickerRun{
+  0%{ transform: translateX(0) }
+  100%{ transform: translateX(-50%) }
+}
+
+/* Mobile tidy */
+@media (max-width:640px){
+  .nx-hero-card{ padding: 18px; }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .nx-hero-v2 .hex,.nx-hero-v2 .beams,.nx-hero-v2 .shards,
+  .nx-hero-card .nx-ticker .track{ animation: none !important; }
+}
+/* ============================== */
+/* Warm Glow Hero (shining yellow) */
+/* Scoped to .nx-hero-v2.nx-warm  */
+/* ============================== */
+
+.nx-hero-v2.nx-warm{
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  padding: clamp(28px, 6vw, 56px);
+  /* remove blue glass feel; neutral base for glow */
+  box-shadow: 0 18px 60px rgba(0,0,0,.18);
+}
+
+/* Background glow layers */
+.nx-hero-v2.nx-warm .wg{
+  position: absolute; inset: -16% -10%;
+  pointer-events: none; z-index: 0;
+}
+
+/* Big outer halo (soft yellow) */
+.nx-hero-v2.nx-warm .halo{
+  background:
+    radial-gradient(1200px 420px at 50% -180px, #fff1cb 20%, transparent 70%),
+    radial-gradient(1400px 520px at 50% -260px, #ffe8b3 18%, transparent 75%);
+  filter: saturate(115%);
+}
+
+/* Inner vignette panel with warm tint and subtle border light */
+.nx-hero-v2.nx-warm .vignette{
+  inset: -6% -6%;
+  background:
+    radial-gradient(90% 70% at 50% 50%, rgba(255, 217, 145, 0.65), rgba(255, 235, 186, 0.45) 45%, rgba(255, 248, 223, 0.15) 70%, rgba(255,255,255,0) 100%),
+    linear-gradient(180deg, rgba(255, 239, 198, .55), rgba(255, 247, 219, .35));
+  box-shadow:
+    inset 0 0 120px rgba(255, 209, 102, .35),
+    inset 0 0 300px rgba(255, 209, 102, .25);
+  border-radius: inherit;
+}
+
+/* Animated sweep highlight (gentle) */
+.nx-hero-v2.nx-warm .sweep{
+  inset: -20%;
+  background:
+    linear-gradient(120deg, rgba(255,255,255,0) 30%, rgba(255,255,255,.35) 50%, rgba(255,255,255,0) 70%);
+  mix-blend-mode: soft-light;
+  transform: translateX(-60%) rotate(10deg);
+  animation: wgSweep 10s linear infinite;
+  filter: blur(12px);
+}
+@keyframes wgSweep{
+  0%   { transform: translateX(-60%) rotate(10deg); opacity:.35 }
+  50%  { transform: translateX(0%)   rotate(10deg); opacity:.45 }
+  100% { transform: translateX(60%)  rotate(10deg); opacity:.35 }
+}
+
+/* Content card (no obvious glass; warm surface with depth) */
+.nx-hero-v2.nx-warm .wg-card{
+  position: relative; z-index: 1;
+  max-width: 980px; margin-inline: auto; text-align: center;
+  padding: clamp(24px, 5vw, 42px);
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgba(255, 248, 223, .65), rgba(255, 242, 204, .45));
+  border: 1px solid rgba(255, 184, 86, .35);
+  box-shadow:
+    0 28px 80px rgba(255, 184, 86, .28),
+    0 18px 50px rgba(0,0,0,.12);
+}
+
+/* Kicker */
+.nx-hero-v2.nx-warm .wg-kicker{
+  margin: 0 0 8px;
+  font-weight: 900;
+  letter-spacing: .18em;
+  color: #a77819;
+}
+
+/* Title with gold accent */
+.nx-hero-v2.nx-warm .wg-title{
+  margin: 0;
+  line-height: 1.06;
+  font-family: "Poppins","Plus Jakarta Sans",sans-serif;
+  font-weight: 900;
+  font-size: clamp(34px, 6vw, 64px);
+  color: #3a4d63;
+  text-shadow: 0 3px 16px rgba(0,0,0,.12);
+}
+.nx-hero-v2.nx-warm .wg-title .gold{
+  background: linear-gradient(90deg, #c08118, #f0b544, #ffe08a, #c08118);
+  background-size: 200% auto;
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+  animation: goldSheen 6s linear infinite;
+}
+@keyframes goldSheen{
+  0%,100% { background-position: 200% center; }
+  50%     { background-position: -200% center; }
+}
+
+/* Subtext readable on warm panel */
+.nx-hero-v2.nx-warm .wg-sub{
+  max-width: 820px; margin: 10px auto 14px;
+  color: #445b72;
+  font-size: clamp(1rem, 2.3vw, 1.15rem);
+}
+
+/* Badges row */
+.nx-hero-v2.nx-warm .wg-badges{
+  display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin: 8px 0 16px;
+}
+.nx-hero-v2.nx-warm .badge{
+  display:inline-flex; align-items:center; gap:8px;
+  padding: 8px 12px; border-radius: 999px;
+  background: #fffdf5;
+  color: #2c3f55;
+  font-weight: 800;
+  border: 1px solid rgba(192, 129, 24, .25);
+  box-shadow: 0 8px 20px rgba(255, 184, 86, .25);
+}
+
+/* CTA */
+.nx-hero-v2.nx-warm .wg-cta .cta-strong{
+  display:inline-block;
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-weight: 900;
+  color: #0b0b0b;
+  text-decoration: none;
+  background: linear-gradient(90deg, #ffb451, #ffd166);
+  border: 1px solid rgba(0,0,0,.08);
+  box-shadow: 0 12px 28px rgba(255, 184, 86, .35);
+  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
+}
+.nx-hero-v2.nx-warm .wg-cta .cta-strong:hover{
+  transform: translateY(-2px);
+  filter: brightness(1.03);
+}
+
+/* Mobile paddings */
+@media (max-width:640px){
+  .nx-hero-v2.nx-warm{ padding: 18px; }
+  .nx-hero-v2.nx-warm .wg-card{ padding: 18px; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .nx-hero-v2.nx-warm .sweep{ animation: none !important; }
+  .nx-hero-v2.nx-warm .wg-title .gold{ animation: none !important; }
+}
+/* Footer box removal (cse_events only) */
+footer .footer {
+  background: transparent !important;   /* remove dark panel */
+  border: 0 !important;                 /* remove any border */
+  box-shadow: none !important;          /* remove inner/outer shadows */
+  padding: 0 !important;                /* rely on outer section padding */
+}
+
+/* Keep footer content readable over page background */
+footer .footer h4 { color: #0f172a; }
+footer .footer a,
+footer .footer p { color: #0f172a; }
+
+/* Optional: maintain layout gaps after removing panel */
+footer .container.section { padding-block: 24px !important; }
+
+
+
+
     </style>
   </head>
-  <body>
+  <body class="cse-tech">
+    <div class="cse-mesh" aria-hidden="true"></div>
+     <div class="cse-hex" aria-hidden="true"></div>
+      <div class="cse-sheen" aria-hidden="true"></div>
+       <div class="cse-trace" aria-hidden="true"></div>
+     <div class="cse-glints" aria-hidden="true"></div> 
     <header role="banner">
       <div class="container nav" aria-label="Primary">
         <div class="brand">
           <img src="../assets/images/SRIT-LOGO.png" alt="SRIT Logo" />
-          <div class="brand-title">NextZen <span class="year">2k25</span></div>
+          <div class="brand-title">NextGen <span class="year">2k25</span></div>
         </div>
         <div class="spacer"></div>
         <nav aria-label="Main">
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="#events">Events</a></li>
-            <li><a href="#schedule">Schedule</a></li>
-            <li><a href="#contact">Contact</a></li>
+          <ul >
+            <li><a href="../index.html" style="color: black;">Home</a></li>
+            <li><a href="#events" style="color: black;">Events</a></li>
+            <li><a href="#schedule" style="color: black;">Schedule</a></li>
+            <li><a href="#contact" style="color: black;">Contact</a></li>
           </ul>
         </nav>
       </div>
     </header>
 
     <main>
-      <section class="hero section">
-        <div class="hero-wrap">
-          <h1 class="hero-title">Computer Science & Engineering</h1>
-          <div class="stream-badges">
-            <span>CSE</span>
-            <span>CSM</span>
-            <span>CAD</span>
-          </div>
-          <p class="hero-sub">
-            Join us for the biggest tech event of the year, featuring workshops, hackathons, and industry experts designed to inspire the next generation of coders.
-          </p>
-        </div>
-      </section>
+<div class="hero-wrap nx-hero-v2 nx-warm">
+  <!-- warm glow layers -->
+  <div class="wg halo" aria-hidden="true"></div>
+  <div class="wg vignette" aria-hidden="true"></div>
+  <div class="wg sweep" aria-hidden="true"></div>
+
+  <div class="wg-card">
+    <p class="wg-kicker">WELCOME TO</p>
+
+    <!-- Headline changed to match your screenshot text -->
+    <h1 class="wg-title">
+      <span>Computer Science</span>
+      <span class="gold">&amp; Engineering</span>
+    </h1>
+
+    <!-- Streams as chips -->
+    <div class="wg-badges" role="list" aria-label="Streams">
+      <span class="badge"><strong>CSE</strong></span>
+      <span class="badge"><strong>CSM</strong></span>
+      <span class="badge"><strong>CAD</strong></span>
+    </div>
+
+    <!-- Subline exactly like the screenshot text -->
+    <p class="wg-sub">
+      Join us for the biggest tech event of the year, featuring workshops, hackathons, and industry experts designed to inspire the next generation of coders.
+    </p>
+
+    <!-- Primary CTA -->
+    <div class="wg-cta">
+      <a href="#events" class="cta-strong">Explore Events</a>
+    </div>
+  </div>
+</div>
+
+
+
 
       <section id="events" class="section">
         <div class="container">
@@ -426,7 +992,7 @@
                   <li class="stat"><i class="fas fa-indian-rupee-sign"></i><div><span class="label">Fee</span><span class="value"><span class="rupee">₹</span>200</span></div></li>
                 </ul>
                 <p class="event-description">Showcase research and ideas on emerging technologies with well-structured, original work and clear communication.</p>
-                <p><strong>Registration Fee:</strong> ₹200/-</p>
+                <p ><strong style="color: white;">Registration Fee:</strong> ₹200/-</p>
                 <a href="#" class="cta-btn register-trigger" data-event="Paper Presentation" data-fee="200" data-team="pair">Register Now</a>
               </div>
             </div>
@@ -444,7 +1010,8 @@
                   <li class="stat"><i class="fas fa-indian-rupee-sign"></i><div><span class="label">Fee</span><span class="value"><span class="rupee">₹</span>300</span></div></li>
                 </ul>
                 <p class="event-description">Brainstorm, build, and present creative solutions under time pressure in a 5-hour coding sprint.</p>
-                <p><strong>Registration Fee:</strong> ₹300/-</p>
+                <br>
+                <p><strong style="color: white;">Registration Fee:</strong> ₹300/-</p>
                 <a href="#" class="cta-btn register-trigger" data-event="Hackathon [5hrs]" data-fee="300" data-team="trio">Register Now</a>
               </div>
             </div>
@@ -462,7 +1029,8 @@
                   <li class="stat"><i class="fas fa-indian-rupee-sign"></i><div><span class="label">Fee</span><span class="value"><span class="rupee">₹</span>100</span></div></li>
                 </ul>
                 <p class="event-description">Solve a technical crossword on programming, algorithms, and CS concepts for prizes.</p>
-                <p><strong>Registration Fee:</strong> ₹100/-</p>
+                <br>
+                <p><strong style="color: white;">Registration Fee:</strong> ₹100/-</p>
                 <a href="#" class="cta-btn register-trigger" data-event="Code Buzz" data-fee="100" data-team="solo">Register Now</a>
               </div>
             </div>
@@ -670,12 +1238,12 @@
             <p>Department of Computer Science and Engineering<br/>Srinivasa Ramanujan Institute of Technology</p>
           </div>
           <div>
-            <h4>Quick Links</h4>
+            <h4 style="color: #187aad;">Quick Links</h4>
             <ul>
-              <li><a href="index.html">Main Home</a></li>
-              <li><a href="#events">Events</a></li>
-              <li><a href="#schedule">Schedule</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li><a href="index.html" style="color: black;">Main Home</a></li>
+              <li><a href="#events" style="color: black;">Events</a></li>
+              <li><a href="#schedule" style="color: black;">Schedule</a></li>
+              <li><a href="#contact" style="color: black;">Contact</a></li>
             </ul>
           </div>
         </div>
@@ -816,6 +1384,13 @@
           closeModal();
         });
       })();
+      (function(){
+    const track = document.getElementById('nxTickerTrack');
+    if(!track) return;
+    // Duplicate content to make a seamless loop if short
+    const clone = track.cloneNode(true);
+    track.parentElement.appendChild(clone);
+  })();
     </script>
   </body>
 </html>
