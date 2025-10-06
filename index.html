@@ -1,743 +1,851 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SRIT Tech Fest 2025</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <style>
-        /* Simulated Paradigm Background Animation */
-        .animated-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: linear-gradient(135deg, #f5eeee 0%, #2c2a2a 50%, #1b1818 100%);
-            overflow: hidden;
-        }
+<head @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@500;700;800&display=swap');
+>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>SRIT Tech Fest 2025 — TARANG 2k25</title>
+  
+  <!-- Font and Icon Imports -->
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<!-- @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@500;700;800&display=swap'); -->
 
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            pointer-events: none;
-            animation: float 6s ease-in-out infinite;
-        }
+  
+  <style>
+    :root{
+      --blue:#56CCF2;
+      --blue-700:#0b84ae;
+      --blue-dark:#187aad;
+      --orange:#FF8A1E;
+      --orange-700:#c25a00;
+      --yellow:#FFD166;
+      --bg:#f6f9ff;
+      --bg-grad1:#f0f7ff;
+      --bg-grad2:#fff3e0;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#475569;
+      --shadow-xl:0 24px 60px rgba(16,24,40,.10);
+      --shadow-lg:0 16px 40px rgba(16,24,40,.10);
+    
+      --shadow:0 8px 24px #10182814;
+      --radius:18px;
+      --radius-lg:22px;
+      --radius-sm:12px;
+      --container:1120px;
+      --pad:clamp(16px,2.5vw,28px);
+      --gap:clamp(16px,2vw,24px);
+    }
+    
+    
+    *{box-sizing:border-box}
+    html{scroll-behavior: smooth;}
+    body{
+      font-family:Manrope, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu;
+      color:var(--text);
+      line-height:1.6;
+      background:
+        radial-gradient(1000px 280px at 20% -120px, #dff3ff 20%, transparent 60%),
+        radial-gradient(900px 260px at 80% -140px, #ffe9cc 10%, transparent 70%),
+        linear-gradient(180deg, var(--bg-grad1), var(--bg));
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    /* Background Animations */
+    @keyframes floatAnimation {
+      0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
+      50% { transform: translateY(-25px) translateX(20px) rotate(10deg); }
+    }
+    .background-anim {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none; overflow: hidden; z-index: -1;
+    }
+    .anim-circle {
+      position: absolute; border-radius: 50%;
+      animation: floatAnimation 10s ease-in-out infinite;
+      filter: blur(8px) drop-shadow(0 0 10px rgba(255,138,30,0.3));
+    }
+    .anim-circle.orange { background: #ff990022; }
+    .anim-circle.blue { background: #56ccf222; animation-duration: 12s; }
+    .anim-circle.s1 { width: 220px; height: 220px; top: 10%; left: 30%; animation-delay: 0s; }
+    .anim-circle.s2 { width: 150px; height: 150px; top: 40%; left: 10%; animation-delay: 2s; }
+    .anim-circle.s3 { width: 250px; height: 250px; top: 60%; left: 65%; animation-delay: 3s; }
+    .anim-circle.s4 { width: 180px; height: 180px; top: 20%; left: 75%; animation-delay: 1s; }
+    .anim-circle.s5 { width: 120px; height: 120px; top: 75%; left: 25%; animation-delay: 4s; }
 
-        .particle-orange {
-            background: radial-gradient(circle, #ff6600 0%, #ff8533 50%, transparent 70%);
-            box-shadow: 0 0 20px #ff6600, 0 0 40px #ff6600, 0 0 60px #ff6600;
-        }
+    /* Utilities */
+    .container{ max-width:var(--container); margin-inline:auto; padding-inline:var(--pad) }
+    .section{ padding-block: clamp(44px, 7vw, 90px); position:relative; z-index: 2; }
+    
+    /* Section Title Glow Effect */
+    .section-title{
+      font-family:"Plus Jakarta Sans", system-ui, -apple-system;
+      font-weight:800; letter-spacing:.2px;
+      font-size: clamp(24px, 3.4vw, 36px);
+      text-align:center; margin:0 0 10px;
+      text-shadow: 0 0 10px rgba(255, 138, 30, 0.4);
+      transition: text-shadow 0.3s ease;
+    }
+    .section-title:hover {
+      text-shadow: 0 0 20px rgba(255, 138, 30, 0.7);
+    }
+    .section-sub{ text-align:center; color:var(--muted); margin:0 auto 26px; max-width:780px }
 
-        .particle-white {
-            background: radial-gradient(circle, #ffffff 0%, #f0f0f0 50%, transparent 70%);
-            box-shadow: 0 0 15px #ffffff, 0 0 30px #ffffff, 0 0 45px #ffffff;
-        }
+    /* Header */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
 
-        .connection-line {
-            position: absolute;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #ff6600, transparent);
-            opacity: 0;
-            animation: linePulse 3s ease-in-out infinite;
-        }
+/* Base container */
+.nx-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: saturate(140%) blur(6px);
+  background:
+    linear-gradient(90deg, #6fd4f2 0%, #9fd9b9 45%, #f1cd6e 100%);
+  box-shadow:
+    0 2px 0 rgba(255,255,255,0.3) inset,
+    0 12px 30px rgba(18, 42, 66, 0.18);
+  border-bottom: 1px solid rgba(255,255,255,0.35);
+}
 
-        .geometric-shape {
-            position: absolute;
-            border: 2px solid #ff6600;
-            opacity: 0.3;
-            animation: rotate 10s linear infinite;
-        }
+/* Subtle light sweep animation at top edge */
+.nx-header::after{
+  content:'';
+  position:absolute; left:0; right:0; top:0; height:3px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.8), transparent);
+  animation: sweep 5s linear infinite;
+  opacity:.6;
+}
+@keyframes sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
 
-        .triangle {
-            width: 0;
-            height: 0;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-bottom: 25px solid #ff6600;
-            background: none;
-        }
+.nx-container {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: 12px 18px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 18px;
+}
 
-        .square {
-            width: 20px;
-            height: 20px;
-            background: transparent;
-        }
+/* Brand */
+.nx-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+.nx-logo {
+  width: 52px; height: 52px; object-fit: contain;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow:
+    0 6px 16px rgba(0,0,0,.18),
+    0 0 0 6px rgba(255,255,255,.35) inset;
+  transition: transform .25s ease, filter .25s ease;
+  filter: drop-shadow(0 6px 14px rgba(0, 180, 255, .35));
+}
+.nx-brand:hover .nx-logo { transform: translateY(-2px) scale(1.03); filter: drop-shadow(0 10px 18px rgba(0, 180, 255, .55)); }
 
-        .hexagon {
-            width: 30px;
-            height: 17px;
-            background: #ff6600;
-            position: relative;
-        }
+.nx-brand-text { display:flex; align-items:center; gap:10px; }
+.nx-title {
+  font-family: "Plus Jakarta Sans", Inter, system-ui, -apple-system, Segoe UI;
+  font-weight: 800;
+  font-size: clamp(20px, 2.6vw, 28px);
+  letter-spacing: .2px;
+  color: #0f172a;
+  text-shadow: 0 1px 0 rgba(255,255,255,.8);
+}
+.nx-badge {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 13px;
+  color: #0f172a;
+  background: linear-gradient(90deg, #ff8a1e, #56ccf2);
+  box-shadow: 0 8px 18px rgba(86, 204, 242, .35);
+  border: 1px solid rgba(255,255,255,.5);
+}
 
-        .hexagon:before,
-        .hexagon:after {
-            content: "";
-            position: absolute;
-            width: 0;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-        }
+/* Navigation */
+.nx-nav { justify-self: center; }
+.nx-menu {
+  display: flex; gap: clamp(12px, 3vw, 34px);
+  margin: 0; padding: 0; list-style: none;
+}
+.nx-link {
+  position: relative;
+  display: inline-block;
+  padding: 8px 6px;
+  font-family: Inter, system-ui, -apple-system, Segoe UI;
+  font-weight: 700;
+  color: #0f172a;
+  text-decoration: none;
+  transition: color .2s ease;
+}
+.nx-link::after {
+  content:'';
+  position: absolute;
+  left: 10%; right: 10%; bottom: 0;
+  height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, #0ea5e9, #f59e0b);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s ease;
+}
+.nx-link:hover { color: #0a2540; }
+.nx-link:hover::after { transform: scaleX(1); }
 
-        .hexagon:before {
-            bottom: 100%;
-            border-bottom: 8px solid #ff6600;
-        }
+/* Gradient pill Login */
+.nx-login {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-family: Inter, system-ui;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(90deg, #ff8a1e, #56ccf2);
+  box-shadow:
+    0 10px 22px rgba(17, 94, 164, .25),
+    0 2px 0 rgba(255,255,255,.6) inset;
+  text-decoration: none;
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+.nx-login:hover { transform: translateY(-2px); filter: saturate(115%); box-shadow: 0 14px 30px rgba(17, 94, 164, .35); }
+.nx-login:active { transform: translateY(0); }
 
-        .hexagon:after {
-            top: 100%;
-            border-top: 8px solid #ff6600;
-        }
+/* Responsive */
+@media (max-width: 860px) {
+  .nx-container { grid-template-columns: auto auto; }
+  .nx-nav { grid-column: 1 / -1; order: 3; }
+  .nx-menu { justify-content: center; flex-wrap: wrap; }
+}
 
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px) rotate(0deg);
-                opacity: 0.7;
-            }
-            25% {
-                transform: translateY(-20px) rotate(90deg);
-                opacity: 1;
-            }
-            50% {
-                transform: translateY(-40px) rotate(180deg);
-                opacity: 0.8;
-            }
-            75% {
-                transform: translateY(-20px) rotate(270deg);
-                opacity: 0.9;
-            }
-        }
+    header{
+      position:sticky; top:0; z-index:50;
+      background:linear-gradient(90deg, var(--blue), var(--yellow));
+      box-shadow: 0 20px 40px rgba(86,204,242,0.3);
+      animation: fadeInDown 1s ease forwards;
+    }
+    .nav{ display:flex; align-items:center; gap:16px; padding-block:12px }
+    .brand{ display:flex; align-items:center; gap:12px }
+    .brand img{ width:56px; height:56px; object-fit:contain; filter: drop-shadow(0 4px 10px #98dffe) }
+    .brand-title{
+      font-family:"Plus Jakarta Sans"; font-weight:800;
+      font-size: clamp(20px, 3vw, 28px); letter-spacing:.4px;
+      display:flex; align-items:center; gap:10px;
+    }
+    .year{
+      background:var(--orange); color:#111; border-radius:999px;
+      padding:4px 10px; font-weight:900; box-shadow:0 10px 24px #ff8a1e1f;
+      font-size: clamp(12px, 1.8vw, 14px);
+    }
+    nav ul{ display:flex; gap: clamp(10px, 2vw, 22px); list-style:none; margin:0; padding:0 }
+    nav a{
+      text-decoration:none; color:#0b2239; font-weight:800; font-size:15px;
+      padding:8px 12px; border-radius:10px; transition: all .18s ease;
+    }
+    nav a:hover{ background:#ffffffb5 }
+    .spacer{ flex:1 }
+    .login-btn, .hero-cta, .dept-link {
+      border:0; border-radius:999px; cursor:pointer;
+      color:#fff; font-weight:900; text-decoration: none;
+      background:linear-gradient(90deg, var(--orange), var(--blue));
+      box-shadow:0 14px 30px #56ccf233;
+      transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), box-shadow 0.25s ease;
+    }
+    .login-btn{ padding:10px 18px; }
+    .login-btn:hover, .hero-cta:hover, .dept-link:hover{
+        transform: translateY(-2px) scale(1.07);
+        box-shadow: 0 16px 40px rgba(255, 138, 30, 0.4);
+    }
 
-        @keyframes linePulse {
-            0%, 100% {
-                opacity: 0;
-                transform: scaleX(0);
-            }
-            50% {
-                opacity: 0.6;
-                transform: scaleX(1);
-            }
-        }
+    /* Hero & Shining Title Effect */
+    .hero{ padding-block: clamp(48px, 8vw, 110px) }
+    .hero-wrap{
+      position: relative;
+      background:
+        radial-gradient(1200px 380px at 50% -200px, #fdf4e7 30%, transparent 70%),
+        radial-gradient(1200px 360px at 50% -260px, #e6f7ff 20%, transparent 75%),
+        linear-gradient(120deg, #ecf7ff 0%, #fff4e1 100%);
+      border-radius: var(--radius-lg);
+      padding: clamp(22px, 5vw, 52px);
+      box-shadow: 0 12px 48px rgba(255, 138, 30, 0.3), inset 0 0 80px rgba(255, 204, 0, 0.2);
+      text-align:center;
+      transition: box-shadow 0.3s ease;
+    }
+    .hero-wrap:hover {
+        box-shadow: 0 20px 60px rgba(255, 138, 30, 0.5), inset 0 0 120px rgba(255, 204, 0, 0.4);
+    }
+    .hero-eyebrow{
+      color: var(--blue-dark); font-weight:800; letter-spacing:.3px;
+      text-transform: uppercase; font-size: 13px;
+    }
+    @keyframes shine {
+        0% { background-position: 200% center; }
+        100% { background-position: -200% center; }
+    }
+    .hero-title{
+      font-family:""; font-weight:900; letter-spacing:.6px;
+      font-size: clamp(34px, 6.5vw, 64px); margin: 8px 0 8px;
+      background: linear-gradient(to right, #0f172a 20%, #ff8a1e 40%, #ff8a1e 60%, #0f172a 80%);
+      background-size: 200% auto;
+      color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: shine 5s linear infinite;
+      font-weight: bolder;
+    }
+    .hero-sub{ max-width:860px; margin: 10px auto 18px; color:#0b2239 }
+    .kpis{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap }
+    .kpi{
+      display:flex; align-items:center; gap:8px;
+      padding:10px 14px; background:#fff; border-radius:14px; font-weight:800;
+      box-shadow: var(--shadow); border-left: 5px solid var(--orange);
+    }
+    .hero-cta{
+        display:inline-block; margin-top: 14px; padding:12px 26px;
+    }
 
-        @keyframes rotate {
-            0% {
-                transform: rotate(0deg);
-                opacity: 0.3;
-            }
-            50% {
-                opacity: 0.6;
-            }
-            100% {
-                transform: rotate(360deg);
-                opacity: 0.3;
-            }
-        }
+    /* Countdown Panel Glow Effect */
+    .panel{
+      background: linear-gradient(90deg, #e9f7fe 40%, #fffbd9 100%);
+      border-radius: 18px; padding: 22px;
+      box-shadow: 0 10px 40px rgba(255, 204, 50, 0.4);
+      text-align:center;
+      transition: box-shadow 0.3s ease;
+    }
+    .panel:hover {
+      box-shadow: 0 16px 50px rgba(255, 204, 50, 0.6);
+    }
+    .timer{ display:flex; justify-content:center; gap: 18px; flex-wrap: wrap; margin-top: 10px }
+    .tick{
+      background:#fff; border-radius: 16px; padding: 16px 18px; min-width: 96px;
+      box-shadow: var(--shadow); border-bottom: 4px solid var(--orange);
+      transform: translateZ(0);
+    }
+    .value{ color: var(--blue-700); font-size: clamp(22px, 4.5vw, 28px); font-weight: 900; line-height: 1.1 }
+    .label{ color: var(--orange-700); font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: .5px }
 
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 0.5;
-            }
-            50% {
-                transform: scale(1.2);
-                opacity: 0.8;
-            }
-        }
+    /* Cards grid (Highlights) */
+    .cards{
+      display:grid; gap: var(--gap);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      perspective: 1200px;
+    }
+    .card{
+      position:relative; overflow:hidden; background: #ffffff;
+      border-radius: 18px; padding: 22px; text-align: center;
+      box-shadow: 0 16px 42px rgba(255, 153, 0, 0.25);
+      border-left: 6px solid var(--orange);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s ease, background 0.35s ease;
+      will-change: transform;
+    }
+    .card:hover{
+      transform: translateY(-10px) scale(1.05) rotateZ(-1deg);
+      background: #fff8ed;
+      box-shadow: 0 24px 58px rgba(255, 153, 0, 0.47);
+    }
+    .card i{
+      font-size: 30px; color: var(--blue-700); margin-bottom: 6px;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    .card:hover i{
+      transform: translateY(-4px) scale(1.2);
+      color: var(--orange);
+    }
+    .card h3{
+      margin: 6px 0 2px; font-size: clamp(20px, 3.4vw, 26px);
+      color: var(--orange-700); font-family:"Plus Jakarta Sans"; font-weight:900;
+    }
+    .card p{ margin:0; color: var(--muted) }
 
-        .pulse-animation {
-            animation: pulse 4s ease-in-out infinite;
-        }
+    /* Enhanced Departments Section */
+    .dept{ background: linear-gradient(180deg, #fffef9, #ffffff) }
+    .dept-grid{
+      display:grid; gap: var(--gap);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .dept-card {
+      background: linear-gradient(135deg, #ecf8ff, #fffdf6);
+      border-radius: 24px;
+      box-shadow: 0 12px 48px rgba(86, 204, 242, 0.24);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s ease;
+      padding: 22px 26px;
+      will-change: transform;
+      display:flex; flex-direction:column; gap:8px;
+    }
+    .dept-card:hover {
+      transform: translateY(-14px) perspective(800px) rotateX(6deg) rotateZ(-3deg);
+      box-shadow: 0 32px 88px rgba(86, 204, 242, 0.48);
+      background: linear-gradient(135deg, #d4e8ff, #fffdf2);
+    }
+    .dept-card .dept-icon {
+      font-size: 26px;
+      color: var(--orange);
+      transition: color 0.32s ease, transform 0.32s ease;
+    }
+    .dept-card:hover .dept-icon {
+      color: var(--blue);
+      transform: scale(1.25) rotate(12deg);
+    }
+    .dept-title {
+      font-family:"Plus Jakarta Sans";
+      font-weight: 900;
+      letter-spacing: .5px;
+      font-size: clamp(18px, 2.8vw, 22px);
+      transition: color 0.3s ease;
+    }
+    .dept-card:hover .dept-title {
+      color: var(--blue-dark);
+    }
+    .dept-desc {
+      font-size: 1rem;
+      color: #435466;
+      line-height: 1.4;
+      transition: color 0.3s ease;
+    }
+    .dept-card:hover .dept-desc {
+      color: #1a2233;
+    }
+    .dept-link{
+      margin-top: 6px; align-self: flex-start; padding: 8px 14px;
+    }
 
-        /* Ensure content is above background */
-        body {
-            position: relative;
-            z-index: 1;
-        }
+    /* Advanced Event Timeline Section */
+    .timeline {
+      background: linear-gradient(180deg, #e2f0fc, #f9fdff);
+    }
+    .tl {
+      max-width: 720px;
+      margin-inline: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      padding-left: 30px;
+      position: relative;
+    }
+    .tl::before {
+      content: '';
+      position: absolute;
+      left: 14px;
+      top: 10px;
+      bottom: 10px;
+      width: 4px;
+      background: linear-gradient(180deg, var(--orange), var(--blue));
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(255,138,30,.3);
+    }
+    @keyframes bounceIn {
+      0% { opacity: 0; transform: scale(0.8) translateX(-20px); }
+      60% { opacity: 1; transform: scale(1.05) translateX(0); }
+      80% { transform: scale(0.98); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .tl-item {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 26px;
+      align-items: center;
+      position: relative;
+      opacity: 0;
+      animation: bounceIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    .tl-time {
+      flex-shrink: 0;
+      width: 130px;
+      font-weight: 900;
+      color: var(--orange-700);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.1rem;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      user-select: none;
+    }
+    .tl-time::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: -38px;
+      width: 20px;
+      height: 20px;
+      background: var(--orange);
+      border: 4px solid #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--orange-700);
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+    .tl-content {
+      background: #fff;
+      border-radius: 20px;
+      padding: 18px 24px;
+      box-shadow: var(--shadow-lg);
+      flex: 1;
+      transform-origin: left center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .tl-item:hover .tl-content {
+      transform: scale(1.03);
+      box-shadow: 0 30px 65px rgba(86, 204, 242, 0.3);
+    }
+    .tl-title {
+      font-weight: 900;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 20px;
+      color: var(--blue-dark);
+      margin: 0 0 4px 0;
+      letter-spacing: .5px;
+    }
+    .tl-text {
+      font-size: 1rem;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.5;
+    }
 
-        /* Subtle overlay for better text readability */
-        .content-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.1);
-            z-index: 0;
-            pointer-events: none;
-        }
-    </style>
+    /* Leadership */
+    .leaders{
+        display: grid;
+        gap: var(--gap);
+        grid-template-columns: repeat(4,minmax(0,1fr));
+    }
+    .leader{
+      background:#fff; border-radius:18px; box-shadow:0 8px 20px rgba(255, 153, 0, 0.2);
+      padding:16px; text-align:center; border-top:5px solid var(--orange);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-top-color 0.3s ease;
+    }
+    .leader:hover{
+      transform: translateY(-8px) rotateZ(1deg);
+      box-shadow: 0 24px 48px rgba(255, 153, 0, 0.45);
+      border-top-color: var(--blue);
+    }
+    .leader img{
+      width:72px; height:72px; object-fit:cover; border-radius:50%;
+      border:3px solid var(--orange); box-shadow:0 8px 22px #ffd16655; background:#fff;
+    }
+    .leader h4{ margin:10px 0 4px; color:#c25a00; font-size:clamp(14px,2.4vw,16px); font-family:"Plus Jakarta Sans"; font-weight:800; }
+    .leader p{ margin:0; color:var(--muted); font-size:14px }
+    
+    /* Contact */
+    .contact{ background: linear-gradient(90deg, #ebfff5, #f3d6ff) }
+    .contact-grid{
+      display:grid; gap: var(--gap);
+      grid-template-columns: 1fr 1fr; max-width: 860px; margin-inline: auto;
+    }
+    .contact-info{ display:grid; gap:10px; align-content:start }
+    .ci{ display:flex; gap:10px; color: var(--muted); align-items:center; }
+    .ci i{ color: var(--blue-dark); font-size:1.2em; }
+    .form{
+      background:#fff; border-radius: 16px; box-shadow: var(--shadow-lg);
+      padding: 16px; display:grid; gap: 10px;
+    }
+    .form input,.form textarea{
+      width:100%; border:1px solid #ffd16666; border-radius: 12px;
+      padding: 12px 14px; font: inherit; color: var(--text); background: #fffef8;
+    }
+    .form button{
+      justify-self: start; padding: 10px 18px;
+    }
+    #msg{ color:#065f46; font-weight:800; min-height:18px }
+    
+    /* Footer */
+    footer{ background: linear-gradient(90deg, var(--blue), var(--orange)) }
+    .footer{
+      display:grid; gap: var(--gap); grid-template-columns: 2fr 1fr 1fr; align-items:start; color:#0b2239;
+    }
+    .logo-small{ width:56px; border-radius:12px; box-shadow: var(--shadow) }
+    .footer h4{ margin:0 0 10px; color:#0b5e89; font-family:"Plus Jakarta Sans"; font-weight:900 }
+    .footer ul{ list-style:none; padding:0; margin:0; display:grid; gap:8px }
+    .footer a{ color:#0b2239; text-decoration:none; font-weight:800 }
+    .copyright{
+      text-align:center; color:#334155; padding: 16px 0 10px; font-size: 14px; font-weight:700;
+    }
+
+    /* Responsive */
+    @media (max-width:1100px){
+      .cards, .dept-grid, .leaders { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+      .footer{ grid-template-columns: 1fr 1fr }
+    }
+    @media (max-width:720px){
+      .nav{ flex-wrap:wrap; gap:8px }
+      nav{ width:100% } nav ul{ justify-content:center; flex-wrap:wrap }
+      .cards, .dept-grid, .contact-grid, .leaders, .footer { grid-template-columns: 1fr }
+      .tl-item { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .tl-time { width: auto; }
+      .tl-time::after { left: -26px; }
+      .login-btn{ width:100%; order:3 }
+    }
+  </style>
 </head>
+
 <body>
-    <!-- Animated Background -->
-    <div class="animated-background" id="animatedBackground"></div>
-    <div class="content-overlay"></div>
-    <header>
-        <div class="header-main">
-            <div class="logo-section">
-                <img src="assets/images/SRIT-LOGO.png" alt="SRIT Logo" class="logo">
-            </div>
-            <h1 class="header-title"> NXTZEN <span class="year">2k25</span></h1>
-            <nav class="nav-bar">
-                <ul class="nav-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#departments">Departments</a></li>
-                    <li><a href="#management">Leadership</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li class="login-li"><a href="dashboards/login.html" class="login-button" style="border: 2px solid #ff6600; padding: 10px 22px; border-radius: 50px;">Login</a></li>
-                </ul>
-            </nav>
+  <!-- Animated background -->
+  <div class="background-anim">
+    <div class="anim-circle orange s1"></div>
+    <div class="anim-circle blue s2"></div>
+    <div class="anim-circle orange s3"></div>
+    <div class="anim-circle blue s4"></div>
+    <div class="anim-circle orange s5"></div>
+  </div>
+
+  <!-- Header -->
+<!-- Enhanced Header -->
+<header class="nx-header" role="banner">
+  <!-- add this inside the header as the first child -->
+<div class="nx-glow" id="nxGlow"></div>
+
+  <div class="nx-container">
+    <a class="nx-brand" href="#home" aria-label="NextZen Home">
+      <img src="assets/images/SRIT-LOGO.png" alt="SRIT Logo" class="nx-logo" />
+      <div class="nx-brand-text">
+        <span class="nx-title">NextZen</span>
+        <span class="nx-badge">2k25</span>
+      </div>
+    </a>
+
+    <nav class="nx-nav" aria-label="Main">
+      <ul class="nx-menu">
+        <li><a href="#home" class="nx-link">Home</a></li>
+        <li><a href="#departments" class="nx-link">Departments</a></li>
+        <li><a href="#leadership" class="nx-link">Leadership</a></li>
+        <li><a href="#contact" class="nx-link">Contact</a></li>
+      </ul>
+    </nav>
+
+    <a href="dashboards/login.html" class="nx-login" aria-label="Login">Login</a>
+  </div>
+</header>
+
+
+  <main>
+    <!-- Hero -->
+    <section id="home" class="hero section">
+      <div class="container">
+        <div class="hero-wrap">
+          <div class="hero-eyebrow">Welcome to</div>
+          <h1 class="hero-title">NEXTZEN</h1>
+          <p class="hero-sub">Join us for an exciting celebration of technology and innovation at Srinivasa Ramanujan Institute of Technology</p>
+          <div class="kpis" role="list">
+            <div class="kpi" role="listitem"><i class="fas fa-calendar"></i> 18th October, 2025</div>
+            <div class="kpi" role="listitem"><i class="fas fa-map-marker-alt"></i> SRIT Campus, ATP.</div>
+          </div>
+          <a class="hero-cta" href="#departments">Explore Events</a>
         </div>
-    </header>
-    <section id="home">
-    <div class="hero">
-        <div class="hero-content">
-            
-            <h2>Welcome to</h2>
-            <h1>NXTZEN 2k25</h1><br>
-            <p>Join us for an exciting celebration of technology and innovation at Srinivasa Ramanujan Institute of Technology</p>
-            <div class="event-details">
-                <div class="detail">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>SRIT Campus, ATP.</span>
+      </div>
+    </section>
+
+    <!-- Countdown -->
+    <section class="section" aria-labelledby="count-title">
+      <div class="container">
+        <h2 id="count-title" class="section-title">Event Starts In</h2>
+        <p class="section-sub">Mark the calendar and get ready to participate in challenges, workshops, and celebrations.</p>
+        <div class="panel">
+          <div class="timer" aria-live="polite">
+            <div class="tick"><div class="value" id="days">19</div><div class="label">Days</div></div>
+            <div class="tick"><div class="value" id="hours">12</div><div class="label">Hours</div></div>
+            <div class="tick"><div class="value" id="minutes">45</div><div class="label">Minutes</div></div>
+            <div class="tick"><div class="value" id="seconds">22</div><div class="label">Seconds</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Highlights -->
+    <section class="section" aria-labelledby="highlights-title">
+      <div class="container">
+        <h2 id="highlights-title" class="section-title">Event Highlights</h2>
+        <div class="cards">
+          <article class="card" aria-label="Prize Pool"><i class="fas fa-trophy"></i><h3>₹1,00,000</h3><p>Prize Pool</p></article>
+          <article class="card" aria-label="Participants"><i class="fas fa-users"></i><h3>1000+</h3><p>Participants</p></article>
+          <article class="card" aria-label="Events Count"><i class="fas fa-calendar-day"></i><h3>30+</h3><p>Events</p></article>
+          <article class="card" aria-label="Certificates"><i class="fas fa-university"></i><h3>Certificates</h3><p>From college management</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Departments -->
+    <section id="departments" class="dept section" aria-labelledby="dept-title">
+      <div class="container">
+        <h2 id="dept-title" class="section-title">Departments</h2>
+        <div class="dept-grid">
+          <article class="dept-card"><div class="dept-icon"><i class="fas fa-laptop-code"></i></div><h3 class="dept-title">CSE Streams</h3><p class="dept-desc">Explore the digital frontier with cutting-edge tech events</p><a class="dept-link" href="cse.html">View Events</a></article>
+          <article class="dept-card"><div class="dept-icon"><i class="fas fa-microchip"></i></div><h3 class="dept-title">Electronics & Communication Engineering</h3><p class="dept-desc">Circuit challenges and electronic innovations</p><a class="dept-link" href="ece.html">View Events</a></article>
+          <article class="dept-card"><div class="dept-icon"><i class="fas fa-bolt"></i></div><h3 class="dept-title">Electrical & Electronics Engineering</h3><p class="dept-desc">Power up with electrifying competitions</p><a class="dept-link" href="eee.html">View Events</a></article>
+          <article class="dept-card"><div class="dept-icon"><i class="fas fa-cog"></i></div><h3 class="dept-title">Mechanical Engineering</h3><p class="dept-desc">Design, build, and test your mechanical prowess</p><a class="dept-link" href="mechanical.html">View Events</a></article>
+          <article class="dept-card"><div class="dept-icon"><i class="fas fa-hard-hat"></i></div><h3 class="dept-title">Civil Engineering</h3><p class="dept-desc">Construct the future with structural challenges</p><a class="dept-link" href="civil.html">View Events</a></article>
+          <article class="dept-card"><div class="dept-icon"><i class="fas fa-lightbulb"></i></div><h3 class="dept-title">Humanities & Sciences</h3><p class="dept-desc">Bridging Science and Society for a Better Tomorrow</p><a class="dept-link" href="h_and_s.html">View Events</a></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="timeline section" aria-labelledby="timeline-title">
+        <div class="container">
+            <h2 id="timeline-title" class="section-title">Event Timeline</h2>
+            <div class="tl">
+                <div class="tl-item" style="animation-delay: 0.1s;">
+                    <div class="tl-time">10:00 AM</div>
+                    <div class="tl-content">
+                        <h3 class="tl-title">Opening Ceremony</h3>
+                        <p class="tl-text">The fest begins with an inaugural session.</p>
+                    </div>
+                </div>
+                <div class="tl-item" style="animation-delay: 0.2s;">
+                    <div class="tl-time">11:00 AM</div>
+                    <div class="tl-content">
+                        <h3 class="tl-title">Events Distribution</h3>
+                        <p class="tl-text">Participants disperse to their respective events.</p>
+                    </div>
+                </div>
+                <div class="tl-item" style="animation-delay: 0.3s;">
+                    <div class="tl-time">1:00 - 2:00 PM</div>
+                    <div class="tl-content">
+                        <h3 class="tl-title">Lunch Time</h3>
+                        <p class="tl-text">Enjoy delicious meals and refreshments.</p>
+                    </div>
+                </div>
+                <div class="tl-item" style="animation-delay: 0.4s;">
+                    <div class="tl-time">2:00 PM</div>
+                    <div class="tl-content">
+                        <h3 class="tl-title">Event Resumption</h3>
+                        <p class="tl-text">Events continue post lunch break.</p>
+                    </div>
+                </div>
+                <div class="tl-item" style="animation-delay: 0.5s;">
+                    <div class="tl-time">3:00 - 4:20 PM</div>
+                    <div class="tl-content">
+                        <h3 class="tl-title">Award Ceremony</h3>
+                        <p class="tl-text">Certificates and awards distributed to participants.</p>
+                    </div>
                 </div>
             </div>
-            <a href="#departments" class="cta-button">Explore Events</a>
         </div>
+    </section>
+    
+    <!-- Leadership -->
+    <section id="management" class="section" aria-labelledby="lead-title">
+      <div class="container">
+        <h2 id="lead-title" class="section-title">Our College Leadership</h2>
+        <div class="leaders">
+          <article class="leader"><img src="assets/images/padma.png" alt="Jonnalagadda Padmavathy" /><h4>Jonnalagadda Padmavathy</h4><p>Chairperson, SRIT</p></article>
+          <article class="leader"><img src="assets/images/samba.png" alt="Aluru Sambasiva Reddy" /><h4>Aluru Sambasiva Reddy</h4><p>Secretary & Correspondent, SRIT</p></article>
+          <article class="leader"><img src="assets/images/ranjit.png" alt="Dr. M. Ranjit Reddy" /><h4>Dr. M. Ranjit Reddy</h4><p>Vice President, SRIT</p></article>
+          <article class="leader"><img src="assets/images/prinicipal.png" alt="Dr. G. Balakrishna" /><h4>Dr. G. Balakrishna</h4><p>Principal, SRIT</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact section" aria-labelledby="contact-title">
+      <div class="container">
+        <h2 id="contact-title" class="section-title">Contact Us</h2>
+        <div class="contact-grid">
+          <div class="contact-info">
+            <div class="ci"><i class="fas fa-envelope"></i> <p>tarang@srit.ac.in</p></div>
+            <div class="ci"><i class="fas fa-phone"></i> <p>+91 9849913200, 9848169943</p></div>
+            <div class="ci"><i class="fas fa-map-marker-alt"></i> <p>SRIT Campus, Anantapur District</p></div>
+          </div>
+          <form name="submit-to-google-sheet" class="form" aria-label="Contact form">
+            <input type="text" name="Name" placeholder="Your Name" required />
+            <input type="email" name="Email" placeholder="Your Email" required />
+            <textarea name="Message" rows="6" placeholder="Your Message"></textarea>
+            <button type="submit" class="login-btn">Send Message</button>
+            <div id="msg" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer role="contentinfo">
+    <div class="container section" style="padding-block:24px">
+      <div class="footer">
+        <div>
+          <img src="assets/images/SRIT-LOGO.png" alt="SRIT Logo" class="logo-small" />
+          <p>Srinivasa Ramanujan Institute<br/>of Technology</p>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#departments">Departments</a></li>
+            <li><a href="#management">Leadership</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Convenors</h4>
+          <p>Dr. P. CHITRALINGAPPA</p>
+          <p style="font-size:12px">chitralingappa.cs@srit.ac.in</p>
+          <p>Dr. G. HEMANTH KUMAR YADAV</p>
+          <p style="font-size:12px">hemanth.cs@srit.ac.in</p>
+        </div>
+      </div>
+      <div class="copyright">© TARANG 2K25. All Rights Reserved.</div>
     </div>
-</section>ol
-<!-- Countdown Section -->
-<section class="countdown">
-    <div class="container">
-        <h3>Event Starts In</h3>
-        <div class="countdown-timer">
-            <div class="countdown-item">
-                <div class="countdown-value" id="days">14</div>
-                <div class="countdown-label">Days</div>
-            </div>
-            <div class="countdown-item">
-                <div class="countdown-value" id="hours">12</div>
-                <div class="countdown-label">Hours</div>
-            </div>
-            <div class="countdown-item">
-                <div class="countdown-value" id="minutes">45</div>
-                <div class="countdown-label">Minutes</div>
-            </div>
-            <div class="countdown-item">
-                <div class="countdown-value" id="seconds">22</div>
-                <div class="countdown-label">Seconds</div>
-            </div>
-        </div>
-    </div>
-</section>
-    <section class="highlights">
-        <div class="container">
-            <h2 class="section-title">Event Highlights</h2>
-            <div class="highlight-cards">
-                <div class="highlight-card">
-                    <i class="fas fa-trophy"></i>
-                    <h3>₹1,00,000+</h3>
-                    <p>Prize Pool</p>
-                </div>
-                <div class="highlight-card">
-                    <i class="fas fa-users"></i>
-                    <h3>1000+</h3>
-                    <p>Participants</p>
-                </div>
-                <div class="highlight-card">
-                    <i class="fas fa-calendar-day"></i>
-                    <h3>30+</h3>
-                    <p>Events</p>
-                </div>
-                <div class="highlight-card">
-                    <i class="fas fa-university"></i>
-                    <h3>Participation Certificates</h3>
-                    <p>From college management</p>
-                </div>
-            </div>
-        </div>
-    </section>
+  </footer>
 
-    <section id="departments" class="departments">
-        <h2 class="section-title">Departments</h2>
-        <div class="department-cards">
-            <div class="department-card" data-department="cse">
-                <div class="card-content">
-                    <div class="card-icon"><i class="fas fa-laptop-code"></i></div>
-                    <h3>CSE Streams</h3>
-                    <p>Explore the digital frontier with cutting-edge tech events</p>
-                    <a href="/tarangnxtzen/dept_events/cse_events.html" class="department-link">View Events</a>
-                </div>
-            </div>
-            <div class="department-card" data-department="ece">
-                <div class="card-content">
-                    <div class="card-icon"><i class="fas fa-microchip"></i></div>
-                    <h3>Electronics and Communication Engineering</h3>
-                    <p>Circuit challenges and electronic innovations</p>
-                    <a href="/tarangnxtzen/dept_events/ece_events.html" class="department-link">View Events</a>
-                </div>
-            </div>
-            <div class="department-card" data-department="eee">
-                <div class="card-content">
-                    <div class="card-icon"><i class="fas fa-bolt"></i></div>
-                    <h3>Electrical and Electronics Engineering</h3>
-                    <p>Power up with electrifying competitions</p>
-                    <a href="/tarangnxtzen/dept_events/eee_events.html" class="department-link">View Events</a>
-                </div>
-            </div>
-            <div class="department-card" data-department="mechanical">
-                <div class="card-content">
-                    <div class="card-icon"><i class="fas fa-cog"></i></div>
-                    <h3>Mechanical Engineering</h3>
-                    <p>Design, build, and test your mechanical prowess</p>
-                    <a href="/tarangnxtzen/dept_events/mech_events.html" class="department-link">View Events</a>
-                </div>
-            </div>
-            <div class="department-card" data-department="civil">
-                <div class="card-content">
-                    <div class="card-icon"><i class="fas fa-hard-hat"></i></div>
-                    <h3>Civil Engineering</h3>
-                    <p>Construct the future with structural challenges</p>
-                    <a href="/tarangnxtzen/dept_events/civil_events.html" class="department-link">View Events</a>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- Scripts -->
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxaLnMrJsOt1ehE3jCOrlq-CqDB7JLkpGWrzpB5TEsI55pjBLZZXGSieUgwgpAM3L2lKA/exec';
+    const form = document.forms['submit-to-google-sheet'];
+    const msg = document.getElementById('msg');
+    if(form){
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        fetch(scriptURL, { method:'POST', body: new FormData(form) })
+          .then(() => { msg.textContent = 'Message Sent Successfully'; setTimeout(()=> msg.textContent='', 4000); form.reset(); })
+          .catch(() => { msg.textContent = 'Error sending message. Try again.'; });
+      });
+        const glow = document.getElementById('nxGlow');
+  document.querySelector('.nx-header').addEventListener('mousemove', (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    glow.style.left = `${e.clientX - rect.left}px`;
+    glow.style.top  = `${e.clientY - rect.top}px`;
+  });
+    
+    // Set the date for the event countdown
+    const countdownDate = new Date("October 18, 2025 00:00:00").getTime();
 
-    <section class="timeline">
-        <div class="container">
-            <h2 class="section-title">Event Timeline</h2>
-                <div class="timeline-container">
-                    <div class="timeline-item">
-                        <div class="timeline-time">10:00</div>
-                        <div class="timeline-content">
-                            <h3>Opening Ceremony</h3>
-                            <p>Welcome and inauguration of Tarang 2k25 with dignitaries.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-time">11:00</div>
-                        <div class="timeline-content">
-                            <h3>Distribution Session</h3>
-                            <p>Distribution of event schedules and participant registration.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-time">13:00</div>
-                        <div class="timeline-content">
-                            <h3>Lunch Break</h3>
-                            <p>Enjoy lunch and refreshments with fellow participants.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-time">14:00</div>
-                        <div class="timeline-content">
-                            <h3>Events Continue</h3>
-                            <p>The rest of the events will be continued.</p>
-                        </div>
-                    </div>
-                </div>
-        </div>
-    </section>
-    <!-- <section id="sponsors" class="sponsors">
-        <div class="container">
-            <h2 class="section-title">Our Sponsors</h2>
-            <div class="sponsors-grid">
-                <div class="sponsor-placeholder">Your Logo Here</div>
-                <div class="sponsor-placeholder">Your Logo Here</div>
-                <div class="sponsor-placeholder">Your Logo Here</div>
-                <div class="sponsor-placeholder">Your Logo Here</div>
-                <div class="sponsor-placeholder">Your Logo Here</div>
-                <div class="sponsor-placeholder">Your Logo Here</div>
-            </div>
-        </div>
-    </section> -->
-    <section id="management" class="leadership-section">
-        <h2>Our College Leadership</h2>
-        <div class="leaders-grid">
-
-            <!-- Principal -->
-            <div class="leader-card">
-                <div class="leader-image">
-                    <img src="assets/images/padma.png" alt="Dr. [Principal's Name]">
-                </div>
-                <div class="leader-info">
-                    <h4>Jonnalagadda Padmavathy</h4>
-                    <p>Chairperson, SRIT</p>
-                </div>
-            </div>
-
-            <!-- Chairperson -->
-            <div class="leader-card">
-                <div class="leader-image">
-                    <img src="assets/images/samba.png" alt="Mr./Ms. [Chairperson's Name]">
-                </div>
-                <div class="leader-info">
-                    <h4>Aluru Sambasiva Reddy</h4>
-                    <p>Secretary & Correspondent, SRIT</p>
-                </div>
-            </div>
-
-            <!-- Higher Authority 1 -->
-            <div class="leader-card">
-                <div class="leader-image">
-                    <img src="assets/images/ranjit.png" alt="Dr. [Authority Name]">
-                </div>
-                <div class="leader-info">
-                    <h4>Dr. M. Ranjit Reddy</h4>
-                    <p>Vice President, SRIT</p>
-                </div>
-            </div>
-
-            <!-- Higher Authority 2 -->
-            <div class="leader-card">
-                <div class="leader-image">
-                    <img src="assets/images/prinicipal.png" alt="Prof. [Authority Name]">
-                </div>
-                <div class="leader-info">
-                    <h4>Dr. G. Balakrishna</h4>
-                    <p>Principal, SRIT</p>
-                </div>
-            </div>
-
-        </div>
-    </section>
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title">Contact Us</h2>
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <p>tarang@srit.ac.in</p>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <p>+91 9849913200, 9848169943</p>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <p>SRIT Campus, Anantapur District</p>
-                    </div>
-                </div>
-                <form name="submit-to-google-sheet" class="contact-form">
-                    <input type="text" name="Name" placeholder="Your Name" required>
-                        <input type="email" name="Email" placeholder="Your EMail" required>
-                        <textarea name="Message" rows="6" placeholder="Your Message"></textarea>
-                    <button type="submit" class="cta-button">Send Message</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-logo">
-                <img src="assets/images/SRIT-LOGO.png" alt="SRIT Logo" class="logo-small">
-                <p>Srinivasa Ramanujan Institute of Technology</p>
-            </div>
-            <div class="footer-links">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#departments">Departments</a></li>
-                    <li><a href="#management">Leadership</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-links">
-                <h4>Convenors</h4>
-                <ul>
-                    <p>Dr. P. CHITRALINGAPPA</p>
-                    <p style="font-size: 12px;">chitralingappa.cse@srit.ac.in</p>                    
-                    <p>Dr. G. HEMANTH KUMAR YADAV <br></p>
-                    <p style="font-size: 12px;">hemanth.cse@srit.ac.in <br> </p>
-                    </ul>
-            </div>
-            <div class="footer-social">
-                <h4>Connect With Us</h4>
-                <div class="social-icons">
-                    <a href="https://www.facebook.com/sritatp" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/sritatp/" class="social-icon"><i class="fab fa-instagram"></i></a>
-                    <a href="https://x.com/sritatp" class="social-icon"><i class="fab fa-twitter"></i></a>
-                    <a href="https://www.linkedin.com/school/sritatp/" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; NXTZEN 2K25. All Rights Reserved.</p>
-        </div>
-    </footer>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-    <script src="script.js"></script>
-
-    <!-- Countdown Timer Script -->
-    <script>
-        // Countdown Timer
-        function updateCountdown() {
-            const eventDate = new Date('October 20, 2025 09:00:00').getTime();
-            const now = new Date().getTime();
-            const timeLeft = eventDate - now;
-
-            const h3 = document.querySelector('.countdown h3');
-
-            if (timeLeft > 0) {
-                h3.textContent = 'Event Starts In';
-                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-                document.getElementById('days').textContent = days;
-                document.getElementById('hours').textContent = hours;
-                document.getElementById('minutes').textContent = minutes;
-                document.getElementById('seconds').textContent = seconds;
-            } else {
-                h3.textContent = 'Event Started';
-                const timeSince = now - eventDate;
-                const days = Math.floor(timeSince / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((timeSince % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((timeSince % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((timeSince % (1000 * 60)) / 1000);
-
-                document.getElementById('days').textContent = days;
-                document.getElementById('hours').textContent = hours;
-                document.getElementById('minutes').textContent = minutes;
-                document.getElementById('seconds').textContent = seconds;
-            }
-        }
-
-        // Update countdown every second
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
-    </script>
-
-    <!-- Simulated Paradigm Background Animation Script -->
-    <script>
-        class ParticleAnimation {
-            constructor() {
-                this.container = document.getElementById('animatedBackground');
-                this.particles = [];
-                this.connections = [];
-                this.shapes = [];
-                this.mouse = { x: 0, y: 0 };
-                
-                this.init();
-                this.animate();
-                this.handleMouseMove();
-                this.handleResize();
-            }
-
-            init() {
-                this.createParticles();
-                this.createGeometricShapes();
-                this.createConnections();
-            }
-
-            createParticles() {
-                const particleCount = window.innerWidth < 768 ? 30 : 60;
-                
-                for (let i = 0; i < particleCount; i++) {
-                    const particle = document.createElement('div');
-                    particle.className = 'particle';
-                    
-                    // Random size between 2px and 8px
-                    const size = Math.random() * 6 + 2;
-                    particle.style.width = size + 'px';
-                    particle.style.height = size + 'px';
-                    
-                    // Random position
-                    particle.style.left = Math.random() * window.innerWidth + 'px';
-                    particle.style.top = Math.random() * window.innerHeight + 'px';
-                    
-                    // Random color (orange or white)
-                    particle.classList.add(Math.random() > 0.6 ? 'particle-orange' : 'particle-white');
-                    
-                    // Random animation delay
-                    particle.style.animationDelay = Math.random() * 6 + 's';
-                    particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
-                    
-                    this.container.appendChild(particle);
-                    this.particles.push({
-                        element: particle,
-                        x: parseFloat(particle.style.left),
-                        y: parseFloat(particle.style.top),
-                        vx: (Math.random() - 0.5) * 0.5,
-                        vy: (Math.random() - 0.5) * 0.5,
-                        size: size
-                    });
-                }
-            }
-
-            createGeometricShapes() {
-                const shapeCount = window.innerWidth < 768 ? 8 : 15;
-                const shapeTypes = ['triangle', 'square', 'hexagon'];
-                
-                for (let i = 0; i < shapeCount; i++) {
-                    const shape = document.createElement('div');
-                    shape.className = 'geometric-shape ' + shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
-                    
-                    shape.style.left = Math.random() * window.innerWidth + 'px';
-                    shape.style.top = Math.random() * window.innerHeight + 'px';
-                    shape.style.animationDelay = Math.random() * 10 + 's';
-                    shape.style.animationDuration = (Math.random() * 5 + 10) + 's';
-                    
-                    // Random opacity
-                    shape.style.opacity = Math.random() * 0.4 + 0.2;
-                    
-                    this.container.appendChild(shape);
-                    this.shapes.push({
-                        element: shape,
-                        x: parseFloat(shape.style.left),
-                        y: parseFloat(shape.style.top),
-                        vx: (Math.random() - 0.5) * 0.2,
-                        vy: (Math.random() - 0.5) * 0.2
-                    });
-                }
-            }
-
-            createConnections() {
-                setInterval(() => {
-                    // Remove old connections
-                    this.connections.forEach(conn => {
-                        if (conn.element && conn.element.parentNode) {
-                            conn.element.parentNode.removeChild(conn.element);
-                        }
-                    });
-                    this.connections = [];
-
-                    // Create new connections between nearby particles
-                    for (let i = 0; i < this.particles.length; i++) {
-                        for (let j = i + 1; j < this.particles.length; j++) {
-                            const dx = this.particles[i].x - this.particles[j].x;
-                            const dy = this.particles[i].y - this.particles[j].y;
-                            const distance = Math.sqrt(dx * dx + dy * dy);
-
-                            if (distance < 150) {
-                                const line = document.createElement('div');
-                                line.className = 'connection-line';
-                                
-                                const angle = Math.atan2(dy, dx);
-                                const x = Math.min(this.particles[i].x, this.particles[j].x);
-                                const y = Math.min(this.particles[i].y, this.particles[j].y);
-                                
-                                line.style.left = x + 'px';
-                                line.style.top = y + 'px';
-                                line.style.width = distance + 'px';
-                                line.style.transformOrigin = '0 0';
-                                line.style.transform = `rotate(${angle}rad)`;
-                                line.style.opacity = (150 - distance) / 150 * 0.6;
-                                line.style.animationDelay = Math.random() * 3 + 's';
-                                
-                                this.container.appendChild(line);
-                                this.connections.push({ element: line });
-                            }
-                        }
-                    }
-                }, 2000);
-            }
-
-            animate() {
-                // Animate particles
-                this.particles.forEach(particle => {
-                    particle.x += particle.vx;
-                    particle.y += particle.vy;
-
-                    // Bounce off edges
-                    if (particle.x < 0 || particle.x > window.innerWidth) {
-                        particle.vx *= -1;
-                        particle.x = Math.max(0, Math.min(window.innerWidth, particle.x));
-                    }
-                    if (particle.y < 0 || particle.y > window.innerHeight) {
-                        particle.vy *= -1;
-                        particle.y = Math.max(0, Math.min(window.innerHeight, particle.y));
-                    }
-
-                    particle.element.style.left = particle.x + 'px';
-                    particle.element.style.top = particle.y + 'px';
-                });
-
-                // Animate shapes
-                this.shapes.forEach(shape => {
-                    shape.x += shape.vx;
-                    shape.y += shape.vy;
-
-                    if (shape.x < 0 || shape.x > window.innerWidth) shape.vx *= -1;
-                    if (shape.y < 0 || shape.y > window.innerHeight) shape.vy *= -1;
-
-                    shape.x = Math.max(0, Math.min(window.innerWidth, shape.x));
-                    shape.y = Math.max(0, Math.min(window.innerHeight, shape.y));
-
-                    shape.element.style.left = shape.x + 'px';
-                    shape.element.style.top = shape.y + 'px';
-                });
-
-                requestAnimationFrame(() => this.animate());
-            }
-
-            handleMouseMove() {
-                document.addEventListener('mousemove', (e) => {
-                    this.mouse.x = e.clientX;
-                    this.mouse.y = e.clientY;
-
-                    // Attract nearby particles to mouse
-                    this.particles.forEach(particle => {
-                        const dx = this.mouse.x - particle.x;
-                        const dy = this.mouse.y - particle.y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-
-                        if (distance < 100) {
-                            const force = (100 - distance) / 100 * 0.02;
-                            particle.vx += (dx / distance) * force;
-                            particle.vy += (dy / distance) * force;
-                        }
-                    });
-                });
-            }
-
-            handleResize() {
-                window.addEventListener('resize', () => {
-                    // Recreate particles on resize
-                    this.particles.forEach(particle => {
-                        if (particle.element.parentNode) {
-                            particle.element.parentNode.removeChild(particle.element);
-                        }
-                    });
-                    this.shapes.forEach(shape => {
-                        if (shape.element.parentNode) {
-                            shape.element.parentNode.removeChild(shape.element);
-                        }
-                    });
-                    this.particles = [];
-                    this.shapes = [];
-                    this.init();
-                });
-            }
-        }
-
-        // Initialize animation when page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            new ParticleAnimation();
-        });
-    </script>
-
-    <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxaLnMrJsOt1ehE3jCOrlq-CqDB7JLkpGWrzpB5TEsI55pjBLZZXGSieUgwgpAM3L2lKA/exec'
-        const form = document.forms['submit-to-google-sheet']
-        const msg=document.getElementById("msg")
-        form.addEventListener('submit', e => {
-          e.preventDefault()
-          fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-            .then(response =>{msg.innerHTML="Message Sent Successfully"
-                setTimeout(function(){
-                    msg.innerHTML=""
-                },5000)
-                form.reset()
-            } )
-            .catch(error => console.error('Error!', error.message))
-        })
-      </script>
+    // Update the timer every second
+    const timerInterval = setInterval(function() {
+      // Get today's date and time
+      const now = new Date().getTime();
+      
+      // Find the distance between now and the countdown date
+      const distance = countdownDate - now;
+      
+      // Time calculations for days, hours, minutes and seconds
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+      // Display the results in the elements with corresponding IDs
+      document.getElementById("days").innerText = days;
+      document.getElementById("hours").innerText = hours;
+      document.getElementById("minutes").innerText = minutes;
+      document.getElementById("seconds").innerText = seconds;
+      
+      // If the countdown is finished, display a message
+      if (distance < 0) {
+        clearInterval(timerInterval);
+        document.querySelector(".timer").innerHTML = "<div class='tick'><div class='value'>Event is Live!</div></div>";
+      }
+    }, 1000);
+    }
+  </script>
 </body>
 </html>

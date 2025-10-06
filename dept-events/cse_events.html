@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CSE Events - NEXTZEN</title>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+    <style>
+      :root{
+        --blue:#56ccf2;--blue-dark:#187aad;--orange:#ff8a1e;--yellow:#ffd166;--bg:#f6f9ff;--card:#ffffff;--text:#0f172a;--muted:#475569;--shadow-lg:0 16px 40px rgba(16,24,40,.1);--radius-lg:22px;--radius:18px;--container:1120px;--pad:clamp(16px,2.5vw,28px);--gap:clamp(16px,2vw,24px)
+      }
+      *{box-sizing:border-box}
+      html{scroll-behavior:smooth}
+      body{font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu;color:var(--text);line-height:1.6;background:linear-gradient(180deg,#f0f7ff,#fff9e6);margin:0}
+
+      .container{max-width:var(--container);margin-inline:auto;padding-inline:var(--pad)}
+      .section{padding-block:clamp(44px,7vw,90px)}
+      .section-title{font-family:"Plus Jakarta Sans",system-ui,-apple-system;font-weight:800;font-size:clamp(28px,4vw,40px);text-align:center;margin:0 0 16px;text-shadow:0 0 12px rgba(86,204,242,.4)}
+      .section-sub{text-align:center;color:var(--muted);margin:0 auto 32px;max-width:780px;font-size:1.1rem}
+
+      /* Header */
+      header{position:sticky;top:0;z-index:50;background:linear-gradient(90deg,var(--blue),var(--yellow));box-shadow:0 10px 30px rgba(86,204,242,.25)}
+      .nav{display:flex;align-items:center;gap:16px;padding-block:12px}
+      .brand{display:flex;align-items:center;gap:12px}
+      .brand img{width:56px;height:56px;object-fit:contain;filter:drop-shadow(0 4px 10px #98dffe)}
+      .brand-title{font-family:"Plus Jakarta Sans";font-weight:800;font-size:clamp(20px,3vw,28px)}
+      .year{background:var(--orange);color:#111;border-radius:999px;padding:4px 10px;font-weight:900;font-size:clamp(12px,1.8vw,14px)}
+      nav ul{display:flex;gap:clamp(10px,2vw,22px);list-style:none;margin:0;padding:0}
+      nav a{text-decoration:none;color:#0f172a;font-weight:700;font-size:16px;padding:8px 14px;border-radius:10px;transition:all .18s ease}
+      nav a:hover{background:rgba(255,255,255,.7)}
+      .spacer{flex:1}
+
+      /* CTA */
+      .cta-btn{border:0;border-radius:999px;cursor:pointer;color:#fff;font-weight:900;text-decoration:none;background:linear-gradient(90deg,var(--orange),var(--blue));box-shadow:0 10px 24px rgba(86,204,242,.4);padding:12px 28px;transition:transform .25s ease,box-shadow .25s ease;display:inline-block}
+      .cta-btn:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(255,138,30,.4)}
+
+      /* Hero */
+      .hero{padding:clamp(48px,8vw,110px);background:
+        radial-gradient(1200px 380px at 50% -200px,#fdf4e7 30%,transparent 70%),
+        radial-gradient(1200px 360px at 50% -260px,#e6f7ff 20%,transparent 75%),
+        linear-gradient(120deg,#ecf7ff 0%,#fff4e1 100%)
+      }
+      .hero-wrap{border-radius:var(--radius-lg);padding:clamp(22px,5vw,52px);box-shadow:0 12px 48px rgba(86,204,242,.3),inset 0 0 80px rgba(86,204,242,.2);text-align:center;transition:box-shadow .3s ease}
+      .hero-wrap:hover{box-shadow:0 20px 60px rgba(86,204,242,.5),inset 0 0 120px rgba(86,204,242,.4)}
+      @keyframes shine{0%,100%{background-position:200% center}50%{background-position:-200% center}}
+      .hero-title{font-family:"Poppins","Plus Jakarta Sans",sans-serif;font-weight:900;font-size:clamp(36px,7vw,72px);background:linear-gradient(to right,var(--blue-dark) 20%,var(--orange) 50%,var(--blue-dark) 80%);background-size:200% auto;color:transparent;-webkit-background-clip:text;background-clip:text;animation:shine 4s linear infinite;margin:0 0 8px}
+      .stream-badges{display:flex;justify-content:center;gap:10px;margin:8px 0 14px}
+      .stream-badges span{display:inline-block;padding:6px 12px;border-radius:999px;font-weight:800;letter-spacing:.4px;background:linear-gradient(90deg,var(--orange),var(--blue));color:#0f172a;box-shadow:0 6px 16px rgba(255,138,30,.35)}
+      .hero-sub{font-size:clamp(1rem,2.5vw,1.15rem);color:var(--muted);max-width:700px;margin:6px auto 0}
+
+      /* Event Cards */
+      .events-grid{display:grid;gap:var(--gap);grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+      .event-card{background:var(--card);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);overflow:hidden;display:flex;flex-direction:column;transition:transform .3s ease,box-shadow .3s ease}
+      .event-card:hover{transform:translateY(-10px);box-shadow:0 20px 50px rgba(16,24,40,.12)}
+      .event-image img{width:100%;height:220px;object-fit:cover}
+      .event-content{padding:24px;display:flex;flex-direction:column;flex-grow:1}
+      .event-title{font-family:"Plus Jakarta Sans";font-size:1.5rem;font-weight:800;margin:0 0 12px;color:var(--blue-dark)}
+      .event-description{text-align:justify;text-justify:inter-word;margin-bottom:20px}
+      .event-card p{margin:0 0 12px;color:var(--muted);font-size:1rem}
+      .event-card p strong{color:var(--text)}
+
+      .event-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:10px 0 14px;padding:1px;border-radius:14px;background:linear-gradient(135deg,#eef7ff 0%,#fff7e8 100%);box-shadow:0 6px 18px rgba(16,24,40,.06) inset,0 4px 12px rgba(16,24,40,.06);list-style:none}
+      .event-stats .stat{display:grid;grid-template-columns:28px 1fr;align-items:center;gap:3px;padding:5px;border-radius:12px;background:#fff;border:1px solid rgba(16,24,40,.06);box-shadow:0 1px 0 rgba(16,24,40,.04);min-width:0}
+      .event-stats i{width:28px;height:28px;display:grid;place-items:center;color:#187aad;background:#e9f7ff;border-radius:8px;box-shadow:0 4px 10px rgba(24,122,173,.18);flex:0 0 auto}
+      .event-stats .label{display:block;font-size:10px;line-height:1;margin-bottom:4px;font-weight:800;text-transform:uppercase;letter-spacing:.45px;color:#64748b;font-family:"Plus Jakarta Sans",system-ui,-apple-system}
+      .event-stats .value{display:block;font-weight:800;color:#0f172a;font-size:12px;line-height:1.15;overflow-wrap:anywhere;font-family:"Plus Jakarta Sans",system-ui,-apple-system}
+      .event-stats .value .rupee{font-feature-settings:"tnum"}
+      .event-stats .stat:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(16,24,40,.08);transition:transform .18s ease,box-shadow .18s ease}
+      @media (max-width:920px){.event-stats .value{font-size:12.5px}}
+      @media (max-width:640px){
+        .event-stats{grid-template-columns:1fr;gap:8px;padding:10px}
+        .event-stats .stat{grid-template-columns:26px 1fr;padding:9px 10px}
+        .event-stats i{width:26px;height:26px}
+        .event-stats .value{font-size:13px}
+      }
+      @supports (text-wrap:balance){.event-title{text-wrap:balance}}
+
+      /* Timeline */
+      .timeline{max-width:720px;margin-inline:auto;padding:30px 16px;position:relative;background:linear-gradient(135deg,#ecf6fc,#fff7e1);border-radius:24px;box-shadow:0 12px 48px rgba(88,139,174,.2)}
+      .timeline::before{content:"";position:absolute;top:20px;bottom:20px;left:40px;width:5px;background:linear-gradient(180deg,var(--orange),var(--blue));border-radius:6px}
+      .timeline-item{position:relative;padding-left:80px;margin-bottom:40px}
+      .timeline-item:last-child{margin-bottom:0}
+      .timeline-time{position:absolute;left:0;top:0;background:linear-gradient(45deg,var(--blue),var(--orange));color:white;font-weight:700;font-family:"Plus Jakarta Sans",sans-serif;padding:8px 14px;border-radius:12px;white-space:nowrap;box-shadow:0 4px 14px rgba(255,138,30,.6)}
+      .timeline-content{background:white;border-radius:16px;box-shadow:0 8px 24px rgba(7,71,140,.12);padding:14px 24px}
+      .timeline-title{font-family:"Plus Jakarta Sans";font-weight:800;color:var(--blue-dark);font-size:1.2rem;margin-bottom:8px}
+      .timeline-desc{font-size:1rem;color:var(--muted);margin:0}
+
+      /* Coordinators */
+      .coordinators-grid{display:grid;gap:var(--gap);grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+      .coordinator-card{background:var(--card);border-radius:18px;box-shadow:0 8px 20px rgba(86,204,242,.2);padding:24px;text-align:center;border-top:5px solid var(--blue);transition:transform .3s ease,box-shadow .3s ease}
+      .coordinator-card:hover{transform:translateY(-8px);box-shadow:0 16px 40px rgba(86,204,242,.35)}
+      .coordinator-card h4{margin:10px 0 4px;color:var(--blue-dark);font-size:1.2rem;font-family:"Plus Jakarta Sans";font-weight:800}
+      .coordinator-card p{margin:0;color:var(--muted)}
+      .contact-details{margin-top:12px;font-size:.9rem;word-break:break-all}
+
+      /* Footer */
+      footer{background:linear-gradient(90deg,var(--blue),var(--yellow))}
+      .footer{display:grid;gap:var(--gap);grid-template-columns:2fr 1fr;align-items:start;color:#0b2239}
+      .logo-small{width:56px;border-radius:12px;box-shadow:0 8px 24px rgba(16,24,40,.08)}
+      .footer h4{margin:0 0 10px;color:#0f172a;font-family:"Plus Jakarta Sans";font-weight:900}
+      .footer ul{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+      .footer a{color:#0f172a;text-decoration:none;font-weight:700}
+      .copyright{text-align:center;padding-top:24px;font-size:14px;border-top:1px solid rgba(0,0,0,.1);margin-top:24px;color:#0f172a}
+
+      /* Responsive */
+      @media (max-width:900px){.coordinators-grid,.footer{grid-template-columns:1fr}}
+      @media (max-width:720px){
+        .nav{flex-wrap:wrap;gap:8px}
+        nav{width:100%}
+        nav ul{justify-content:center;flex-wrap:wrap}
+      }
+
+      /* Modal (accessible) */
+      .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,14,32,.55);backdrop-filter:saturate(140%) blur(6px);z-index:1000}
+      .modal[aria-hidden="false"]{display:flex}
+      .modal-content{width:min(720px,92vw);background:linear-gradient(180deg,#ffffff,#fbfdff);border-radius:20px;box-shadow:0 20px 60px rgba(16,24,40,.18);overflow:hidden;border:1px solid rgba(16,24,40,.06)}
+      .modal-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:linear-gradient(90deg,var(--blue),var(--yellow));color:#0f172a}
+      .modal-header h3{margin:0;font-family:"Plus Jakarta Sans";font-weight:900}
+      .close{appearance:none;background:transparent;border:0;cursor:pointer;font-size:24px;line-height:1;padding:6px;color:#0f172a;border-radius:8px}
+      .close:focus{outline:3px solid rgba(24,122,173,.4);outline-offset:2px}
+      .modal-body{padding:18px 20px 22px}
+
+      /* Form */
+      form#registrationForm{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+      .form-group{display:flex;flex-direction:column;gap:6px}
+      label{font-weight:800;font-family:"Plus Jakarta Sans";font-size:.95rem;color:#0f172a}
+      input[type="text"],input[type="email"],input[type="tel"],select{border:1px solid rgba(16,24,40,.12);border-radius:12px;padding:12px 12px;font-size:1rem;background:#fff;box-shadow:0 1px 0 rgba(16,24,40,.03)}
+      input[readonly]{background:#f8fafc;color:#334155}
+      .register-btn{margin-top:6px;grid-column:1 / -1}
+      .qr-code{grid-column:1 / -1;padding:12px;border:1px dashed rgba(16,24,40,.2);border-radius:14px;background:linear-gradient(180deg,#f6fbff,#fffdf5)}
+      .qr-code p{margin:0 0 8px;color:#0f172a;font-weight:800}
+      .qr-code img{max-width:200px;border-radius:12px;box-shadow:0 6px 18px rgba(16,24,40,.12)}
+      #eventNote{grid-column:1 / -1}
+      .helper{font-size:.85rem;color:#64748b}
+      /* THEMED REGISTRATION MODAL (scoped) */
+#registrationModal {
+  --reg-orange: #ff8a1e;              /* primary orange */
+  --reg-orange-soft: #ffe9cf;         /* light orange wash */
+  --reg-orange-mid: #ffd79e;          /* mid tint for accents */
+  --reg-bg-white: #ffffff;            /* base white */
+  --reg-text: #0b0b0b;                /* black-ish text */
+  --reg-muted: #3a3a3a;               /* small text */
+  --reg-border: rgba(0,0,0,0.12);     /* subtle borders */
+  --reg-shadow: 0 16px 44px rgba(0,0,0,0.18);
+}
+
+/* Backdrop unchanged for consistency */
+#registrationModal.modal {
+  background: radial-gradient(80% 60% at 50% 20%, rgba(255, 179, 89, 0.22) 0%, rgba(0,0,0,0) 70%),
+              rgba(2, 14, 32, 0.55);
+}
+
+/* Card background: mixed white–orange with soft glow */
+#registrationModal .modal-content {
+  background:
+    linear-gradient(180deg, var(--reg-bg-white) 0%, #fffaf2 100%),
+    radial-gradient(120% 100% at 100% 0%, rgba(255, 204, 143, 0.18) 0%, rgba(255,255,255,0) 60%);
+  border: 1px solid var(--reg-border);
+  border-radius: 20px;
+  box-shadow: var(--reg-shadow);
+  overflow: hidden;
+}
+
+/* Header: orange gradient with bold heading */
+#registrationModal .modal-header {
+  background: linear-gradient(90deg, var(--reg-orange), #ffc372);
+  color: #111;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+#registrationModal .modal-header h3 {
+  color: #111;            /* heading: orange band with dark text */
+  letter-spacing: 0.2px;
+}
+
+/* Close button: dark icon with subtle hover */
+#registrationModal .modal-header .close {
+  color: #1a1a1a;
+  background: rgba(255,255,255,0.35);
+  border-radius: 10px;
+  transition: background .2s ease, transform .2s ease;
+}
+#registrationModal .modal-header .close:hover {
+  background: rgba(255,255,255,0.55);
+  transform: translateY(-1px);
+}
+
+/* Body spacing */
+#registrationModal .modal-body {
+  background:
+    radial-gradient(140% 120% at -10% -20%, rgba(255, 229, 189, 0.25) 0%, rgba(255,255,255,0) 55%),
+    linear-gradient(180deg, #fff 0%, #fff8ef 100%);
+  padding: 18px 20px 22px;
+}
+
+/* Helper and small text: black for small text tone */
+#registrationModal .helper,
+#registrationModal label,
+#registrationModal .modal-body p {
+  color: var(--reg-muted);
+}
+
+/* Labels as orange accents */
+#registrationModal label {
+  color: var(--reg-orange);
+  font-weight: 800;
+}
+
+/* Inputs/selects: crisp on mixed background */
+#registrationModal input[type="text"],
+#registrationModal input[type="email"],
+#registrationModal input[type="tel"],
+#registrationModal select {
+  background: #fff;
+  color: var(--reg-text);
+  border: 1px solid var(--reg-border);
+  border-radius: 12px;
+  padding: 12px 12px;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.03);
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+/* Focus states: orange ring for accessibility */
+#registrationModal :where(input, select, button):focus {
+  outline: 3px solid rgba(255, 138, 30, 0.45);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(255, 138, 30, 0.25);
+}
+
+/* Readonly fee field: soft tint */
+#registrationModal input[readonly] {
+  background: linear-gradient(180deg, #fff, #fff8ed);
+  color: #222;
+}
+
+/* QR panel: orange-tinted paper card */
+#registrationModal .qr-code {
+  background:
+    linear-gradient(180deg, #fffaf3 0%, #fff 80%),
+    linear-gradient(0deg, rgba(255, 186, 112, 0.22), rgba(255, 186, 112, 0.22));
+  border: 1px dashed rgba(255, 138, 30, 0.55);
+  border-radius: 14px;
+}
+#registrationModal .qr-code p {
+  color: #111;                    /* black for small text */
+}
+#registrationModal .qr-code img {
+  box-shadow: 0 8px 22px rgba(255, 138, 30, 0.18);
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+/* Team note line: subtle orange callout */
+#registrationModal #eventNote {
+  background: linear-gradient(180deg, #fff7ec 0%, #fff 100%);
+  border-left: 4px solid var(--reg-orange);
+  color: var(--reg-text);          /* black for note content */
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+/* Primary submit button: orange pill with readable text */
+#registrationModal .register-btn {
+  background: linear-gradient(90deg, var(--reg-orange), #ffb152);
+  color: #0b0b0b;                 /* black on orange for AA contrast on small text */
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 10px 24px rgba(255, 138, 30, 0.35);
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+#registrationModal .register-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(255, 138, 30, 0.45);
+  filter: brightness(1.02);
+}
+
+/* Inputs hover */
+#registrationModal input[type="text"]:hover,
+#registrationModal input[type="email"]:hover,
+#registrationModal input[type="tel"]:hover,
+#registrationModal select:hover {
+  border-color: rgba(255, 138, 30, 0.4);
+}
+
+/* Input invalid hint using native :user-invalid (progressive enhancement) */
+#registrationModal input:user-invalid,
+#registrationModal select:user-invalid {
+  border-color: rgba(209, 46, 46, 0.6);
+}
+
+/* Small screens still clean */
+@media (max-width:640px){
+  #registrationModal .modal-content { border-radius: 18px; }
+  #registrationModal .modal-header { padding: 14px 16px; }
+  #registrationModal .modal-body { padding: 14px 16px 18px; }
+}
+
+/* Ensure modal overlays above all content */
+#registrationModal.modal { z-index: 1000; } /* keep above site UI */
+/* Scrollable modal body; header stays pinned */
+#registrationModal .modal-content {
+  max-height: min(86vh, 920px);
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+#registrationModal .modal-body {
+  overflow: auto;              /* add scrollbars when needed */
+  -webkit-overflow-scrolling: touch;
+}
+/* Single-column layout for the registration form */
+#registrationModal form#registrationForm {
+  display: grid;
+  grid-template-columns: 1fr;      /* one column only */
+  gap: 14px;                       /* compact vertical rhythm */
+}
+
+/* Ensure group blocks span full width in the single column */
+#registrationModal #teamMembers,
+#registrationModal #eventNote,
+#registrationModal .qr-code,
+#registrationModal .utr-line,
+#registrationModal .register-btn {
+  grid-column: 1;                  /* explicit single-track placement */
+}
+
+/* Center the QR code card */
+#registrationModal .qr-code {
+  place-self: center;              /* center horizontally in grid cell */
+  max-width: 360px;                /* a tidy card width */
+  width: 100%;
+  text-align: center;              /* center the caption */
+}
+
+/* Make the QR image proportionate and centered */
+#registrationModal .qr-code img {
+  display: block;
+  margin: 8px auto 0;              /* center image below caption */
+  max-width: 220px;                /* keep it compact */
+  width: 100%;
+  height: auto;
+}
+
+/* Optional: center the submit button for visual balance */
+#registrationModal .register-btn {
+  justify-self: center;            /* center the button in the column */
+  min-width: 220px;
+}
+@media (max-width: 420px) {
+  #registrationModal .modal-content { width: 96vw; }
+  #registrationModal .modal-body { padding: 12px; }
+}
+
+/* On very small screens, allow more height but keep scroll */
+@media (max-width: 480px){
+  #registrationModal .modal-content {
+    max-height: 92vh;
+  }
+}
+
+      
+
+      @media (max-width:640px){
+        form#registrationForm{grid-template-columns:1fr}
+        .register-btn{width:100%}
+        .qr-code img{max-width:56vw}
+      }
+
+      /* Focus ring for keyboard users */
+      :where(a,button,input,select,textarea):focus{outline:3px solid rgba(24,122,173,.45);outline-offset:2px}
+    </style>
+  </head>
+  <body>
+    <header role="banner">
+      <div class="container nav" aria-label="Primary">
+        <div class="brand">
+          <img src="../assets/images/SRIT-LOGO.png" alt="SRIT Logo" />
+          <div class="brand-title">NextZen <span class="year">2k25</span></div>
+        </div>
+        <div class="spacer"></div>
+        <nav aria-label="Main">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#events">Events</a></li>
+            <li><a href="#schedule">Schedule</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero section">
+        <div class="hero-wrap">
+          <h1 class="hero-title">Computer Science & Engineering</h1>
+          <div class="stream-badges">
+            <span>CSE</span>
+            <span>CSM</span>
+            <span>CAD</span>
+          </div>
+          <p class="hero-sub">
+            Join us for the biggest tech event of the year, featuring workshops, hackathons, and industry experts designed to inspire the next generation of coders.
+          </p>
+        </div>
+      </section>
+
+      <section id="events" class="section">
+        <div class="container">
+          <h2 class="section-title">Featured Events</h2>
+          <p class="section-sub">Participate in our exciting events designed to challenge skills and expand knowledge in computer science.</p>
+
+          <div class="events-grid">
+            <!-- Paper Presentation -->
+            <div class="event-card">
+              <div class="event-image">
+                <img src="../assets/images/csepaperpresentation.jpg" alt="Paper Presentation" />
+              </div>
+              <div class="event-content">
+                <h3 class="event-title">Paper Presentation</h3>
+                <ul class="event-stats" aria-label="Paper quick facts">
+                  <li class="stat"><i class="fas fa-clock"></i><div><span class="label">Time</span><span class="value">11 - 1 PM</span></div></li>
+                  <li class="stat"><i class="fas fa-user-friends"></i><div><span class="label">Team</span><span class="value">1 – 2</span></div></li>
+                  <li class="stat"><i class="fas fa-indian-rupee-sign"></i><div><span class="label">Fee</span><span class="value"><span class="rupee">₹</span>200</span></div></li>
+                </ul>
+                <p class="event-description">Showcase research and ideas on emerging technologies with well-structured, original work and clear communication.</p>
+                <p><strong>Registration Fee:</strong> ₹200/-</p>
+                <a href="#" class="cta-btn register-trigger" data-event="Paper Presentation" data-fee="200" data-team="pair">Register Now</a>
+              </div>
+            </div>
+
+            <!-- Hackathon -->
+            <div class="event-card">
+              <div class="event-image">
+                <img src="../assets/images/csehackathon.jpeg" alt="Hackathon" />
+              </div>
+              <div class="event-content">
+                <h3 class="event-title">Hackathon</h3>
+                <ul class="event-stats" aria-label="Hackathon quick facts">
+                  <li class="stat"><i class="fas fa-clock"></i><div><span class="label">Time</span><span class="value">12 - 5 PM</span></div></li>
+                  <li class="stat"><i class="fas fa-user-friends"></i><div><span class="label">Team</span><span class="value">1 – 3</span></div></li>
+                  <li class="stat"><i class="fas fa-indian-rupee-sign"></i><div><span class="label">Fee</span><span class="value"><span class="rupee">₹</span>300</span></div></li>
+                </ul>
+                <p class="event-description">Brainstorm, build, and present creative solutions under time pressure in a 5-hour coding sprint.</p>
+                <p><strong>Registration Fee:</strong> ₹300/-</p>
+                <a href="#" class="cta-btn register-trigger" data-event="Hackathon [5hrs]" data-fee="300" data-team="trio">Register Now</a>
+              </div>
+            </div>
+
+            <!-- Code Buzz -->
+            <div class="event-card">
+              <div class="event-image">
+                <img src="../assets/images/csecodebuzz.jpg" alt="Code Buzz" />
+              </div>
+              <div class="event-content">
+                <h3 class="event-title">Code Buzz</h3>
+                <ul class="event-stats" aria-label="Code Buzz quick facts">
+                  <li class="stat"><i class="fas fa-clock"></i><div><span class="label">Time</span><span class="value">2 - 3 PM</span></div></li>
+                  <li class="stat"><i class="fas fa-user-friends"></i><div><span class="label">Team</span><span class="value">Solo</span></div></li>
+                  <li class="stat"><i class="fas fa-indian-rupee-sign"></i><div><span class="label">Fee</span><span class="value"><span class="rupee">₹</span>100</span></div></li>
+                </ul>
+                <p class="event-description">Solve a technical crossword on programming, algorithms, and CS concepts for prizes.</p>
+                <p><strong>Registration Fee:</strong> ₹100/-</p>
+                <a href="#" class="cta-btn register-trigger" data-event="Code Buzz" data-fee="100" data-team="solo">Register Now</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Accessible Modal -->
+      <div id="registrationModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="regTitle" aria-describedby="regDesc">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 id="regTitle">Event Registration</h3>
+            <button class="close" type="button" aria-label="Close" data-close>&times;</button>
+          </div>
+          <div class="modal-body">
+            <p id="regDesc" class="helper">Fill details and submit to complete registration; payment UTR is required for confirmation.</p>
+
+            <form id="registrationForm" novalidate>
+              <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" autocomplete="name" required />
+              </div>
+
+              <div class="form-group">
+                <label for="studentId">Student ID</label>
+                <input type="text" id="studentId" name="studentId" required />
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" autocomplete="email" required />
+                <span class="helper">Use an active email for confirmation.</span>
+              </div>
+
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone" inputmode="numeric" pattern="^[6-9][0-9]{9}$" placeholder="10-digit Indian number" required />
+              </div>
+
+              <div class="form-group">
+                <label for="collegename">College Name</label>
+                <input type="text" id="collegename" name="collegename" required />
+              </div>
+
+              <div class="form-group">
+                <label for="department">Department</label>
+                <select id="department" name="department" required>
+                  <option value="CSE" selected>CSE</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="year">Year</label>
+                <select id="year" name="year" required>
+                  <option value="">Select Year</option>
+                  <option value="1st Year">1st Year</option>
+                  <option value="2nd Year">2nd Year</option>
+                  <option value="3rd Year">3rd Year</option>
+                  <option value="4th Year">4th Year</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="event">Event</label>
+                <select id="event" name="event" required>
+                  <option value="Paper Presentation">Paper Presentation</option>
+                  <option value="Hackathon [5hrs]">Hackathon [5hrs]</option>
+                  <option value="Code Buzz">Code Buzz</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="fee">Event Fee (₹)</label>
+                <input type="text" id="fee" name="fee" readonly />
+              </div>
+
+              <!-- Team members (conditionally shown) -->
+              <div id="teamMembers" style="display:none; grid-column:1 / -1;">
+                <div class="form-group">
+                  <label for="member1">Team Member 1 Name</label>
+                  <input type="text" id="member1" name="member1" />
+                </div>
+                <div class="form-group">
+                  <label for="member1Email">Team Member 1 Email</label>
+                  <input type="email" id="member1Email" name="member1Email" />
+                </div>
+                <div class="form-group">
+                  <label for="member2">Team Member 2 Name (Optional)</label>
+                  <input type="text" id="member2" name="member2" />
+                </div>
+                <div class="form-group">
+                  <label for="member2Email">Team Member 2 Email (Optional)</label>
+                  <input type="email" id="member2Email" name="member2Email" />
+                </div>
+              </div>
+
+              <div id="eventNote" class="helper" style="display:none;">Note: This is a team event; provide member details as applicable.</div>
+
+              <div class="qr-code">
+                <p>Scan this QR code for payment</p>
+                <img src="../assets/images/qr-code.jpg" alt="QR Code for Payment" />
+              </div>
+
+              <div class="form-group utr-line" style="grid-column:1 / -1;">
+                <label for="utr">UTR Number</label>
+                <input type="text" id="utr" name="utr" pattern="^[A-Za-z0-9\-]{6,30}$" placeholder="Enter payment UTR" required />
+              </div>
+
+              <button type="submit" id="submitBtn" class="cta-btn register-btn">Register</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <section id="schedule" class="section">
+        <div class="container">
+          <h2 class="section-title">Event Schedule</h2>
+          <p class="section-sub">Plan the day with the detailed schedule below.</p>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-time">10:00 AM</div>
+              <div class="timeline-content">
+                <h3 class="timeline-title">Opening Ceremony</h3>
+                <p class="timeline-desc">Welcome address and kickoff for NextZen 2k25.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-time">11:00 AM</div>
+              <div class="timeline-content">
+                <h3 class="timeline-title">Paper Presentation</h3>
+                <p class="timeline-desc">Parallel sessions for research and innovative projects.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-time">12:00 PM</div>
+              <div class="timeline-content">
+                <h3 class="timeline-title">Hackathon Kickoff</h3>
+                <p class="timeline-desc">The 5-hour coding marathon begins.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-time">1:00 PM</div>
+              <div class="timeline-content">
+                <h3 class="timeline-title">Lunch Break</h3>
+                <p class="timeline-desc">Recharge and network with peers.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-time">2:00 PM</div>
+              <div class="timeline-content">
+                <h3 class="timeline-title">Crossword Puzzle</h3>
+                <p class="timeline-desc">Mind-bending challenge to test wit.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-time">4:00 PM</div>
+              <div class="timeline-content">
+                <h3 class="timeline-title">Award Ceremony</h3>
+                <p class="timeline-desc">Celebrating winners and concluding the fest.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section">
+        <div class="container">
+          <h2 class="section-title">Contact Our Coordinators</h2>
+          <p class="section-sub">Reach out to faculty coordinators for event-related inquiries.</p>
+          <div class="coordinators-grid">
+            <div class="coordinator-card">
+              <h4>Coordinator 1</h4>
+              <p>Assistant Professor</p>
+              <div class="contact-details">
+                <p><i class="fas fa-envelope"></i> coordinator1.cse@srit.ac.in</p>
+                <p><i class="fas fa-phone"></i> +91 98574 26245</p>
+              </div>
+            </div>
+            <div class="coordinator-card">
+              <h4>Coordinator 2</h4>
+              <p>Assistant Professor</p>
+              <div class="contact-details">
+                <p><i class="fas fa-envelope"></i> coordinator2.cse@srit.ac.in</p>
+                <p><i class="fas fa-phone"></i> +91 85478 26359</p>
+              </div>
+            </div>
+            <div class="coordinator-card">
+              <h4>Coordinator 3</h4>
+              <p>Assistant Professor</p>
+              <div class="contact-details">
+                <p><i class="fas fa-envelope"></i> coordinator3.cse@srit.ac.in</p>
+                <p><i class="fas fa-phone"></i> +91 96547 12457</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer role="contentinfo">
+      <div class="container section" style="padding-block:24px">
+        <div class="footer">
+          <div>
+            <img src="../assets/images/SRIT-LOGO.png" alt="SRIT Logo" class="logo-small"/>
+            <p>Department of Computer Science and Engineering<br/>Srinivasa Ramanujan Institute of Technology</p>
+          </div>
+          <div>
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="index.html">Main Home</a></li>
+              <li><a href="#events">Events</a></li>
+              <li><a href="#schedule">Schedule</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="copyright">© 2025 CSE Dept, SRIT. All Rights Reserved.</div>
+      </div>
+    </footer>
+
+    <script>
+      (() => {
+        const modal = document.getElementById('registrationModal');
+        const form = document.getElementById('registrationForm');
+        const eventSelect = document.getElementById('event');
+        const feeInput = document.getElementById('fee');
+        const teamWrap = document.getElementById('teamMembers');
+        const eventNote = document.getElementById('eventNote');
+        const closeBtn = modal.querySelector('[data-close]');
+        const triggers = document.querySelectorAll('.register-trigger');
+        let lastFocused = null;
+
+        // Event config
+        const fees = {
+          'Paper Presentation': 200,
+          'Hackathon [5hrs]': 300,
+          'Code Buzz': 100
+        };
+        const teamMode = {
+          'Paper Presentation': 'pair', // 1-2
+          'Hackathon [5hrs]': 'trio',   // 1-3
+          'Code Buzz': 'solo'           // solo
+        };
+
+        // Open modal
+        function openModal(prefillEvent){
+          lastFocused = document.activeElement;
+          modal.setAttribute('aria-hidden','false');
+          document.body.style.overflow = 'hidden'; // prevent background scroll
+          // Prefill event + fee + team fields visibility
+          if(prefillEvent){
+            eventSelect.value = prefillEvent;
+          }
+          updateFeeAndTeam();
+          // Focus first field
+          const firstInput = form.querySelector('input, select, button');
+          if(firstInput){ firstInput.focus(); }
+          // Setup focus trap
+          document.addEventListener('keydown', handleKeydown, true);
+        }
+
+        // Close modal
+        function closeModal(){
+          modal.setAttribute('aria-hidden','true');
+          document.body.style.overflow = '';
+          document.removeEventListener('keydown', handleKeydown, true);
+          if(lastFocused) lastFocused.focus();
+        }
+
+        // Key handling for ESC and trap
+        function handleKeydown(e){
+          if(e.key === 'Escape'){
+            e.preventDefault();
+            closeModal();
+            return;
+          }
+          if(e.key === 'Tab'){
+            trapFocus(e);
+          }
+        }
+
+        function trapFocus(e){
+          const focusables = modal.querySelectorAll('a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])');
+          const list = Array.from(focusables).filter(el => !el.hasAttribute('disabled') && el.offsetParent !== null);
+          if(list.length === 0) return;
+          const first = list[0], last = list[list.length - 1];
+          if(e.shiftKey){
+            if(document.activeElement === first){
+              e.preventDefault();
+              last.focus();
+            }
+          }else{
+            if(document.activeElement === last){
+              e.preventDefault();
+              first.focus();
+            }
+          }
+        }
+
+        // Bind triggers
+        triggers.forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const ev = btn.getAttribute('data-event');
+            const fee = btn.getAttribute('data-fee');
+            // Prefill event & fee
+            if(ev) eventSelect.value = ev;
+            if(fee) feeInput.value = fee;
+            openModal(ev);
+          });
+        });
+
+        // Close actions
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+          if(e.target === modal){ closeModal(); }
+        });
+
+        // Update fee and team UI
+        function updateFeeAndTeam(){
+          const ev = eventSelect.value;
+          feeInput.value = (fees[ev] ?? '').toString();
+          const mode = teamMode[ev];
+          if(mode === 'solo'){
+            teamWrap.style.display = 'none';
+            eventNote.style.display = 'none';
+          } else {
+            teamWrap.style.display = 'grid';
+            eventNote.style.display = 'block';
+          }
+        }
+        eventSelect.addEventListener('change', updateFeeAndTeam);
+
+        // Initialize defaults
+        updateFeeAndTeam();
+
+        // Lightweight client-side validation + demo submit
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          // native constraints first
+          if(!form.checkValidity()){
+            form.reportValidity();
+            return;
+          }
+          // Optional: custom checks (e.g., phone starts 6-9 already via pattern)
+          // Here, simulate successful submit
+          alert('Registration submitted successfully!');
+          form.reset();
+          // Reset fee/team after reset
+          updateFeeAndTeam();
+          closeModal();
+        });
+      })();
+    </script>
+  </body>
+</html>
