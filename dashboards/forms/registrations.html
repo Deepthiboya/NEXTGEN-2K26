@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Event Registration</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+body{font-family:'Poppins',sans-serif;background:linear-gradient(135deg,#ff9e59,#ffffff 70%);margin:0;display:flex;justify-content:center;align-items:flex-start;min-height:100vh;}
+.container{width:100%;max-width:700px;margin:40px 15px;background:rgba(255,255,255,0.95);padding:35px 30px;border-radius:16px;box-shadow:0 12px 30px rgba(0,0,0,0.15)}
+h2{text-align:center;color:#ff6600;margin-bottom:30px;font-size:2rem}
+#registrationForm { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+label{display:block;margin:10px 0 6px;color:#444;font-weight:500}
+input,select{width:100%;padding:12px 14px;margin-bottom:14px;border:1px solid #ffbc80;border-radius:10px;background:#fff8f0;font-size:.95rem;outline:none}
+input:focus,select:focus{box-shadow:0 0 6px rgba(255,102,0,0.3);border-color:#ff6600}
+button{background:linear-gradient(135deg,#ff6600,#ff9e59);color:#fff;padding:14px 0;border:0;border-radius:12px;font-weight:700;cursor:pointer; grid-column: span 2;}
+.qr-code img{display:block;margin:10px auto;border-radius:12px;border:1px solid #ffbc80}
+small{display:block;margin-bottom:10px; grid-column: span 2;}
+#teamMembers { grid-column: span 2; }
+.qr-code { grid-column: span 2; }
+@media(max-width:500px){.container{padding:22px 18px;margin:22px 10px}h2{font-size:1.6rem}}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Event Registration</h2>
+<form id="registrationForm" autocomplete="off" novalidate>
+<label>Student ID</label><input id="studentId" type="text" required />
+<label>Email</label><input id="email" type="email" required />
+<label>Phone</label><input id="phone" type="tel" inputmode="tel" required />
+<label>Department</label>
+<select id="department" required>
+<option value="">Select Department</option>
+<option value="CSE">CSE</option>
+<option value="CAD">CAD</option>
+<option value="CSM">CSM</option>
+<option value="ECE">ECE</option>
+<option value="EEE">EEE</option>
+<option value="MECH">MECH</option>
+<option value="CIVIL">CIVIL</option>
+</select>
+<label>Year</label>
+<select id="year" required>
+<option value="">Select Year</option>
+<option value="1">1st Year</option>
+<option value="2">2nd Year</option>
+<option value="3">3rd Year</option>
+<option value="4">4th Year</option>
+</select>
+<label>Event</label>
+<select id="event" required>
+<option value="">Select Event</option>
+</select>
+<small id="eventNote" style="color:#d9534f;font-weight:500;display:none">⚠️ Max 3 members allowed for this event</small>
+<div id="teamMembers" style="display:none;margin-top:10px;">
+<input id="member1" type="text" placeholder="Member 1 Name (required)" />
+<input id="member1Email" type="email" placeholder="Member 1 Email (required)" />
+<input id="member2" type="text" placeholder="Member 2 Name (optional)" />
+<input id="member2Email" type="email" placeholder="Member 2 Email (optional)" />
+</div>
+<label>Event Fee (₹)</label>
+<input id="fee" type="number" readonly />
+<div class="qr-code">
+<label>Scan this QR code for payment:</label>
+<img src="../assets/images/qr-code.jpg" alt="Payment QR Code" width="200" height="200">
+</div>
+<label>Full Name</label><input id="name" type="text" required />
+<label>UTR Number</label>
+<input id="utr" type="text" required />
+<button id="submitBtn" type="submit">Register</button>
+</form>
+</div>
+
+<!-- Supabase UMD -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+<script>
+window.addEventListener('DOMContentLoaded', async () => {
+const SUPABASE_URL = "https://jkqxisgkngxqlwuojuul.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImprcXhpc2drbmd4cWx3dW9qdXVsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5OTMxODgsImV4cCI6MjA3NDU2OTE4OH0.88ga7OV0KRK44PlAdo3tOZzxARHdSYNBZqp1AIj43vY";
+let supabaseClient = null;
+try { supabaseClient = supabase.createClient(SUPABASE_URL,SUPABASE_KEY); }
+catch(err){ console.warn('Supabase init failed:',err); }
+
+const form=document.getElementById('registrationForm');
+const departmentSelect=document.getElementById('department');
+const yearSelect=document.getElementById('year');
+const eventSelect=document.getElementById('event');
+const feeInput=document.getElementById('fee');
+const teamMembersDiv=document.getElementById('teamMembers');
+const member1=document.getElementById('member1');
+const member1Email=document.getElementById('member1Email');
+const member2=document.getElementById('member2');
+const member2Email=document.getElementById('member2Email');
+const eventNote=document.getElementById('eventNote');
+const submitBtn=document.getElementById('submitBtn');
+
+const departmentEvents={"CSE":["Hackathon [5 Hours]","Cross Word Puzzle","Paper Presentation"],"CAD":["Hackathon [5 Hours]","Cross Word Puzzle","Paper Presentation"],"CSM":["Hackathon [5 Hours]","Cross Word Puzzle","Paper Presentation"],"ECE":["IoT Hackathon","Paper Presentation","Technical Quiz"],"EEE":["Paper Presentation","Tinker Cad Masters","Technical Quiz"],"MECH":["Paper Presentation","CAD Design Contest","Model Expo","Technical Quiz"],"CIVIL":["Paper Presentation","Bridge Blitz","Technical Quiz"]};
+const eventFees={"Paper Presentation":200,"Technical Quiz":100,"Cross Word Puzzle":100,"Tinker Cad Masters":100,"CAD Design Contest":100,"Model Expo":100,"Bridge Blitz":100,"Hackathon [5 Hours]":300,"IoT Hackathon":300};
+
+function populateEvents(){
+const dept=departmentSelect.value;
+eventSelect.innerHTML='<option value="">Select Event</option>';
+feeInput.value='';
+if(!dept)return;
+const list=departmentEvents[dept]||[];
+list.forEach(ev=>{const opt=document.createElement('option');opt.value=ev;opt.textContent=ev;eventSelect.appendChild(opt);});
+if(eventSelect.value)eventSelect.dispatchEvent(new Event('change'));
+}
+
+departmentSelect.addEventListener('change',()=>{
+populateEvents();
+feeInput.value='';teamMembersDiv.style.display='none';eventNote.style.display='none';
+member1.required=false;member1.value='';member1Email.required=false;member1Email.value='';
+member2.value='';member2Email.value='';
+});
+
+yearSelect.addEventListener('change',()=>{populateEvents();});
+
+eventSelect.addEventListener('change',()=>{
+const sel=eventSelect.value;
+feeInput.value=eventFees[sel]||'';
+const isHack=(sel==="Hackathon [5 Hours]"||sel==="IoT Hackathon");
+if(isHack){
+teamMembersDiv.style.display='block';eventNote.style.display='block';
+member1.required=true;member1Email.required=true;
+}else{
+teamMembersDiv.style.display='none';eventNote.style.display='none';
+member1.required=false;member1.value='';member1Email.required=false;member1Email.value='';
+member2.value='';member2Email.value='';
+}
+});
+
+form.addEventListener('submit',async e=>{
+e.preventDefault();submitBtn.disabled=true;const original=submitBtn.textContent;submitBtn.textContent='Submitting...';
+try{
+const name=document.getElementById('name').value.trim();
+const student_id=document.getElementById('studentId').value.trim();
+const email=document.getElementById('email').value.trim();
+const phone=document.getElementById('phone').value.trim();
+const department=departmentSelect.value;
+const year=yearSelect.value;
+const eventName=eventSelect.value;
+const fee=parseInt(feeInput.value)||0;
+const utr=document.getElementById('utr').value.trim();
+if(!name||!student_id||!email||!phone||!department||!year||!eventName||!utr){alert('Please fill all required fields.');return;}
+if((eventName==="Hackathon [5 Hours]"||eventName==="IoT Hackathon")&&(!member1.value.trim()||!member1Email.value.trim())){alert('Member 1 name & email required for Hackathon/IoT Hackathon.');return;}
+const payload={name,student_id,email,phone,department,year,event:eventName,fee,utr_number:utr,status:'pending',members:(member1.value||member1Email.value||member2.value||member2Email.value)?{member1_name:member1.value||null,member1_email:member1Email.value||null,member2_name:member2.value||null,member2_email:member2Email.value||null}:null};
+if(!supabaseClient){console.warn('Supabase client not available. Skipping DB insert. Payload:',payload);alert('Form validated but backend not available (Supabase not loaded). Check console.');}
+else{const {data,error}=await supabaseClient.from('registrations').insert([payload]);if(error)throw error;alert('✅ Registration submitted successfully!');}
+form.reset();eventSelect.innerHTML='<option value="">Select Event</option>';feeInput.value='';teamMembersDiv.style.display='none';eventNote.style.display='none';
+}catch(err){console.error(err);alert('❌ Error: '+(err.message||err));}
+finally{submitBtn.disabled=false;submitBtn.textContent=original;}
+});
+
+populateEvents();if(eventSelect.value)eventSelect.dispatchEvent(new Event('change'));
+
+// Handle URL parameters to pre-fill form
+const urlParams = new URLSearchParams(window.location.search);
+const deptParam = urlParams.get('department');
+const eventParam = urlParams.get('event');
+
+if (deptParam) {
+    departmentSelect.value = deptParam;
+    departmentSelect.dispatchEvent(new Event('change'));
+}
+
+if (eventParam) {
+    // Wait a bit for events to populate
+    setTimeout(() => {
+        eventSelect.value = eventParam;
+        eventSelect.dispatchEvent(new Event('change'));
+    }, 100);
+}
+});
+</script>
+</body>
+</html>

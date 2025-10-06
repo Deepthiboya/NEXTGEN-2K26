@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login - Tarang NextGen</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    /* Minimal overrides to your existing CSS */
+   body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+
+    .login-container {
+      background: #fff;
+      padding: 32px;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+      width: 360px;
+    }
+
+    h2 {
+      color: #ff6600;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    button {
+      background: #ff6600;
+      color: #fff;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    button:hover {
+      background: #e65c00;
+    }
+
+    #error-msg {
+      color: #d9534f;
+      margin-top: 12px;
+      min-height: 1.2em;
+      text-align: center;
+    }
+
+    @media(max-width:400px) {
+      .login-container {
+        width: 90%;
+        padding: 20px;
+      }
+    }
+
+    /* Simulated Paradigm Background Animation */
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #7a7676 0%, #d59849 50%, #767572 100%);
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .particle-orange {
+            background: radial-gradient(circle, #ff6600 0%, #ff8533 50%, transparent 70%);
+            box-shadow: 0 0 20px #ff6600, 0 0 40px #ff6600, 0 0 60px #ff6600;
+        }
+
+        .particle-white {
+            background: radial-gradient(circle, #ffffff 0%, #f0f0f0 50%, transparent 70%);
+            box-shadow: 0 0 15px #ffffff, 0 0 30px #ffffff, 0 0 45px #ffffff;
+        }
+
+        .connection-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ff6600, transparent);
+            opacity: 0;
+            animation: linePulse 3s ease-in-out infinite;
+        }
+
+        .geometric-shape {
+            position: absolute;
+            border: 2px solid #ff6600;
+            opacity: 0.3;
+            animation: rotate 10s linear infinite;
+        }
+
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 25px solid #ff6600;
+            background: none;
+        }
+
+        .square {
+            width: 20px;
+            height: 20px;
+            background: transparent;
+        }
+
+        .hexagon {
+            width: 30px;
+            height: 17px;
+            background: #ff6600;
+            position: relative;
+        }
+
+        .hexagon:before,
+        .hexagon:after {
+            content: "";
+            position: absolute;
+            width: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+        }
+
+        .hexagon:before {
+            bottom: 100%;
+            border-bottom: 8px solid #ff6600;
+        }
+
+        .hexagon:after {
+            top: 100%;
+            border-top: 8px solid #ff6600;
+        }
+
+        /* New polygon shapes */
+
+        .pentagon {
+            width: 54.64px; /* width = 2 * side * cos(36deg) */
+            height: 50px;
+            background: #ff6600;
+            clip-path: polygon(
+                50% 0%,
+                95% 35%,
+                79% 90%,
+                21% 90%,
+                5% 35%
+            );
+            opacity: 0.3;
+            position: absolute;
+            border: 2px solid #ff6600;
+            box-sizing: border-box;
+            animation: rotate 12s linear infinite;
+        }
+
+        .octagon {
+            width: 40px;
+            height: 40px;
+            background: #ff6600;
+            clip-path: polygon(
+                30% 0%, 70% 0%,
+                100% 30%, 100% 70%,
+                70% 100%, 30% 100%,
+                0% 70%, 0% 30%
+            );
+            opacity: 0.3;
+            position: absolute;
+            border: 2px solid #ff6600;
+            box-sizing: border-box;
+            animation: rotate 15s linear infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.7;
+            }
+            25% {
+                transform: translateY(-20px) rotate(90deg);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-40px) rotate(180deg);
+                opacity: 0.8;
+            }
+            75% {
+                transform: translateY(-20px) rotate(270deg);
+                opacity: 0.9;
+            }
+        }
+
+        @keyframes linePulse {
+            0%, 100% {
+                opacity: 0;
+                transform: scaleX(0);
+            }
+            50% {
+                opacity: 0.6;
+                transform: scaleX(1);
+            }
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: rotate(360deg);
+                opacity: 0.3;
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+        }
+
+        .pulse-animation {
+            animation: pulse 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+  <div class="animated-background">
+    <div class="particle particle-orange" style="left: 10%; top: 20%; width: 10px; height: 10px;"></div>
+    <div class="particle particle-white" style="left: 50%; top: 40%; width: 15px; height: 15px;"></div>
+    <div class="particle particle-orange" style="left: 80%; top: 60%; width: 12px; height: 12px;"></div>
+    <div class="particle particle-white" style="left: 30%; top: 80%; width: 8px; height: 8px;"></div>
+    <div class="particle particle-orange" style="left: 70%; top: 10%; width: 14px; height: 14px;"></div>
+    <div class="connection-line" style="left: 20%; top: 30%; width: 100px;"></div>
+    <div class="connection-line" style="left: 60%; top: 50%; width: 80px;"></div>
+    <div class="geometric-shape triangle" style="left: 40%; top: 70%;"></div>
+    <div class="geometric-shape square" style="left: 90%; top: 20%;"></div>
+    <div class="geometric-shape hexagon pulse-animation" style="left: 15%; top: 50%;"></div>
+
+    <!-- New polygon shapes -->
+    <div class="geometric-shape pentagon" style="left: 25%; top: 30%;"></div>
+    <div class="geometric-shape octagon" style="left: 75%; top: 70%;"></div>
+  </div>
+  <div class="login-container">
+    <h2>Login</h2>
+    <form id="login-form">
+      <input id="email" type="email" placeholder="Email" required />
+      <input id="password" type="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+    <div id="error-msg"></div>
+  </div>
+
+  <!-- Supabase JS -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = "https://jkqxisgkngxqlwuojuul.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImprcXhpc2drbmd4cWx3dW9qdXVsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5OTMxODgsImV4cCI6MjA3NDU2OTE4OH0.88ga7OV0KRK44PlAdo3tOZzxARHdSYNBZqp1AIj43vY";
+
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const form = document.getElementById('login-form');
+    const err = document.getElementById('error-msg');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      err.textContent = '';
+
+      const email = document.getElementById('email').value.trim().toLowerCase();
+      const password = document.getElementById('password').value;
+
+      if (!email || !password) {
+        err.textContent = 'Enter both email and password.';
+        return;
+      }
+
+      try {
+        // Sign in
+        const { data: loginData, error: loginError } = await supabase.auth.signInWithPassword({ email, password });
+        if (loginError || !loginData.user) {
+          console.error(loginError);
+          err.textContent = 'Invalid email or password.';
+          return;
+        }
+
+        const uid = loginData.user.id;
+
+        // Fetch role from profiles table
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', uid)
+          .single();
+
+        if (profileError || !profile || !profile.role) {
+          console.error(profileError);
+          err.textContent = 'User role not set. Contact admin.';
+          await supabase.auth.signOut();
+          return;
+        }
+
+        const role = profile.role;
+
+        // Redirect based on role
+        switch(role) {
+          case 'super_admin':
+            window.location.href = '/tarangnxtzen/dashboards/super_admin/dashboard.html';
+            break;
+          case 'convenor':
+            window.location.href = '/tarangnxtzen/dashboards/convenor/dashboard.html';
+            break;
+          case 'dept_coordinator':
+            window.location.href = '/tarangnxtzen/dashboards/dept_coordinator/dashboard.html';
+            break;
+          case 'student_coordinator':
+            window.location.href = '/tarangnxtzen/dashboards/student_coordinator/dashboard.html';
+            break;
+          default:
+            err.textContent = 'Unknown role. Contact admin.';
+            await supabase.auth.signOut();
+        }
+
+      } catch (e) {
+        console.error(e);
+        err.textContent = 'Unexpected error. Try again.';
+      }
+    });
+  </script>
+</body>
+</html>

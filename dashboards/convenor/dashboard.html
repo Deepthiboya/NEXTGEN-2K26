@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Convenor • NextZen</title>
+
+    <!-- Chart.js for the amounts chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+      /* inlined shared style (keeps same look as Super Admin) */
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+      :root {
+        --accent: #ff7f11;
+        --accent-2: #ff9d4a;
+        --bg: #f6f7fb;
+        --card: #fff;
+        --muted: #666;
+      }
+      * {
+        box-sizing: border-box;
+        font-family: Poppins, "Segoe UI", Roboto, Arial;
+      }
+      body {
+        margin: 0;
+        background: linear-gradient(180deg, #fff, #f2f6fb);
+        min-height: 100vh;
+      }
+      .wrap {
+        display: flex;
+        min-height: 100vh;
+      }
+      .sidebar {
+        width: 260px;
+        background: linear-gradient(180deg, var(--accent), var(--accent-2));
+        color: #fff;
+        padding: 28px 18px;
+      }
+      .sidebar h2 {
+        margin: 0 0 20px;
+        font-size: 20px;
+      }
+      .menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .menu li {
+        padding: 12px 10px;
+        border-radius: 8px;
+        margin-bottom: 6px;
+        cursor: pointer;
+      }
+      .menu li.active,
+      .menu li:hover {
+        background: rgba(255, 255, 255, 0.12);
+      }
+      .menu a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .logout {
+        position: fixed;
+        left: 18px;
+        bottom: 20px;
+        width: 220px;
+      }
+      .logout a {
+        display: block;
+        padding: 10px;
+        border-radius: 8px;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.12);
+        color: #fff;
+        text-decoration: none;
+        font-weight: 700;
+      }
+      .main {
+        flex: 1;
+        padding: 26px 32px;
+      }
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+      }
+      .header h1 {
+        margin: 0;
+        color: var(--accent);
+      }
+      .note {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 18px;
+        margin-bottom: 18px;
+      }
+      .card {
+        background: #f6ebe800;
+        border-radius: 12px;
+        padding: 18px;
+        box-shadow: 0 8px 28px rgba(66, 55, 47, 0.251);
+      }
+      .card h3 {
+        
+        margin: 0 0 10px;
+        color: #333;
+      }
+      .card p.big {
+        font-size: 22px;
+        margin: 6px 0;
+        color: #000;
+        font-weight: 700;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      table th,
+      table td {
+        padding: 10px;
+        border: 1px solid #b06060;
+        text-align: left;
+      }
+      table th {
+        background: var(--accent);
+        color: #fff;
+      }
+      .section {
+        display: none;
+      }
+      .section.active {
+        display: block;
+      }
+      .mini-form {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
+      .mini-form input {
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #e9e9e9;
+        flex: 1;
+        min-width: 140px;
+      }
+      .mini-form button {
+        padding: 10px 14px;
+        border-radius: 8px;
+        border: 0;
+        background: var(--accent);
+        color: #fff;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .cards-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 12px;
+        margin-top: 12px;
+      }
+      .person-card {
+        background: #e6e9e3a8;
+        padding: 12px;
+        border-radius: 8px;
+        box-shadow: 0 6px 18px rgba(10, 10, 20, 0.05);
+        border: 1px solid #eee;
+      }
+      .person-card h4 {
+        margin: 6px 0 4px;
+      }
+      .person-card p {
+        margin: 4px 0;
+        color: #444;
+        font-size: 0.95rem;
+      }
+      .person-card .actions {
+        margin-top: 8px;
+        display: flex;
+        gap: 8px;
+      }
+      .person-card button {
+        padding: 8px 10px;
+        border-radius: 6px;
+        border: 0;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .btn-delete {
+        background: #dc3545;
+        color: #fff;
+      }
+      .btn-edit {
+        background: #007bff;
+        color: #fff;
+      }
+      .view-btn {
+        margin-top: 10px;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 6px;
+        background: var(--accent);
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .view-btn:hover {
+        background: var(--accent-2);
+      }
+      #deptBreakdown {
+        margin-top: 20px;
+        background: #fff;
+        padding: 18px;
+        border-radius: 10px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+      }
+      #deptBreakdown .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .close-btn {
+        background: #dc3545;
+        color: #fff;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .close-btn:hover {
+        background: #b02a37;
+      }
+      .event-grid,
+      .dept-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 18px;
+        margin-top: 20px;
+      }
+      .event-card,
+      .dept-card {
+        background: #dce4d4a8;
+        border-radius: 12px;
+        padding: 16px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.13);
+      }
+      .event-card h4,
+      .dept-card h4 {
+        margin: 0 0 10px;
+      }
+      .event-card button,
+      .dept-card button {
+        padding: 6px 12px;
+        border: none;
+        border-radius: 6px;
+        background: var(--accent);
+        color: #fff;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      .event-card button:hover,
+      .dept-card button:hover {
+        background: var(--accent-2);
+      }
+      .small-note {
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 8px;
+      }
+      /* tables area styles */
+      .table-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+      .back-btn {
+        background: #ddd;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .back-btn:hover {
+        background: #ccc;
+      }
+      .chart-card {
+        min-height: 340px;
+        padding: 24px 18px 18px 18px;
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(66, 55, 47, 0.13);
+        border: 1px solid #f0f0f0;
+        margin-bottom: 24px;
+      }
+      /* --- Amounts layout & chart sizing --- */
+      #amounts .card {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      #amountsTableContainer {
+        max-height: 380px;
+        overflow: auto;
+        border-radius: 8px;
+      }
+
+      #amountsChart {
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 260px;
+        max-height: 380px;
+        display: block;
+      }
+
+      /* make amounts table rows compact so chart isn't pushed too far down */
+      #amountsTableContainer table th,
+      #amountsTableContainer table td {
+        padding: 8px;
+        font-size: 0.95rem;
+      }
+
+      /* small indent for event rows */
+      #amounts-body .indent {
+        padding-left: 20px;
+        color: #444;
+        font-size: 0.95rem;
+      }
+
+      /* Pagination buttons container */
+      #registrations-pagination {
+        margin: 16px 0;
+        text-align: center;
+      }
+
+      #registrations-pagination button {
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 7px 16px;
+        margin: 0 6px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      #registrations-pagination button:disabled {
+        background: #eee;
+        color: #aaa;
+        cursor: not-allowed;
+      }
+
+      #registrations-pagination span {
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--muted);
+        margin: 0 8px;
+      }
+      /* nice card layout for dept*/
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 16px;
+        margin-top: 16px;
+      }
+      .dept-card,
+      .event-section {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 12px;
+        background: #cec1ad34;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+      .dept-card h4,
+      .event-section h4 {
+        margin: 0 0 8px;
+      }
+      /* Edit button style*/
+      /* Buttons inside departments table */
+.btn-edit, .btn-delete {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-right: 6px;
+  transition: background 0.2s ease;
+}
+
+/* Edit button (blue) */
+.btn-edit {
+  background: #007bff;
+  color: #fff;
+}
+.btn-edit:hover {
+  background: #0056b3;
+}
+
+/* Delete button (red) */
+.btn-delete {
+  background: #dc3545;
+  color: #fff;
+}
+.btn-delete:hover {
+  background: #b02a37;
+}
+
+      .chart-card { position: relative; }
+      .chart-card canvas {
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 260px;
+        max-height: 380px;
+        display: block;
+        margin: 0 auto;
+      }
+/* Analytics layout */
+.analytics-wrap {
+  max-width: 1100px;          /* slightly narrower than full width */
+  margin: 8px auto 24px;      /* center and add bottom space */
+  padding: 0 10px;            /* small side padding */
+}
+
+/* Card look aligned with your existing .card */
+.chart-card.clean {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  margin: 18px 0;             /* spacing between charts */
+  overflow: hidden;           /* clip any overflow */
+  border: 1px solid #f0f0f0;
+}
+
+/* Title area */
+.chart-header {
+  padding: 10px 14px;
+  border-bottom: 1px solid #f3f3f3;
+}
+.chart-header h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Chart container controls actual canvas size per Chart.js guidance */
+      .chart-container {
+        position: relative;
+        width: 100%;
+        height: 380px;              /* base chart height (taller) */
+        padding: 0;
+      }
+      .chart-container.tall { height: 420px; }  /* extra tall variant */
+
+/* Make the canvas fully fill its parent; Chart.js will render sharply */
+      .chart-container canvas {
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 260px;
+        max-height: 380px;
+        display: block;
+        margin: 0 auto;
+      }
+
+/* Responsive: stack nicely on small screens with comfortable spacing */
+      @media (max-width: 900px) {
+        .analytics-wrap {
+          max-width: 820px;
+          padding: 0 12px;
+        }
+        .chart-container { height: 260px; }
+        .chart-container.tall { height: 300px; }
+      }
+
+      @media (max-width: 600px) {
+        .analytics-wrap {
+          max-width: 560px;
+          padding: 0 10px;
+        }
+        .chart-card.clean {
+          margin: 14px 0;
+          border-radius: 12px;
+        }
+        .chart-header h4 { font-size: 15px; }
+        .chart-container { height: 180px; }
+        .chart-container.tall { height: 220px; }
+      }
+
+/* Optional: soften Chart.js legend wrapping */
+.chart-card .legend-scroll {
+  max-height: 56px;
+  overflow: auto;
+  padding: 0 12px 8px;
+}
+#dashboardTablesAnchor { margin-bottom: 16px; }
+#deptBreakdown.card-block { margin-bottom: 16px; }
+
+/* Amounts section specific styles */
+#total-fee {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: white;
+  padding: 12px 20px;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 20px !important;
+  box-shadow: 0 6px 18px rgba(255, 127, 17, 0.3);
+}
+
+.charts-container {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+#amounts-container {
+  margin-top: 20px;
+}
+
+/* Pagination styles for amounts table */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  font-family: 'Poppins', sans-serif;
+  flex-wrap: wrap;
+}
+
+.page-btn, .page-num {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #f9f9f9;
+  color: #000;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.page-btn:hover:not(:disabled), .page-num:hover:not(.active) {
+  background: #e6e6e6;
+}
+
+.page-btn:disabled {
+  background: #f1f1f1;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+.page-num.active {
+  background: var(--accent);
+  color: white;
+  font-weight: bold;
+}
+
+/* Responsive charts */
+@media (max-width: 768px) {
+  .charts-container {
+    flex-direction: column;
+    gap: 20px !important;
+  }
+  
+  .charts-container > div {
+    flex: none !important;
+  }
+  
+  #deptPieChart, #eventBarChart {
+    max-width: 100% !important;
+  }
+}
+
+
+
+
+      /**/
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <h2>Convenor</h2>
+        <ul class="menu">
+          <li id="menu-dashboard" class="active">
+            <a href="#" onclick="show('dashboard','menu-dashboard')"
+              >🏠 Dashboard</a
+            >
+          </li>
+          <li id="menu-coordinators">
+            <a href="#" onclick="show('coordinators','menu-coordinators')"
+              >👥 Coordinators</a
+            >
+            
+          </li>
+          <li id="menu-departments">
+            <a href="#" onclick="show('departments','menu-departments')"
+              >🏫 Departments</a
+            >
+          </li>
+          <li id="menu-events">
+            <a href="#" onclick="show('events','menu-events')">🎪 Events</a>
+          </li>
+          <li id="menu-tables">
+            <a href="#" onclick="show('tables','menu-tables')">📋 Tables</a>
+          </li>
+          <li id="menu-amounts">
+            <a href="#" onclick="show('amounts','menu-amounts')">💰 Amounts</a>
+          </li>
+        </ul>
+        <div class="logout"><a id="logout" href="#">Logout</a></div>
+      </aside>
+
+      <!-- Main -->
+      <main class="main">
+        <div class="header">
+          <h1 id="welcome">Welcome, Convenor</h1>
+          <div id="status" class="note"></div>
+        </div>
+
+        <!-- Dashboard -->
+        <section id="dashboard" class="section active">
+          <div class="card-grid">
+            <div class="card">
+              <h3>Total Registrations</h3>
+              <p class="big" id="totalRegs">0</p>
+              <button class="view-btn" onclick="showDeptBreakdown('total')">
+                View More
+              </button>
+            </div>
+            <div class="card">
+              <h3>Pending Registrations</h3>
+              <p class="big" id="pendingRegs">0</p>
+              <button class="view-btn" onclick="showDeptBreakdown('pending')">
+                View More
+              </button>
+            </div>
+            <div class="card">
+              <h3>Paid Registrations</h3>
+              <p class="big" id="paidRegs">0</p>
+              <button class="view-btn" onclick="showDeptBreakdown('paid')">
+                View More
+              </button>
+            </div>
+            <div class="card">
+              <h3>Total Amount</h3>
+              <p class="big" id="totalAmount">₹0</p>
+              <button
+                class="view-btn"
+                id="view-more-amounts"
+                onclick="showDeptBreakdown('amount')"
+              >
+                View More
+              </button>
+            </div>
+          </div>
+        <div id="dashboardTablesAnchor"></div>  
+          <!-- Daily registrations analytics -->
+<!-- Analytics (stacked, responsive) -->
+<div class="analytics-wrap">
+  <div class="chart-card clean">
+    <div class="chart-header">
+      <h4>Daily registrations — per Department</h4>
+    </div>
+    <div class="chart-container tall">
+      <canvas id="chartDailyDept"></canvas>
+    </div>
+  </div>
+
+  <div class="chart-card clean">
+    <div class="chart-header">
+      <h4>Daily registrations — per Event</h4>
+    </div>
+    <div class="chart-container tall">
+      <canvas id="chartDailyEvent"></canvas>
+    </div>
+  </div>
+
+  <div class="chart-card clean">
+    <div class="chart-header">
+      <h4>Daily registrations — Dept × Event (Top 4)</h4>
+    </div>
+    <div class="chart-container tall">
+      <canvas id="chartDailyDeptEvent"></canvas>
+    </div>
+  </div>
+</div>
+
+
+          <!-- <div id="deptBreakdown" style="display:none;">
+          <div class="card">
+            <div class="header" style="justify-content:space-between;align-items:center;">
+              <h3>Depathe rtment-wise</h3>
+              <button class="close-btn" onclick="closeDeptBreakdown()">Close</button>
+            </div>
+            <table>
+              <thead><tr><th>Department</th><th>Count</th><th>Action</th></tr></thead>
+              <tbody id="deptTable"></tbody>
+            </table>
+          </div>
+        </div> -->
+          <div id="deptBreakdown" style="display: none">
+            <div class="card">
+              <div
+                class="header"
+                style="justify-content: space-between; align-items: center"
+              >
+                <h3 id="deptBreakdownTitle">Department-wise</h3>
+                <button class="close-btn" onclick="closeDeptBreakdown()">
+                  Close
+                </button>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Department</th>
+                    <th id="deptBreakdownValueTitle">Count</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="deptTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tables (target for event->dept->registrations) -->
+        <section id="tables" class="section">
+          <div class="card">
+            <div class="table-header">
+              <button class="back-btn" id="tables-back">
+                ← Back to Events
+              </button>
+              <h3 id="tables-title">Registrations</h3>
+              <div style="flex: 1"></div>
+              <button class="view-btn" id="export-visible-csv">
+                Export Visible CSV
+              </button>
+            </div>
+            <div id="tableFilters" style="margin-bottom: 8px">
+              <label style="font-size: 13px; color: var(--muted)"
+                >Filter:
+                <select id="filterStatus">
+                  <option value="all">All</option>
+                  <option value="pending">Pending</option>
+                  <option value="paid">Paid</option>
+                </select>
+              </label>
+              <label style="font-size: 13px; color: var(--muted); margin-left: 10px;">
+  Event:
+  <select id="filterEvent">
+    <option value="all">All</option>
+  </select>
+</label>
+
+            </div>
+            <div id="tableContainer">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Student ID</th>
+                    <th>Department</th>
+                    <th>Event</th>
+                    <th>Fee</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="registrations-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Coordinators -->
+        <section id="coordinators" class="section">
+          <div class="card">
+            <h3>Coordinators</h3>
+            <div id="coordinator-cards" class="cards-container"></div>
+            <form id="coordinator-form" class="mini-form">
+              <input
+                name="serial"
+                type="text"
+                placeholder="Serial no"
+                required
+              />
+              <input name="name" type="text" placeholder="Name" required />
+              <input
+                name="email"
+                type="email"
+                placeholder="Email (for login)"
+                required
+              />
+              <input
+                name="department"
+                type="text"
+                placeholder="Department"
+                required
+              />
+              <input name="phone" type="text" placeholder="Phone" />
+              <input name="year" type="text" placeholder="Year" />
+              <button type="submit">Add Coordinator</button>
+            </form>
+            <div id="coordinator-error" class="error"></div>
+          </div>
+        </section>
+
+        <!-- Departments -->
+        <section id="departments" class="section">
+          <div class="card">
+            <h3>Departments</h3>
+            <!-- Container for department cards -->
+            <div id="departmentsCardsContainer" class="cards-grid"></div>
+
+            <!-- Container for selected department events + registrations -->
+            <div id="deptEventsContainer" style="display: none"></div>
+            <br />
+            <table>
+              <thead>
+                <tr>
+                  <th>Department</th>
+                  <th>Events</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="departments-body"></tbody>
+            </table>
+            <form id="department-form" class="mini-form">
+              <input
+                name="dept"
+                type="text"
+                placeholder="Department name"
+                required
+              />
+              <input
+                name="events"
+                type="text"
+                placeholder="Events (comma separated)"
+                required
+              />
+              <button type="submit">Add Department</button>
+            </form>
+            <div id="department-error" class="error"></div>
+          </div>
+        </section>
+
+        <!-- Events -->
+        <section id="events" class="section">
+          <div class="card">
+            <h3>Events</h3>
+            <div id="all-events-list" class="event-grid"></div>
+            <div id="eventDetails"></div>
+          </div>
+        </section>
+
+        <!-- Amounts -->
+        <section id="amounts" class="section">
+          <div class="card">
+            <h3>Amounts (Dept-wise & Event-wise)</h3>
+            <div id="total-fee" style="margin-bottom:15px; font-weight:bold; font-size: 18px; color: var(--accent);">Total Fee: ₹0</div>
+
+            <!-- Charts -->
+            <div class="charts-container" style="display:flex; flex-wrap:wrap; justify-content:center; gap:40px; margin-bottom:20px;">
+              <!-- Pie Chart centered -->
+              <div style="flex:1 1 300px; display:flex; justify-content:center; align-items:center;">
+                <canvas id="deptPieChart" style="max-width:400px;"></canvas>
+              </div>
+              <!-- Bar Chart -->
+              <div style="flex:1 1 400px;">
+                <canvas id="eventBarChart" style="width:100%;"></canvas>
+              </div>
+            </div>
+
+            <!-- Amounts Table -->
+            <div id="amounts-container"></div>
+            
+            <!-- Existing 14-day chart -->
+            <div class="chart-card card" style="margin-top: 30px;">
+              <h4>Fees collected — last 14 days</h4>
+              <canvas id="amountsChart" height="120"></canvas>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="./dashboard.js"></script>
+  </body>
+</html>

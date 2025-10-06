@@ -11,19 +11,21 @@
 }
 
 :root {
-    --primary-color: #ff6600;
-    --primary-light: #ff8533;
-    --primary-dark: #cc5200;
-    --secondary-color: #000000;
-    --secondary-light: #333333;
-    --accent-color: #ff9900;
-    --light-color: #ffffff;
-    --gray-color: #f0f0f0;
-    --dark-gray: #444444;
+    --primary-color: #FF9100;
+    --primary-light: #FFE0B2;
+    --primary-dark: #FF6D00;
+    --secondary-color: #FFFFFF;
+    --secondary-light: #F5F5F5;
+    --accent-color: #FFC107;
+    --light-color: #FFFBEA;
+    --gray-color: #E0E0E0;
+    --dark-gray: #BDBDBD;
+    --info-blue: #E3F2FD;
+    --mint: #E9FFF6;
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     background-color: var(--secondary-color);
     color: var(--light-color);
     min-height: 100vh;
@@ -43,12 +45,13 @@ a {
 
 /* Header styles */
 header {
-    background-color: rgba(0, 0, 0, 0.9);
+    background: linear-gradient(to bottom right, rgba(42, 39, 39, 0.753), rgba(239, 130, 57, 0.644));
     padding: 15px 0;
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 10px rgba(14, 14, 14, 0.955);
+    position: relative;
 }
 
 .logo-container {
@@ -128,10 +131,242 @@ nav a:hover::after {
     width: 100%;
 }
 
+.login-button {
+    float: right;
+    margin-left: 20px;
+    background: linear-gradient(45deg, var(--primary-dark), var(--primary-color));
+    color: var(--light-color);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(255, 102, 0, 0.705);
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+}
+
+/* Header Main Styles */
+.header-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background: linear-gradient(to bottom right, rgba(42, 39, 39, 0.753), rgba(239, 130, 57, 0.644));
+    border-radius: 0 0 10px 10px;
+}
+
+.logo-section {
+    flex-shrink: 0;
+}
+
+.logo {
+    height: 80px;
+    width: auto;
+    object-fit: contain;
+}
+
+.header-title {
+    flex: 1;
+    text-align: center;
+    margin: 0;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.year {
+    font-weight: 900;
+    color: var(--primary-color);
+    -webkit-text-fill-color: var(--primary-color);
+}
+
+.nav-bar {
+    flex-shrink: 0;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    margin: 0;
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--light-color);
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 5px 0;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.login-li {
+    margin-left: 20px;
+}
+
+.login-button {
+    background: linear-gradient(45deg, var(--primary-dark), var(--primary-color));
+    color: var(--light-color);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(255, 102, 0, 0.705);
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+}
+
+/* Subheader Styles */
+.subheader {
+    background-color: var(--secondary-light);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    border-bottom: 2px solid var(--primary-light);
+}
+
+.event-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    color: var(--primary-dark);
+}
+
+.event-info h3 {
+    font-size: 1.2rem;
+    margin: 0;
+    color: var(--primary-color);
+    font-family: 'Orbitron', sans-serif;
+}
+
+.event-info span {
+    font-weight: 500;
+    color: #ff6600;
+}
+
+.search-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.search-input {
+    padding: 8px 12px;
+    border: 1px solid var(--gray-color);
+    border-radius: 25px;
+    font-size: 1rem;
+    width: 200px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(255, 102, 0, 0.2);
+}
+
+.search-button {
+    background: linear-gradient(45deg, var(--primary-dark), var(--primary-color));
+    color: var(--light-color);
+    padding: 8px 16px;
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.search-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 102, 0, 0.4);
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+}
+
+.subheader .tagline {
+    font-size: 1rem;
+    letter-spacing: 2px;
+    color: var(--primary-color);
+    margin: 0;
+    flex: 1;
+    text-align: center;
+    order: 3;
+}
+
+@media (max-width: 768px) {
+    .top-header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .subheader {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .search-input {
+        width: 100%;
+        max-width: 250px;
+    }
+
+    .nav-bar ul {
+        gap: 15px;
+    }
+
+    .nav-bar .login-button {
+        margin-left: 10px;
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+}
+
 /* Hero section styles */
 .hero {
     height: 85vh;
-    background-image: url('hero-background.jpg');
+    background-image: url('../images/hero-background.jpg.png');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -146,7 +381,7 @@ nav a:hover::after {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.9), rgba(255, 102, 0, 0.3));
+    background: linear-gradient(to bottom right, rgba(42, 37, 37, 0.9), rgba(255, 102, 0, 0.644));
 }
 
 .hero-content {
@@ -206,7 +441,7 @@ nav a:hover::after {
 
 .cta-button:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(255, 102, 0, 0.3);
+    box-shadow: 0 10px 20px rgba(255, 102, 0, 0.705);
     background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
 }
 
@@ -235,7 +470,7 @@ nav a:hover::after {
 .highlight-card {
     flex: 1;
     min-width: 200px;
-    background-color: rgba(255, 102, 0, 0.1);
+    background-color: rgba(255, 102, 0, 0.796);
     border-left: 4px solid var(--primary-color);
     padding: 30px 20px;
     text-align: center;
@@ -246,23 +481,23 @@ nav a:hover::after {
 .highlight-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    background-color: rgba(255, 102, 0, 0.2);
+    background-color: rgba(255, 102, 0, 0.633);
 }
 
 .highlight-card i {
     font-size: 2.5rem;
-    color: var(--primary-color);
+    color: black;
     margin-bottom: 15px;
 }
 
 .highlight-card h3 {
     font-size: 2rem;
     margin-bottom: 5px;
-    color: var(--light-color);
+    color: black;
 }
 
 .highlight-card p {
-    color: var(--gray-color);
+    color: black;
 }
 
 /* Departments section styles */
@@ -279,7 +514,7 @@ nav a:hover::after {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('pattern.png') center/cover;
+    background: url('../images/pattern.png') center/cover;
     opacity: 0.05;
 }
 
@@ -316,15 +551,15 @@ nav a:hover::after {
 }
 
 .department-card {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgb(237, 233, 230);
     border-radius: 15px;
     overflow: hidden;
     position: relative;
     transition: all 0.4s ease;
     cursor: pointer;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 20px rgba(129, 102, 102, 0.968);
     height: 280px;
-    border: 1px solid rgba(255, 102, 0, 0.1);
+    border: 1px solid rgba(226, 98, 13, 0.949);
 }
 
 .department-card::before {
@@ -334,7 +569,7 @@ nav a:hover::after {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(255, 102, 0, 0.3));
+    background: linear-gradient(to bottom, rgba(247, 244, 244, 0.678), rgba(255, 102, 0, 0.3));
     transition: all 0.3s ease;
     opacity: 0;
 }
@@ -372,13 +607,13 @@ nav a:hover::after {
 .department-card h3 {
     font-size: 1.5rem;
     margin-bottom: 10px;
-    color: var(--light-color);
+    color: black;
     font-weight: 600;
 }
 
 .department-card p {
     font-size: 1rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: black;
     margin-bottom: 20px;
     opacity: 0;
     transform: translateY(20px);
@@ -423,7 +658,7 @@ nav a:hover::after {
 
 .timeline-container {
     position: relative;
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
 }
 
@@ -431,45 +666,91 @@ nav a:hover::after {
     content: '';
     position: absolute;
     top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 10px;
     width: 4px;
     height: 100%;
     background-color: var(--primary-color);
-}
-
-.timeline-item {
-    position: relative;
-    margin-bottom: 50px;
-}
-
-.timeline-date {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: var(--primary-color);
-    color: var(--light-color);
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-weight: 600;
     z-index: 1;
 }
 
-.timeline-content {
+.timeline-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 60px;
     position: relative;
-    background-color: rgba(0, 0, 0, 0.5);
+    padding-left: 120px;
+    min-height: 60px;
+}
+
+.timeline-time {
+    position: absolute;
+    left: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    z-index: 2;
+    box-shadow: 0 0 0 4px var(--secondary-light);
+    border: 3px solid var(--secondary-color);
+}
+
+.timeline-content {
+    flex: 1;
+    margin-left: 120px;
+    background-color: rgba(173, 216, 230, 0.8); /* Light blue like image */
     border-radius: 10px;
-    padding: 30px;
-    margin-top: 20px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 102, 0, 0.2);
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 145, 0, 0.3);
+    position: relative;
 }
 
 .timeline-content h3 {
     font-size: 1.5rem;
     margin-bottom: 10px;
-    color: var(--primary-color);
+    color: var(--primary-dark);
+    font-family: 'Orbitron', sans-serif;
+}
+
+.timeline-content p {
+    color: #555;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Responsive for timeline */
+@media (max-width: 768px) {
+    .timeline-container::before {
+        left: 30px;
+    }
+    
+    .timeline-item {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 80px;
+        margin-bottom: 40px;
+    }
+    
+    .timeline-time {
+        left: 0;
+        top: 0;
+        transform: none;
+        margin-bottom: 15px;
+        font-size: 1rem;
+    }
+    
+    .timeline-content {
+        margin-left: 0;
+        width: 100%;
+    }
 }
 
 /* Sponsors section */
@@ -516,7 +797,7 @@ nav a:hover::after {
 /* Contact section */
 .contact {
     padding: 80px 0;
-    background-color: var(--secondary-light);
+    background-color: var(--primary-light);
 }
 
 .contact-grid {
@@ -536,14 +817,18 @@ nav a:hover::after {
     align-items: center;
     gap: 15px;
 }
+
+.contact-item p {
+    color: rgb(6, 6, 6);
+}
 /* Continuation from previous part */
-    
+
 .contact-item i {
     font-size: 1.5rem;
-    color: var(--primary-color);
+    color: orange;
     width: 40px;
     height: 40px;
-    background-color: rgba(255, 102, 0, 0.1);
+    background-color: rgba(235, 101, 11, 0.992);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -562,7 +847,7 @@ nav a:hover::after {
     padding: 12px 15px;
     border-radius: 8px;
     border: 1px solid var(--secondary-light);
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgb(220, 215, 215);
     color: var(--light-color);
     font-family: 'Poppins', sans-serif;
 }
@@ -576,7 +861,7 @@ nav a:hover::after {
 }
 
 .contact-form ::placeholder {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(12, 12, 12, 0.844);
 }
 
 /* Footer styles */
@@ -686,8 +971,8 @@ footer {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: rgba(255, 102, 0, 0.1);
-    color: var(--light-color);
+    background: rgb(11, 11, 11);
+    color: var(--primary-color);
     transition: all 0.3s ease;
     border: 1px solid var(--primary-color);
 }
@@ -704,7 +989,7 @@ footer {
     padding-top: 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: #ff6600;
 }
 
 /* Department page specific styles */
@@ -817,7 +1102,7 @@ footer {
 .event-description {
     font-size: 0.9rem;
     margin-bottom: 15px;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(11, 11, 11, 0.8);
 }
 
 .event-meta {
@@ -877,6 +1162,14 @@ footer {
 .countdown h3 {
     font-size: 2.5rem;
     margin-bottom: 20px;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.countdown .event-started {
+    color: var(--primary-color);
+    font-weight: bold;
+    background-color: var(--primary-light);
 }
 
 .countdown-timer {
@@ -893,11 +1186,12 @@ footer {
 }
 
 .countdown-value {
-    font-size: 2.5rem;
+    font-size: 30px;
     font-weight: 700;
-    background-color: var(--primary);
-    width: 100px;
-    height: 100px;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    width: 90px;
+    height: 90px;
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -910,6 +1204,8 @@ footer {
     font-size: 1rem;
     text-transform: uppercase;
     letter-spacing: 1px;
+    color: var(--primary-color);
+    font-weight: bold;
 }
 /* Animation keyframes */
 @keyframes fadeIn {
@@ -1148,13 +1444,13 @@ footer {
 .leadership-section {
     text-align: center;
     padding: 60px 20px;
-    background: black;
+    background: rgba(128, 126, 126, 0.629);
 }
 
 .leadership-section h2 {
     font-size: 38px;
     font-weight: 600;
-    color: orange;
+    color: rgb(231, 139, 11);
     text-transform: uppercase;
     letter-spacing: 3px;
     position: relative;
@@ -1166,7 +1462,7 @@ footer {
     display: block;
     width: 100%;
     height: 4px;
-    background: orange;
+    background: rgb(236, 131, 3);
     margin: 8px auto;
 }
 
@@ -1182,14 +1478,14 @@ footer {
 
 /* Individual Card Styling */
 .leader-card {
-    background: #1e1e1e;
+    background: #1e1e1ee1;
     padding: 25px;
     border-radius: 12px;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
     overflow: hidden;
-    border: 2px solid orange;
+    border: 2px solid rgb(239, 117, 4);
 }
 
 /* Hover Effect on Card */
@@ -1222,12 +1518,12 @@ footer {
 .leader-info h4 {
     font-size: 22px;
     font-weight: 600;
-    color: orange;
+    color: rgba(239, 127, 7, 0.742);
 }
 
 .leader-info p {
     font-size: 16px;
-    color: #d1d1d1;
+    color: #c9c3c3;
     font-weight: 300;
 }
 
@@ -1239,7 +1535,7 @@ footer {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(255, 165, 0, 0.15) 10%, transparent 50%);
+    background: radial-gradient(circle, rgba(212, 138, 0, 0.15) 10%, transparent 50%);
     transition: transform 0.4s ease-in-out;
     opacity: 0;
 }
@@ -1275,5 +1571,11 @@ footer {
 
     .tagline {
         font-size: 14px;
+    }
+
+    .login-button {
+        margin-left: 10px;
+        padding: 8px 15px;
+        font-size: 0.9rem;
     }
 }

@@ -204,7 +204,7 @@
     async function loadDashboard() {
       const { data: { user }, error: userErr } = await supabase.auth.getUser();
       if (userErr || !user) {
-        window.location.href = "login.html";
+        window.location.href = "/tarangnxtzen/dashboards/login.html";
         return;
       }
 
@@ -266,7 +266,7 @@
 
     logoutBtn.addEventListener('click', async () => {
       await supabase.auth.signOut();
-      window.location.href = "login.html";
+      window.location.href = "/tarangnxtzen/dashboards/login.html";
     });
 
     loadDashboard();

@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Super Admin • Tarang</title>
+<link rel="stylesheet" href="./dashboard.css">
+
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 6px 10px;
+    text-align: left;
+  }
+  th {
+    background: #f4f4f4;
+    font-weight: 600;
+  }
+  tr:nth-child(even) {
+    background: #fafafa;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <aside class="sidebar" id="sidebar">
+    <h2>Super Admin</h2>
+    <ul class="menu">
+      <li id="menu-dashboard" class="active"><a href="#" onclick="show('dashboard','menu-dashboard')">🏠Dashboard</a></li>
+      <li id="menu-convenor"><a href="#" onclick="show('convenor','menu-convenor')">🧑‍💼Convenor</a></li>
+      <li id="menu-coordinators"><a href="#" onclick="show('coordinators','menu-coordinators')">👥Coordinators</a></li>
+      <li id="menu-departments"><a href="#" onclick="show('departments','menu-departments')">🏫 Departments</a></li>
+      <li id="menu-events"><a href="#" onclick="show('events-section','menu-events')">🎪 Events</a></li>
+      <li id="menu-tables"><a href="#" onclick="show('tables','menu-tables')">📋 Tables</a></li>
+      <li id="menu-amounts"><a href="#" onclick="show('amounts','menu-amounts')"> 💰 Amounts</a></li>
+    </ul>
+  </aside>
+
+  <main class="main">
+    <div class="header">
+      <h1 id="welcome">Welcome Super Admin</h1>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <button id="refresh-all">🔄 Refresh</button>
+        <div id="status" class="note">Loading...</div>
+      </div>
+    </div>
+
+    <!-- Dashboard -->
+    <section id="dashboard" class="section active">
+      <div class="card-grid">
+        <div class="card">
+          <h3>Total Registrations</h3>
+          <p class="big" id="totalRegs">0</p>
+          <button class="view-btn" onclick="showDeptBreakdown('total')">View More</button>
+        </div>
+        <div class="card">
+          <h3>Pending Registrations</h3>
+          <p class="big" id="pendingRegs">0</p>
+          <button class="view-btn" onclick="showDeptBreakdown('pending')">View More</button>
+        </div>
+        <div class="card">
+          <h3>Paid Registrations</h3>
+          <p class="big" id="paidRegs">0</p>
+          <button class="view-btn" onclick="showDeptBreakdown('paid')">View More</button>
+        </div>
+        <div class="card">
+          <h3>Total Amount</h3>
+          <p class="big" id="totalAmount">₹0</p>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- Convenor -->
+    <section id="convenor" class="section">
+      <div class="card">
+        <h3>Convenors</h3>
+        <div id="convenor-list" class="cards-container"></div>
+        <form id="convenor-form" class="mini-form" style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+  <form id="convenor-form" class="mini-form" style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+  <input name="serial" type="text" placeholder="Serial (id/roll)" required style="flex: 1 1 100px;">
+  <input name="name" type="text" placeholder="Name" required style="flex: 1 1 150px;">
+  <input name="email" type="email" placeholder="Email (for login)" required style="flex: 1 1 200px;">
+  <input name="phone" type="text" placeholder="Phone" style="flex: 1 1 120px;">
+  <input name="year" type="text" placeholder="Year" style="flex: 1 1 80px;">
+  <button type="submit" style="flex: 0 0 auto; padding: 12px 24px; font-size: 18px; background-color: #ff6e40; color: #fff; border: none; border-radius: 6px; cursor: pointer;">
+    Add Convenor
+  </button>
+</form>
+
+        <div id="convenor-error" class="error" role="alert"></div>
+        </div>
+      </section>
+      
+    <!-- Coordinators -->
+    <section id="coordinators" class="section">
+      <div class="card">
+        <h3>Coordinators</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Serial</th><th>Name</th><th>Email</th><th>Department</th><th>Phone</th><th>Year</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="coordinator-body"></tbody>
+        </table>
+        <form id="coordinator-form" class="mini-form" style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+      <input name="serial" type="text" placeholder="Serial (id/roll)" required style="flex: 1 1 100px;">
+      <input name="name" type="text" placeholder="Name" required style="flex: 1 1 150px;">
+      <input name="email" type="email" placeholder="Email (for login)" required style="flex: 1 1 200px;">
+      <input name="department" type="text" placeholder="Department" required style="flex: 1 1 150px;">
+     <input name="phone" type="text" placeholder="Phone" style="flex: 1 1 120px;">
+      <input name="year" type="text" placeholder="Year" style="flex: 1 1 80px;">
+      <button type="submit" style="flex: 0 0 auto; padding: 12px 24px; font-size: 18px; background-color: #ff6e40; color: #fff; border: none; border-radius: 6px; cursor: pointer;">
+        Add Coordinator
+      </button>
+    </form>
+        <div id="coordinator-error" class="error"></div>
+      </div>
+    </section>
+
+    <!-- Departments -->
+    <section id="departments" class="section">
+      <h3>Departments</h3>
+      <div id="departments-grid" class="mini-card-container"></div>
+    </section>
+
+    <!-- Tables -->
+   <section id="tables" class="section">
+  <div class="card">
+    <div class="table-header" style="display:flex; align-items:center; justify-content:space-between;">
+      <div>
+        <button class="back-btn" id="tables-back">← Back</button>
+        <h3 id="tables-title" style="display:inline-block; margin-left:10px;">Registrations</h3>
+      </div>
+      <button class="view-btn" id="export-visible-csv">Export CSV</button>
+    </div>
+
+    <div id="table-container" style="margin-top:15px;"></div>
+  </div>
+</section>
+
+
+
+    <!-- Events -->
+    <section id="events-section" class="section">
+      <h3>Events</h3>
+      <div id="events-grid" class="mini-card-container"></div>
+    </section>
+
+    <!-- Amounts -->
+    <section id="amounts" class="section">
+      <div class="card">
+        <h3>Amounts (Dept-wise & Event-wise)</h3>
+        <div id="total-fee" style="margin-bottom:15px; font-weight:bold;">Total Fee: ₹0</div>
+
+        <div class="charts-container" style="display:flex; flex-wrap:wrap; justify-content:center; gap:40px; margin-bottom:20px;">
+          <!-- Pie Chart -->
+          <div style="flex:1 1 300px; display:flex; justify-content:center; align-items:center;">
+            <canvas id="deptPieChart" style="max-width:400px;"></canvas>
+          </div>
+          <!-- Bar Chart -->
+          <div style="flex:1 1 400px;">
+            <canvas id="eventBarChart" style="width:100%;"></canvas>
+          </div>
+        </div>
+
+        <div id="amounts-container"></div>
+        <div id="amounts-pagination" style="margin-top:12px; text-align:center;"></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script type="module" src="./dashboard.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>
