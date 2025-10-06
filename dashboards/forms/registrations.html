@@ -39,34 +39,32 @@ small{display:block;margin-bottom:10px; grid-column: span 2;}
 <option value="MECH">MECH</option>
 <option value="CIVIL">CIVIL</option>
 </select>
-<label>Year</label>
-<select id="year" required>
-<option value="">Select Year</option>
-<option value="1">1st Year</option>
-<option value="2">2nd Year</option>
-<option value="3">3rd Year</option>
-<option value="4">4th Year</option>
-</select>
+
 <label>Event</label>
 <select id="event" required>
 <option value="">Select Event</option>
 </select>
 <small id="eventNote" style="color:#d9534f;font-weight:500;display:none">⚠️ Max 3 members allowed for this event</small>
+
 <div id="teamMembers" style="display:none;margin-top:10px;">
 <input id="member1" type="text" placeholder="Member 1 Name (required)" />
 <input id="member1Email" type="email" placeholder="Member 1 Email (required)" />
 <input id="member2" type="text" placeholder="Member 2 Name (optional)" />
 <input id="member2Email" type="email" placeholder="Member 2 Email (optional)" />
 </div>
+
 <label>Event Fee (₹)</label>
 <input id="fee" type="number" readonly />
+
 <div class="qr-code">
 <label>Scan this QR code for payment:</label>
 <img src="../assets/images/qr-code.jpg" alt="Payment QR Code" width="200" height="200">
 </div>
+
 <label>Full Name</label><input id="name" type="text" required />
 <label>UTR Number</label>
 <input id="utr" type="text" required />
+
 <button id="submitBtn" type="submit">Register</button>
 </form>
 </div>
@@ -84,7 +82,6 @@ catch(err){ console.warn('Supabase init failed:',err); }
 
 const form=document.getElementById('registrationForm');
 const departmentSelect=document.getElementById('department');
-const yearSelect=document.getElementById('year');
 const eventSelect=document.getElementById('event');
 const feeInput=document.getElementById('fee');
 const teamMembersDiv=document.getElementById('teamMembers');
@@ -115,8 +112,6 @@ member1.required=false;member1.value='';member1Email.required=false;member1Email
 member2.value='';member2Email.value='';
 });
 
-yearSelect.addEventListener('change',()=>{populateEvents();});
-
 eventSelect.addEventListener('change',()=>{
 const sel=eventSelect.value;
 feeInput.value=eventFees[sel]||'';
@@ -139,15 +134,40 @@ const student_id=document.getElementById('studentId').value.trim();
 const email=document.getElementById('email').value.trim();
 const phone=document.getElementById('phone').value.trim();
 const department=departmentSelect.value;
-const year=yearSelect.value;
 const eventName=eventSelect.value;
 const fee=parseInt(feeInput.value)||0;
 const utr=document.getElementById('utr').value.trim();
-if(!name||!student_id||!email||!phone||!department||!year||!eventName||!utr){alert('Please fill all required fields.');return;}
+const college = 'SRIT'; // replace with dynamic value if needed
+
+if(!name||!student_id||!email||!phone||!department||!eventName||!utr){alert('Please fill all required fields.');return;}
 if((eventName==="Hackathon [5 Hours]"||eventName==="IoT Hackathon")&&(!member1.value.trim()||!member1Email.value.trim())){alert('Member 1 name & email required for Hackathon/IoT Hackathon.');return;}
-const payload={name,student_id,email,phone,department,year,event:eventName,fee,utr_number:utr,status:'pending',members:(member1.value||member1Email.value||member2.value||member2Email.value)?{member1_name:member1.value||null,member1_email:member1Email.value||null,member2_name:member2.value||null,member2_email:member2Email.value||null}:null};
-if(!supabaseClient){console.warn('Supabase client not available. Skipping DB insert. Payload:',payload);alert('Form validated but backend not available (Supabase not loaded). Check console.');}
-else{const {data,error}=await supabaseClient.from('registrations').insert([payload]);if(error)throw error;alert('✅ Registration submitted successfully!');}
+
+const payload={
+name,
+student_id,
+email,
+phone,
+department,
+college,
+event:eventName,
+fee,
+utr_number:utr,
+status:'pending',
+members:(member1.value||member1Email.value||member2.value||member2Email.value)?{
+member1_name:member1.value||null,
+member1_email:member1Email.value||null,
+member2_name:member2.value||null,
+member2_email:member2Email.value||null
+}:null
+};
+
+if(!supabaseClient){console.warn('Supabase client not available. Skipping DB insert. Payload:',payload);alert('Form validated but backend not available. Check console.');}
+else{
+const {data,error}=await supabaseClient.from('registrations').insert([payload]);
+if(error)throw error;
+alert('✅ Registration submitted successfully!');
+}
+
 form.reset();eventSelect.innerHTML='<option value="">Select Event</option>';feeInput.value='';teamMembersDiv.style.display='none';eventNote.style.display='none';
 }catch(err){console.error(err);alert('❌ Error: '+(err.message||err));}
 finally{submitBtn.disabled=false;submitBtn.textContent=original;}
