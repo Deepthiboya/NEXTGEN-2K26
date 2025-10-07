@@ -17,6 +17,12 @@ function $(id) { return document.getElementById(id); }
 function setStatus(msg) { const s = $('status'); if (s) s.textContent = msg || ''; }
 function escapeHtml(s) { if (s === null || s === undefined) return ''; return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
 
+// --- Amounts Table Pagination ---
+window.amountsPerPage = 10;        // number of rows per page
+window.amountsCurrentPage = 1;     // current page
+window.amountsTotalPages = 1;      // will be computed dynamically
+
+
 //paginations
 let registrationsCurrentPage = 1;
 const registrationsRowsPerPage = 10;
@@ -976,6 +982,8 @@ function renderEventBarChart(registrations) {
   } catch (err) { console.warn('renderEventBarChart err', err); }
 }
 
+
+
 // Render amounts table with detailed breakdown
 function renderAmountsTable(registrations) {
   try {
@@ -1139,6 +1147,18 @@ function renderDailyCharts() {
   chartDailyDeptEvent = _renderLine(chartDailyDeptEvent, 'chartDailyDeptEvent', labels, dsDE);
 }
 
+function paginateAmounts(data, page = 1, pageSize = 10) {
+  const start = (page - 1) * pageSize;
+  const end = start + pageSize;
+  const pageData = data.slice(start, end);
+
+  const totalPaid = pageData.reduce((sum, r) => sum + (r.paid || 0), 0);
+  const totalPending = pageData.reduce((sum, r) => sum + (r.pending || 0), 0);
+
+  return { pageData, totalPaid, totalPending };
+}
+
+
 
 function _renderOrUpdateLineChart(existing, canvasId, labels, datasets, yTitle) {
   const ctx = document.getElementById(canvasId)?.getContext?.('2d');
@@ -1225,6 +1245,20 @@ async function checkUserAndInit() {
     setStatus('Loading data...');
     await loadDashboardData();
     await loadRegistrationStats();
+
+   
+window.amountsData = (window.registrationData || []).map(r => ({
+  department: r.department || 'Unknown',
+  event: r.event || 'Unknown',
+  total: Number(r.fee || 0),
+  paid: r.status === 'paid' ? Number(r.fee || 0) : 0,
+  pending: r.status === 'paid' ? 0 : Number(r.fee || 0)
+}));
+
+
+    const { totalPaid, totalPending } = computeAmountsTotals(window.registrationData || []);
+$('totalPaidAmount').textContent = `₹${totalPaid.toLocaleString('en-IN')}`;
+$('totalPendingAmount').textContent = `₹${totalPending.toLocaleString('en-IN')}`;
     
     populateEventFilterOptions();
 show('dashboard', 'menu-dashboard');
@@ -1261,6 +1295,8 @@ window.addEventListener('resize', () => {
     setStatus('Error checking session (see console)');
   }
 }
+
+
 
 // ---------- BOOTSTRAP ----------
 document.addEventListener('DOMContentLoaded', () => {
@@ -1357,6 +1393,20 @@ function renderDepartmentsCards(departments) {
   });
 }
 window.renderDepartmentsCards = renderDepartmentsCards;
+function computeAmountsTotals(registrations) {
+  let totalPaid = 0;
+  let totalPending = 0;
+
+  (registrations || []).forEach(r => {
+    const fee = Number(r.fee || 0);
+    if (r.status === 'paid') totalPaid += fee;
+    else totalPending += fee;
+  });
+
+  return { totalPaid, totalPending };
+}
+
+
 //show events for a department
 function showDepartmentEvents(departmentName) {
   const regs = window.registrationData || [];

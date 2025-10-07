@@ -263,14 +263,24 @@
   border-radius: 10px;
 }
 
-/* Primary submit button: orange pill with readable text */
 #registrationModal .register-btn {
   background: linear-gradient(90deg, var(--reg-orange), #ffb152);
-  color: #0b0b0b;                 /* black on orange for AA contrast on small text */
+  color: #0b0b0b;
   border: 1px solid rgba(0,0,0,0.08);
   box-shadow: 0 10px 24px rgba(255, 138, 30, 0.35);
   transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+  
+  padding: 8px 16px;        /* smaller button */
+  font-size: 14px;          /* smaller text */
+  border-radius: 6px;       /* rounded corners */
+  
+  display: block;            /* makes margin auto work */
+  width: fit-content;        /* button shrinks to content width */
+  margin: 0 auto;            /* centers the button */
+  text-align: center;        /* center text inside */
 }
+
+
 #registrationModal .register-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 14px 30px rgba(255, 138, 30, 0.45);
@@ -1021,10 +1031,10 @@ footer .container.section { padding-block: 24px !important; }
             <!-- Code Buzz -->
             <div class="event-card">
               <div class="event-image">
-                <img src="../assets/images/csecodebuzz.jpg" alt="Code Buzz" />
+                <img src="../assets/images/crosswordpuzzle.jpg" alt="Code Buzz" />
               </div>
               <div class="event-content">
-                <h3 class="event-title">Code Buzz</h3>
+                <h3 allign="center" class="event-title">Crossword Puzzle</h3>
                 <ul class="event-stats" aria-label="Code Buzz quick facts">
                   <li class="stat"><i class="fas fa-clock"></i><div><span class="label">Time</span><span class="value">2 - 3 PM</span></div></li>
                   <li class="stat"><i class="fas fa-user-friends"></i><div><span class="label">Team</span><span class="value">Solo</span></div></li>

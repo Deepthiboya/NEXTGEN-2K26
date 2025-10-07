@@ -8,7 +8,7 @@
     <!-- Chart.js for the amounts chart -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-   <link rel="stylesheet" href="dashboard.css" />
+    <link rel="stylesheet" href="dashboard.css" />
     <style>
       table {
         width: 100%;
@@ -29,6 +29,23 @@
       tr:nth-child(even) {
         background: #fafafa;
       }
+      .totals span {
+        font-weight: 600;
+        color: #007bff;
+      }
+      #pagination button {
+        padding: 4px 8px;
+        margin: 0 2px;
+        cursor: pointer;
+        border: 1px solid #007bff;
+        background: #fff;
+        color: #007bff;
+        border-radius: 4px;
+      }
+      #pagination button.active {
+        background: #007bff;
+        color: #fff;
+      }
     </style>
   </head>
   <body>
@@ -38,20 +55,13 @@
         <h2>Convenor</h2>
         <ul class="menu">
           <li id="menu-dashboard" class="active">
-            <a href="#" onclick="show('dashboard','menu-dashboard')"
-              >🏠 Dashboard</a
-            >
+            <a href="#" onclick="show('dashboard','menu-dashboard')">🏠 Dashboard</a>
           </li>
           <li id="menu-coordinators">
-            <a href="#" onclick="show('coordinators','menu-coordinators')"
-              >👥 Coordinators</a
-            >
-            
+            <a href="#" onclick="show('coordinators','menu-coordinators')">👥 Coordinators</a>
           </li>
           <li id="menu-departments">
-            <a href="#" onclick="show('departments','menu-departments')"
-              >🏫 Departments</a
-            >
+            <a href="#" onclick="show('departments','menu-departments')">🏫 Departments</a>
           </li>
           <li id="menu-events">
             <a href="#" onclick="show('events','menu-events')">🎪 Events</a>
@@ -100,70 +110,35 @@
             <div class="card">
               <h3>Total Amount</h3>
               <p class="big" id="totalAmount">₹0</p>
-              <button
-                class="view-btn"
-                id="view-more-amounts"
-                onclick="showDeptBreakdown('amount')"
-              >
+              <button class="view-btn" id="view-more-amounts" onclick="showDeptBreakdown('amount')">
                 View More
               </button>
             </div>
           </div>
-        <div id="dashboardTablesAnchor"></div>  
-          <!-- Daily registrations analytics -->
-<!-- Analytics (stacked, responsive) -->
-<div class="analytics-wrap">
-  <div class="chart-card clean">
-    <div class="chart-header">
-      <h4>Daily registrations — per Department</h4>
-    </div>
-    <div class="chart-container tall">
-      <canvas id="chartDailyDept"></canvas>
-    </div>
-  </div>
+          <div id="dashboardTablesAnchor"></div>  
 
-  <div class="chart-card clean">
-    <div class="chart-header">
-      <h4>Daily registrations — per Event</h4>
-    </div>
-    <div class="chart-container tall">
-      <canvas id="chartDailyEvent"></canvas>
-    </div>
-  </div>
-
-  <div class="chart-card clean">
-    <div class="chart-header">
-      <h4>Daily registrations — Dept × Event (Top 4)</h4>
-    </div>
-    <div class="chart-container tall">
-      <canvas id="chartDailyDeptEvent"></canvas>
-    </div>
-  </div>
-</div>
-
-
-          <!-- <div id="deptBreakdown" style="display:none;">
-          <div class="card">
-            <div class="header" style="justify-content:space-between;align-items:center;">
-              <h3>Depathe rtment-wise</h3>
-              <button class="close-btn" onclick="closeDeptBreakdown()">Close</button>
+          <!-- Analytics -->
+          <div class="analytics-wrap">
+            <div class="chart-card clean">
+              <div class="chart-header"><h4>Daily registrations — per Department</h4></div>
+              <div class="chart-container tall"><canvas id="chartDailyDept"></canvas></div>
             </div>
-            <table>
-              <thead><tr><th>Department</th><th>Count</th><th>Action</th></tr></thead>
-              <tbody id="deptTable"></tbody>
-            </table>
+            <div class="chart-card clean">
+              <div class="chart-header"><h4>Daily registrations — per Event</h4></div>
+              <div class="chart-container tall"><canvas id="chartDailyEvent"></canvas></div>
+            </div>
+            <div class="chart-card clean">
+              <div class="chart-header"><h4>Daily registrations — Dept × Event (Top 4)</h4></div>
+              <div class="chart-container tall"><canvas id="chartDailyDeptEvent"></canvas></div>
+            </div>
           </div>
-        </div> -->
+
+          <!-- Department breakdown -->
           <div id="deptBreakdown" style="display: none">
             <div class="card">
-              <div
-                class="header"
-                style="justify-content: space-between; align-items: center"
-              >
+              <div class="header" style="justify-content: space-between; align-items: center">
                 <h3 id="deptBreakdownTitle">Department-wise</h3>
-                <button class="close-btn" onclick="closeDeptBreakdown()">
-                  Close
-                </button>
+                <button class="close-btn" onclick="closeDeptBreakdown()">Close</button>
               </div>
               <table>
                 <thead>
@@ -179,22 +154,17 @@
           </div>
         </section>
 
-        <!-- Tables (target for event->dept->registrations) -->
+        <!-- Tables Section -->
         <section id="tables" class="section">
           <div class="card">
             <div class="table-header">
-              <button class="back-btn" id="tables-back">
-                ← Back to Events
-              </button>
+              <button class="back-btn" id="tables-back">← Back to Events</button>
               <h3 id="tables-title">Registrations</h3>
               <div style="flex: 1"></div>
-              <button class="view-btn" id="export-visible-csv">
-                Export Visible CSV
-              </button>
+              <button class="view-btn" id="export-visible-csv">Export Visible CSV</button>
             </div>
             <div id="tableFilters" style="margin-bottom: 8px">
-              <label style="font-size: 13px; color: var(--muted)"
-                >Filter:
+              <label style="font-size: 13px; color: var(--muted)">Filter:
                 <select id="filterStatus">
                   <option value="all">All</option>
                   <option value="pending">Pending</option>
@@ -202,12 +172,11 @@
                 </select>
               </label>
               <label style="font-size: 13px; color: var(--muted); margin-left: 10px;">
-  Event:
-  <select id="filterEvent">
-    <option value="all">All</option>
-  </select>
-</label>
-
+                Event:
+                <select id="filterEvent">
+                  <option value="all">All</option>
+                </select>
+              </label>
             </div>
             <div id="tableContainer">
               <table>
@@ -229,31 +198,16 @@
           </div>
         </section>
 
-        <!-- Coordinators -->
+        <!-- Coordinators Section -->
         <section id="coordinators" class="section">
           <div class="card">
             <h3>Coordinators</h3>
             <div id="coordinator-cards" class="cards-container"></div>
             <form id="coordinator-form" class="mini-form">
-              <input
-                name="serial"
-                type="text"
-                placeholder="Serial no"
-                required
-              />
+              <input name="serial" type="text" placeholder="Serial no" required />
               <input name="name" type="text" placeholder="Name" required />
-              <input
-                name="email"
-                type="email"
-                placeholder="Email (for login)"
-                required
-              />
-              <input
-                name="department"
-                type="text"
-                placeholder="Department"
-                required
-              />
+              <input name="email" type="email" placeholder="Email (for login)" required />
+              <input name="department" type="text" placeholder="Department" required />
               <input name="phone" type="text" placeholder="Phone" />
               <input name="year" type="text" placeholder="Year" />
               <button type="submit">Add Coordinator</button>
@@ -262,14 +216,11 @@
           </div>
         </section>
 
-        <!-- Departments -->
+        <!-- Departments Section -->
         <section id="departments" class="section">
           <div class="card">
             <h3>Departments</h3>
-            <!-- Container for department cards -->
             <div id="departmentsCardsContainer" class="cards-grid"></div>
-
-            <!-- Container for selected department events + registrations -->
             <div id="deptEventsContainer" style="display: none"></div>
             <br />
             <table>
@@ -283,25 +234,15 @@
               <tbody id="departments-body"></tbody>
             </table>
             <form id="department-form" class="mini-form">
-              <input
-                name="dept"
-                type="text"
-                placeholder="Department name"
-                required
-              />
-              <input
-                name="events"
-                type="text"
-                placeholder="Events (comma separated)"
-                required
-              />
+              <input name="dept" type="text" placeholder="Department name" required />
+              <input name="events" type="text" placeholder="Events (comma separated)" required />
               <button type="submit">Add Department</button>
             </form>
             <div id="department-error" class="error"></div>
           </div>
         </section>
 
-        <!-- Events -->
+        <!-- Events Section -->
         <section id="events" class="section">
           <div class="card">
             <h3>Events</h3>
@@ -310,28 +251,52 @@
           </div>
         </section>
 
-        <!-- Amounts -->
+        <!-- Amounts Section -->
         <section id="amounts" class="section">
           <div class="card">
             <h3>Amounts (Dept-wise & Event-wise)</h3>
-            <div id="total-fee" style="margin-bottom:15px; font-weight:bold; font-size: 18px; color: var(--accent);">Total Fee: ₹0</div>
+
+            <!-- Total Paid & Pending -->
+            <div class="totals" style="display:flex; gap:30px; margin-bottom:15px; font-size:16px;">
+           <div>Total Paid Amount: <span id="totalPaidAmount">₹0</span></div>
+          <div>Total Pending Amount: <span id="totalPendingAmount">₹0</span></div>
+
+            </div>
+
+          
 
             <!-- Charts -->
             <div class="charts-container" style="display:flex; flex-wrap:wrap; justify-content:center; gap:40px; margin-bottom:20px;">
-              <!-- Pie Chart centered -->
               <div style="flex:1 1 300px; display:flex; justify-content:center; align-items:center;">
                 <canvas id="deptPieChart" style="max-width:400px;"></canvas>
               </div>
-              <!-- Bar Chart -->
               <div style="flex:1 1 400px;">
                 <canvas id="eventBarChart" style="width:100%;"></canvas>
               </div>
             </div>
 
             <!-- Amounts Table -->
-            <div id="amounts-container"></div>
-            
-            <!-- Existing 14-day chart -->
+            <div id="amounts-container">
+              <table id="amountTable">
+                <thead>
+                  <tr>
+                    <th>Department</th>
+                    <th>Event</th>
+                    <th>Paid Amount</th>
+                    <th>Pending Amount</th>
+                    <th>Total Fee</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Table rows populated by JS -->
+                </tbody>
+              </table>
+              <!-- Pagination -->
+              <div id="pagination" style="margin-top:10px; display:flex; justify-content:center; gap:10px;"></div>
+            </div>
+
+            <!-- Last 14 days chart -->
             <div class="chart-card card" style="margin-top: 30px;">
               <h4>Fees collected — last 14 days</h4>
               <canvas id="amountsChart" height="120"></canvas>
@@ -342,6 +307,5 @@
     </div>
 
     <script type="module" src="./dashboard.js"></script>
-    
   </body>
 </html>

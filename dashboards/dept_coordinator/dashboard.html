@@ -1,275 +1,295 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Coordinator Dashboard</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dept Coordinator — Dashboard</title>
   <style>
-    :root {
+    :root{
       --primary-color: #ff6e40;
-      --secondary-color: #333333;
+      --muted: #666;
+      --bg: #f3f3f3;
+      --card: #fff;
       --accent-green: #2ecc71;
       --accent-yellow: #f1c40f;
-      --background-light: #ecf0f1;
-      --card-white: #ffffff;
-      --logout-red: #e74c3c;
-      --shadow-light: rgba(0, 0, 0, 0.1);
+      --accent-red: #e74c3c;
+      --shadow: rgba(0,0,0,0.08);
+      --sidebar-bg: #20232a;
+      --sidebar-accent: #ff6e40;
     }
-
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 40px;
-      background: var(--background-light);
-      color: var(--secondary-color);
-    }
-
-    .dashboard-container {
-      max-width: 1300px;
-      margin: auto;
-      background: var(--card-white);
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 8px 25px var(--shadow-light);
-      overflow-x: auto;
-    }
-
-    .header-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-      padding-bottom: 15px;
-      border-bottom: 3px solid var(--primary-color);
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    #title {
-      color: var(--primary-color);
-      font-size: 2em;
-      margin: 0;
-      flex: 1 1 auto;
-      min-width: 200px;
-    }
-
-    #logoutBtn {
-      padding: 8px 18px;
-      background: var(--logout-red);
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      flex: 0 0 auto;
-      min-width: 100px;
-      white-space: nowrap;
-    }
-    #logoutBtn:hover { background: #c0392b; }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      border-radius: 8px;
-      overflow: hidden;
-      min-width: 800px;
-    }
-
-    th, td {
-      padding: 12px 15px;
-      border-bottom: 1px solid #ddd;
-      text-align: left;
-      white-space: nowrap;
-    }
-
-    th {
-      background: var(--primary-color);
-      color: white;
-      text-transform: uppercase;
-      font-size: 0.85em;
-    }
-
-    tr:nth-child(even) { background: #f9f9f9; }
-    tr:hover { background: #f0f0f0; }
-
-    .status-badge {
-      padding: 5px 10px;
-      border-radius: 4px;
-      font-size: 0.8em;
-      font-weight: bold;
-    }
-    .status-paid { background: var(--accent-green); color: white; }
-    .status-pending { background: var(--accent-yellow); color: #333; }
-    .status-na { background: #bbb; color: white; }
-
-    /* Responsive adjustments */
-
-    @media (max-width: 992px) {
-      body {
-        padding: 20px 15px;
-      }
-      .dashboard-container {
-        padding: 20px 15px;
-        max-width: 100%;
-      }
-      #title {
-        font-size: 1.6em;
-      }
-      table {
-        min-width: 700px;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .header-bar {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      #logoutBtn {
-        width: 100%;
-        min-width: unset;
-      }
-      #title {
-        width: 100%;
-        margin-bottom: 10px;
-      }
-      table {
-        min-width: 600px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      body {
-        padding: 15px 10px;
-      }
-      .dashboard-container {
-        padding: 15px 10px;
-        border-radius: 8px;
-      }
-      table {
-        min-width: 500px;
-        font-size: 0.85em;
-      }
-      th, td {
-        padding: 8px 10px;
-      }
-      .status-badge {
-        font-size: 0.7em;
-        padding: 3px 7px;
-      }
-    }
+    *{box-sizing:border-box;font-family: 'Segoe UI', Arial, sans-serif;}
+    body{margin:0;background:var(--bg);min-height:100vh;display:flex;gap:24px;}
+    .sidebar{width:240px;min-height:100vh;background:var(--sidebar-bg);color:#fff;padding:24px 12px;flex-shrink:0;}
+    .sidebar .brand{text-align:center;margin-bottom:18px;}
+    .sidebar h2{margin:0;color:var(--sidebar-accent);font-size:1.25rem;}
+    .nav-list{list-style:none;padding:0;margin-top:10px;}
+    .nav-list li{margin:6px 0;}
+    .nav-link{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;color:#fff;text-decoration:none;transition:background .12s;}
+    .nav-link:hover{background:rgba(255,255,255,0.03);}
+    .nav-link.active{background:rgba(255,110,64,0.12);color:var(--sidebar-accent);}
+    .nav-footer{margin-top:30px;padding:12px;color:#ddd;font-size:0.9rem;}
+    .logout-btn{display:block;width:100%;background:var(--accent-red);border:none;padding:10px;border-radius:8px;color:#fff;cursor:pointer;margin-top:12px;}
+    .logout-btn:active{transform:translateY(1px);}
+    .main{flex:1;padding:22px;max-width:1200px;margin:20px auto;background:var(--card);border-radius:12px;box-shadow:0 12px 28px var(--shadow);}
+    .header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px;}
+    .title{color:var(--primary-color);font-size:1.6rem;margin-bottom:4px;}
+    .sub{color:var(--muted);font-size:0.95rem;}
+    .controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px;}
+    .search{padding:10px 12px;border-radius:8px;border:1px solid #ddd;min-width:260px;}
+    .btn{padding:10px 14px;border-radius:8px;border:0;cursor:pointer;background:var(--primary-color);color:#fff;font-weight:600;}
+    .btn.secondary{background:#f5f5f5;color:#333;border:1px solid #eee;}
+    .small-muted{font-size:0.85rem;color:var(--muted);}
+    .table-wrap{overflow:auto;border-radius:10px;border:1px solid #eee;background:#fff;padding:6px;}
+    table{width:100%;border-collapse:collapse;min-width:900px;}
+    th, td{padding:12px 14px;text-align:left;border-bottom:1px solid #f1f1f1;white-space:nowrap;font-size:0.95rem;}
+    th{background:var(--primary-color);color:#fff;font-weight:700;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.5px;}
+    tr:nth-child(even){background:#fbfbfb;}
+    tr:hover{background:#fcfcfc;}
+    .status-badge{padding:6px 8px;border-radius:6px;font-weight:700;font-size:0.82rem;display:inline-block;}
+    .status-paid{background:var(--accent-green);color:#fff;}
+    .status-pending{background:var(--accent-yellow);color:#222;}
+    .status-na{background:#bbb;color:#fff;}
+    .approve-btn{padding:8px 10px;border-radius:6px;border:0;cursor:pointer;background:var(--primary-color);color:#fff;font-weight:700;}
+    .approve-btn[disabled]{opacity:0.6; cursor:not-allowed;}
+    .footer{margin-top:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:0.9rem;}
+    .debug{font-size:0.85rem;color:#b53;background:#fff4f4;padding:8px;border-radius:8px;border:1px solid #ffd1d1;display:none;}
+    @media(max-width:980px){.sidebar{display:none;}body{padding:12px;}.main{margin:8px;width:100%;}table{min-width:700px;}}
+    @media(max-width:600px){.search{min-width:100%;}th,td{padding:8px;}}
   </style>
 </head>
 <body>
-  <div class="dashboard-container">
-    <div class="header-bar">
-      <h1 id="title">Coordinator Dashboard</h1>
-      <button id="logoutBtn">Logout</button>
+  <aside class="sidebar" role="navigation" aria-label="Coordinator menu">
+    <div class="brand">
+      <h2>Coordinator</h2>
+      <div style="font-size:0.85rem;color:#ddd;margin-top:6px;">Dept Portal</div>
+    </div>
+    <ul class="nav-list" id="navList">
+      <li><a class="nav-link active" href="#" data-view="dashboard">📊 Dashboard</a></li>
+      <li><a class="nav-link" href="#" data-view="events">🎯 Events</a></li>
+      <li><a class="nav-link" href="#" data-view="amounts">💰 Amounts</a></li>
+    </ul>
+    <div class="nav-footer">
+      <div style="margin-bottom:8px;">Signed in:</div>
+      <div id="signedInAs" style="font-weight:700;color:#fff;"></div>
+      <button id="sidebarLogout" class="logout-btn" aria-label="Logout">Logout</button>
+    </div>
+  </aside>
+
+  <main class="main" role="main">
+    <div class="header">
+      <div>
+        <div class="title" id="title">Dept Coordinator Dashboard</div>
+        <div class="sub" id="subtitle">Loading...</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div id="counts" class="small-muted">—</div>
+        <button id="topLogout" class="btn secondary" title="Logout quick">Logout</button>
+      </div>
     </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Roll No</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Event</th>
-          <th>Fee</th>
-          <th>UTR Number</th>
-          <th>Status</th>
-          <th>Year</th>
-          <th>Registered On</th>
-        </tr>
-      </thead>
-      <tbody id="table-body">
-        <tr><td colspan="10" style="text-align:center;">Loading data...</td></tr>
-      </tbody>
-    </table>
-  </div>
+    <div class="controls" role="region" aria-label="controls">
+      <input id="searchInput" class="search" placeholder="Search by UTR number or name..." aria-label="Search registrations" />
+      <button id="refreshBtn" class="btn secondary">Refresh</button>
+      <button id="exportBtn" class="btn secondary">Export CSV</button>
+      <div style="margin-left:auto;" class="small-muted">Tip: search is trimmed & case-insensitive</div>
+    </div>
+
+    <div class="table-wrap" id="tableWrap" aria-live="polite">
+      <table aria-describedby="subtitle" id="registrationsTable">
+        <thead id="tableHead">
+          <tr>
+            <th>Roll No</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Event</th>
+            <th>Fee</th>
+            <th>UTR Number</th>
+            <th>Status</th>
+            <th>Year</th>
+            <th>Registered On</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <tr><td colspan="11" style="text-align:center;padding:28px;">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer">
+      <div id="paginationInfo">Showing <span id="showCount">0</span> registrations</div>
+      <div>
+        <button id="prevBtn" class="btn secondary">Prev</button>
+        <button id="nextBtn" class="btn secondary">Next</button>
+      </div>
+    </div>
+
+    <div id="debugBox" class="debug" role="status" aria-live="polite"></div>
+  </main>
 
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script>
-    const SUPABASE_URL = "https://jkqxisgkngxqlwuojuul.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImprcXhpc2drbmd4cWx3dW9qdXVsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5OTMxODgsImV4cCI6MjA3NDU2OTE4OH0.88ga7OV0KRK44PlAdo3tOZzxARHdSYNBZqp1AIj43vY";
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const SUPABASE_URL = "https://jkqxisgkngxqlwuojuul.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImprcXhpc2drbmd4cWx3dW9qdXVsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5OTMxODgsImV4cCI6MjA3NDU2OTE4OH0.88ga7OV0KRK44PlAdo3tOZzxARHdSYNBZqp1AIj43vY";
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const titleEl = document.getElementById('title');
-    const tableBody = document.getElementById('table-body');
-    const logoutBtn = document.getElementById('logoutBtn');
+  const navList = document.getElementById('navList');
+  const titleEl = document.getElementById('title');
+  const subtitleEl = document.getElementById('subtitle');
+  const signedInAs = document.getElementById('signedInAs');
+  const countsEl = document.getElementById('counts');
+  const topLogout = document.getElementById('topLogout');
+  const sidebarLogout = document.getElementById('sidebarLogout');
+  const refreshBtn = document.getElementById('refreshBtn');
+  const exportBtn = document.getElementById('exportBtn');
+  const searchInput = document.getElementById('searchInput');
+  const tableBody = document.getElementById('tableBody');
+  const tableHead = document.getElementById('tableHead');
+  const debugBox = document.getElementById('debugBox');
+  const showCount = document.getElementById('showCount');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
 
-    // Helper for safe values
-    const safe = (val, def='N/A') => (!val || val === '') ? def : val;
+  let registrations=[], filtered=[];
+  let currentDept=null, currentUser=null;
+  let page=0, PAGE_SIZE=20;
+  let activeView='dashboard';
 
-    async function loadDashboard() {
-      const { data: { user }, error: userErr } = await supabase.auth.getUser();
-      if (userErr || !user) {
-        window.location.href = "/tarangnxtzen/dashboards/login.html";
-        return;
-      }
+  function dbg(msg,show=false){ console.debug(msg); if(show){ debugBox.style.display='block'; debugBox.textContent=(new Date()).toLocaleTimeString()+' — '+String(msg); } }
+  function safe(v,d=''){ return (v===null||v===undefined)?d:String(v); }
+  function escapeHtml(s){ if(s===null||s===undefined) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+  function normalizeQ(q){ return (q||'').toString().trim().toLowerCase(); }
+  function setCounts(total,pending,paid){ countsEl.textContent=`Total: ${total} • Pending: ${pending} • Paid: ${paid}`; }
 
-      const { data: profile, error: profErr } = await supabase
-        .from('profiles')
-        .select('department')
-        .eq('id', user.id)
-        .single();
-
-      if (profErr || !profile) {
-        titleEl.innerText = "Profile Error!";
-        return;
-      }
-
-      const dept = profile.department;
-      titleEl.innerText = `${dept} Coordinator Dashboard`;
-
-      const { data: regs, error } = await supabase
-        .from('registrations')
-        .select('student_id, name, email, phone, event, fee, utr_number, status, year, created_at')
-        .eq('department', dept);
-
-      if (error) {
-        console.error(error);
-        tableBody.innerHTML = `<tr><td colspan="10" style="color:red; text-align:center;">Error loading data</td></tr>`;
-        return;
-      }
-
-      if (!regs || regs.length === 0) {
-        tableBody.innerHTML = `<tr><td colspan="10" style="text-align:center;">No registrations found.</td></tr>`;
-        return;
-      }
-
-      tableBody.innerHTML = "";
-      regs.forEach(r => {
-        let badge;
-        const status = safe(r.status).toLowerCase();
-        if (status === 'paid' || status === 'completed') badge = `<span class="status-badge status-paid">Paid</span>`;
-        else if (status === 'pending' || status === 'unpaid') badge = `<span class="status-badge status-pending">Pending</span>`;
-        else badge = `<span class="status-badge status-na">N/A</span>`;
-
-        const row = `
-          <tr>
-            <td>${safe(r.student_id)}</td>
-            <td>${safe(r.name)}</td>
-            <td>${safe(r.email)}</td>
-            <td>${safe(r.phone)}</td>
-            <td>${safe(r.event)}</td>
-            <td>${safe(r.fee)}</td>
-            <td>${safe(r.utr_number)}</td>
-            <td>${badge}</td>
-            <td>${safe(r.year)}</td>
-            <td>${new Date(r.created_at).toLocaleString()}</td>
-          </tr>
-        `;
-        tableBody.innerHTML += row;
-      });
+  async function getUser(){ const { data } = await supabase.auth.getUser(); return data?.user??null; }
+  async function init(){
+    currentUser = await getUser();
+    if(!currentUser){ window.location.href='/tarangnxtzen/dashboards/login.html'; return; }
+    signedInAs.textContent=currentUser.email||currentUser.id||'Coordinator';
+    currentDept=currentUser?.user_metadata?.department||null;
+    if(!currentDept){
+      const { data: prof } = await supabase.from('profiles').select('department').eq('id',currentUser.id).maybeSingle();
+      if(prof) currentDept=prof.department;
     }
+    if(!currentDept){ titleEl.textContent='Department not found'; subtitleEl.textContent='Contact admin'; return; }
+    titleEl.textContent=`${escapeHtml(currentDept)} Coordinator Dashboard`;
+    subtitleEl.textContent=`Signed in as ${escapeHtml(currentUser.email||'')}`;
+    await loadRegistrations(currentDept);
+  }
 
-    logoutBtn.addEventListener('click', async () => {
-      await supabase.auth.signOut();
-      window.location.href = "/tarangnxtzen/dashboards/login.html";
-    });
+  async function loadRegistrations(dept){
+    tableBody.innerHTML='<tr><td colspan="11" style="text-align:center;padding:28px;">Loading registrations…</td></tr>';
+    const { data, error } = await supabase.from('registrations').select('*').eq('department',dept).order('created_at',{ascending:false}).limit(2000);
+    if(error){ tableBody.innerHTML='<tr><td colspan="11" style="color:red;text-align:center;padding:18px;">Error loading data</td></tr>'; setCounts(0,0,0); return; }
+    registrations = data||[]; filtered=registrations.slice(); page=0; renderPage(); updateCounts();
+  }
 
-    loadDashboard();
+  function updateCounts(){
+    const total = filtered.length;
+    const pending = filtered.filter(r=>['pending','unpaid'].includes((r.status||'').toLowerCase())).length;
+    const paid = filtered.filter(r=>['paid','completed'].includes((r.status||'').toLowerCase())).length;
+    setCounts(total,pending,paid);
+  }
+
+  function renderPage(){
+    if(activeView==='dashboard'){
+      const start=page*PAGE_SIZE, pageItems=filtered.slice(start,start+PAGE_SIZE);
+      if(!pageItems.length){ tableBody.innerHTML='<tr><td colspan="11" style="text-align:center;padding:18px;">No registrations found.</td></tr>'; showCount.textContent='0'; return; }
+      showCount.textContent=String(filtered.length);
+      tableHead.innerHTML='<tr><th>Roll No</th><th>Name</th><th>Email</th><th>Phone</th><th>Event</th><th>Fee</th><th>UTR Number</th><th>Status</th><th>Year</th><th>Registered On</th><th>Action</th></tr>';
+      tableBody.innerHTML=pageItems.map(r=>{
+        const status=(r.status||'').toLowerCase();
+        const badge=status==='paid'||status==='completed'?'<span class="status-badge status-paid">Paid</span>':status==='pending'||status==='unpaid'?'<span class="status-badge status-pending">Pending</span>':'<span class="status-badge status-na">N/A</span>';
+        const action=status==='pending'?`<button class="approve-btn" data-rid="${r.id}">Approve</button>`:'';
+        return `<tr>
+          <td>${safe(r.student_id,'—')}</td>
+          <td>${safe(r.name,'—')}</td>
+          <td>${safe(r.email,'—')}</td>
+          <td>${safe(r.phone,'—')}</td>
+          <td>${safe(r.event,'—')}</td>
+          <td>${safe(r.fee,'0')}</td>
+          <td>${safe(r.utr_number,'—')}</td>
+          <td>${badge}</td>
+          <td>${safe(r.year,'—')}</td>
+          <td>${r.created_at?escapeHtml(new Date(r.created_at).toLocaleString()):'—'}</td>
+          <td>${action}</td>
+        </tr>`;
+      }).join('');
+    } else if(activeView==='events'){
+      const eventMap={}; registrations.forEach(r=>{ const ev=safe(r.event,'Unknown'); if(!eventMap[ev]) eventMap[ev]={total:0,paid:0,pending:0}; eventMap[ev].total++; const st=(r.status||'').toLowerCase(); if(st==='paid'||st==='completed') eventMap[ev].paid++; else if(st==='pending'||st==='unpaid') eventMap[ev].pending++; });
+      tableHead.innerHTML='<tr><th>Event</th><th>Total Registrations</th><th>Paid</th><th>Pending</th></tr>';
+      tableBody.innerHTML=Object.entries(eventMap).map(([ev,v])=>`<tr><td>${escapeHtml(ev)}</td><td>${v.total}</td><td>${v.paid}</td><td>${v.pending}</td></tr>`).join('');
+    } else if(activeView==='amounts'){
+      const amtMap={};
+      registrations.forEach(r=>{
+        const ev = safe(r.event,'Unknown');
+        const fee = Number(r.fee)||0;
+        const st = (r.status||'').toLowerCase();
+        if(!amtMap[ev]) amtMap[ev] = { total:0, paid:0, pending:0 };
+        amtMap[ev].total += fee;
+        if(st==='paid'||st==='completed') amtMap[ev].paid += fee;
+        else if(st==='pending'||st==='unpaid') amtMap[ev].pending += fee;
+      });
+      tableHead.innerHTML = '<tr><th>Event</th><th>Total Amount</th><th>Paid</th><th>Pending</th></tr>';
+      tableBody.innerHTML = Object.entries(amtMap).map(([ev,v])=>
+        `<tr>
+          <td>${escapeHtml(ev)}</td>
+          <td>${v.total}</td>
+          <td>${v.paid}</td>
+          <td>${v.pending}</td>
+        </tr>`).join('');
+    }
+  }
+
+  // ---------- SEARCH ----------
+  searchInput.addEventListener('input',()=>{
+    const q = normalizeQ(searchInput.value);
+    filtered = registrations.filter(r=>normalizeQ(r.name).includes(q)||normalizeQ(r.utr_number).includes(q));
+    page=0; renderPage(); updateCounts();
+  });
+
+  // ---------- PAGINATION ----------
+  prevBtn.addEventListener('click',()=>{ if(page>0){ page--; renderPage(); }});
+  nextBtn.addEventListener('click',()=>{ if((page+1)*PAGE_SIZE<filtered.length){ page++; renderPage(); }});
+
+  // ---------- NAVIGATION ----------
+  navList.addEventListener('click',e=>{
+    const link=e.target.closest('.nav-link'); if(!link) return;
+    navList.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+    link.classList.add('active');
+    activeView=link.dataset.view; page=0; renderPage();
+  });
+
+  // ---------- APPROVE ----------
+  tableBody.addEventListener('click',async e=>{
+    const btn = e.target.closest('.approve-btn'); if(!btn) return;
+    const rid = btn.dataset.rid;
+    btn.disabled=true;
+    const { error } = await supabase.from('registrations').update({status:'paid'}).eq('id',rid);
+    if(error){ alert('Error approving'); btn.disabled=false; return; }
+    const reg = registrations.find(r=>r.id==rid); if(reg) reg.status='paid';
+    filtered = filtered.map(r=>r.id==rid?{...r,status:'paid'}:r); renderPage(); updateCounts();
+  });
+
+  // ---------- REFRESH & EXPORT ----------
+  refreshBtn.addEventListener('click',()=>loadRegistrations(currentDept));
+  exportBtn.addEventListener('click',()=>{
+    let csv = '';
+    if(activeView==='dashboard'){
+      csv = filtered.map(r=>[r.student_id,r.name,r.email,r.phone,r.event,r.fee,r.utr_number,r.status,r.year,r.created_at].map(v=>`"${v}"`).join(',')).join('\n');
+      csv = 'Roll No,Name,Email,Phone,Event,Fee,UTR Number,Status,Year,Registered On\n'+csv;
+    }
+    const blob = new Blob([csv],{type:'text/csv'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href=url; a.download='registrations.csv'; a.click(); URL.revokeObjectURL(url);
+  });
+
+  // ---------- LOGOUT ----------
+  topLogout.addEventListener('click',()=>supabase.auth.signOut().then(()=>window.location.reload()));
+  sidebarLogout.addEventListener('click',()=>supabase.auth.signOut().then(()=>window.location.reload()));
+
+  init();
   </script>
 </body>
 </html>
