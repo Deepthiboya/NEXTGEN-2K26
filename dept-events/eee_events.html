@@ -205,7 +205,7 @@
       .event-card:hover{ transform: translateY(-10px); box-shadow: 0 20px 50px rgba(16,24,40,.22); }
       .event-image img{ width:100%; height:220px; object-fit:cover; }
       .event-content{ padding:24px; display:flex; flex-direction:column; flex-grow:1; }
-      .event-title{ font-family:"Plus Jakarta Sans"; font-size:1.5rem; font-weight:800; margin:0 0 12px; color:#9ae8ff; }
+      .event-title{ font-family:"Plus Jakarta Sans"; font-size:1.5rem; font-weight:800; margin:0 0 12px; color:#9ae8ff; text-align:center;}
       .event-description{ flex-grow:1; margin-bottom:20px; color:#d5e6f7; text-align: justify; text-justify: inter-word; }
 
       .event-stats{
@@ -228,7 +228,7 @@
       .event-stats .value{ display:block; font-weight:800; color:#eaf4ff; font-size:12px; line-height:1.15; overflow-wrap:anywhere; font-family:"Plus Jakarta Sans"; }
 
       .cta-btn{
-        border:0; border-radius:999px; cursor:pointer; color:#0b0b0b; font-weight:900; text-decoration:none;
+        border:0; border-radius:999px; cursor:pointer; color:#0b0b0b; font-weight:900; text-decoration:none;text-align:center;
         background: linear-gradient(90deg, var(--amber), var(--blue));
         box-shadow:0 10px 24px rgba(86,204,242,.4);
         padding:12px 28px; transition: transform .25s ease, box-shadow .25s ease;
@@ -320,6 +320,195 @@
         .eee-bg .grid, .eee-bg .pulse::before, .eee-bg .pulse::after,
         .nx-hero-v2.nx-warm .sweep, .wg-title .gold { animation: none !important; }
       }
+      /* Theme vars with safe fallbacks (can be overridden where needed) */
+:root {
+  --nx-blue: #0ea5e9;
+  --nx-teal: #14b8a6;
+  --nx-amber: #ff8a30;
+  --nx-text-on-accent: #00212a;
+}
+
+/* Layout container (keeps side-by-side and equal width) */
+.nx-button-group {
+  display: flex !important;
+  gap: 12px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-wrap: nowrap !important; /* keep them on one row by default */
+}
+.nx-button-group > a,
+.nx-button-group > button {
+  flex: 1 1 0 !important;
+  min-width: 140px !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+}
+
+/* Compact filled accent style for the View Details button */
+.nx-view-details {
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 8px 12px !important;
+  border-radius: 999px !important;
+  border: 0 !important;
+  cursor: pointer !important;
+  font-weight: 800 !important;
+  font-size: 0.88rem !important;
+  color: var(--nx-text-on-accent, #00212a) !important;
+  background: linear-gradient(90deg, var(--nx-blue, #0ea5e9), var(--nx-teal, #14b8a6)) !important;
+  box-shadow: 0 8px 20px rgba(20,184,166,0.10) !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;         /* force single line */
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  transition: transform .14s ease, box-shadow .14s ease, filter .14s ease !important;
+}
+
+/* Hover / focus */
+.nx-view-details:hover {
+  transform: translateY(-2px) !important;
+  filter: brightness(.99) !important;
+  box-shadow: 0 12px 30px rgba(20,184,166,0.12) !important;
+}
+.nx-view-details:focus {
+  outline: none !important;
+  box-shadow: 0 0 0 5px rgba(20,184,166,0.07) !important;
+}
+
+/* Register button (keeps parity with view button) */
+.nx-register-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 8px 12px !important;
+  border-radius: 999px !important;
+  border: 0 !important;
+  cursor: pointer !important;
+  font-weight: 900 !important;
+  font-size: 0.95rem !important;
+  color: #0b0b0b !important;
+  background: linear-gradient(90deg, var(--nx-amber, #ff8a30), var(--nx-blue, #0ea5e9)) !important;
+  box-shadow: 0 10px 24px rgba(86,204,242,0.30) !important;
+  text-decoration: none !important;
+  transition: transform .18s ease, box-shadow .18s ease !important;
+}
+.nx-register-button:hover { transform: translateY(-2px) !important; }
+
+/* Responsive: stack on very small screens for better tap targets */
+@media (max-width: 480px) {
+  .nx-button-group {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+  .nx-button-group > a,
+  .nx-button-group > button {
+    width: 100% !important;
+    flex: none !important;
+  }
+}
+   /*Fixed footer and bar*/
+footer .copyright{
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 1000;
+  padding: 10px 16px;
+  text-align: center;
+  background:linear-gradient(90deg, var(--orange), var(--blue));    /* dark glass */
+  color: black;
+  backdrop-filter: saturate(140%) blur(6px);
+  border-top: 1px solid rgba(28, 43, 63, 0.727);
+  font-weight: bold;
+}
+
+/* add bottom space so last content isn't hidden behind the bar */
+@media (min-width: 0){
+  body{ padding-bottom: 44px; } /* match bar height */
+}
+  /* always-on shiny text + subtle pop on hover */
+.nx-login {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-family: Inter, system-ui;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(90deg, #ff8a1e, #56ccf2);
+  box-shadow:
+    0 10px 22px rgba(17, 94, 164, .25),
+    0 2px 0 rgba(255,255,255,.6) inset;
+  text-decoration: none;
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+.nx-login:hover { transform: translateY(-2px); filter: saturate(115%); box-shadow: 0 14px 30px rgba(17, 94, 164, .35); }
+.nx-login:active { transform: translateY(0); }
+ .nx-nav .nx-link::after{
+  content:""; position:absolute; left:14px; right:14px; bottom:6px; height:2px; border-radius:2px;
+  background: linear-gradient(90deg,#7cd3ff,#ffd166,#ff8a1e,#eeecee);
+  background-size: 200% 100%; animation: navSheen 3.2s linear infinite;
+  box-shadow: 0 0 10px rgba(124,211,255,.35);
+}
+ @media (max-width: 860px) {
+  .nx-container { grid-template-columns: auto auto; }
+  .nx-nav { grid-column: 1 / -1; order: 3; }
+  .nx-menu { justify-content: center; flex-wrap: wrap; }
+}
+
+ /* shift menu a bit left */
+.nx-nav .nx-menu{ gap:18px; transform: translateX(-24px); }
+
+/* always-on shiny text */
+.nx-nav .nx-link{
+  position:relative; display:inline-block; padding:8px 20px; font-weight:800;
+  background:linear-gradient(90deg,#010a13 0%,#ffe08a 30%,#eaf4ff 60%,#7cd3ff 90%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  background-size:200% 100%; animation:navSheen 3.2s linear infinite;
+  text-shadow:0 0 8px rgba(255,209,102,.35);
+}
+@keyframes navSheen{ 0%{background-position:0 0} 100%{background-position:200% 0} }
+.nx-nav .nx-link:hover{ transform:translateY(-1px) scale(1.04); }
+
+/* Hero title fix for nx-hero-v2 */
+.nx-hero-v2 .wg-card{
+  max-width: min(940px, 94vw);
+  margin-inline: auto;
+  padding: clamp(16px, 4vw, 28px);
+  min-width: 0;
+}
+
+.nx-hero-v2 .wg-title{
+  margin: 0 0 clamp(8px, 2.4vw, 14px);
+  line-height: 1.12;
+  font-weight: 900;
+  font-size: clamp(22px, 6.2vw, 44px);   /* responsive size */
+  word-break: keep-all;                  /* don’t split words */
+  overflow-wrap: normal;                 /* wrap only at spaces */
+  white-space: normal;
+  text-wrap: balance;
+}
+
+.nx-hero-v2 .wg-title > span{
+  display: inline;
+  white-space: normal;
+}
+
+.nx-hero-v2 .wg-badges{
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+
+.nx-hero-v2 .wg-sub{
+  font-size: clamp(14px, 3.6vw, 18px);
+  line-height: 1.45;
+  margin-top: clamp(8px, 2vw, 12px);
+}
+
+@media (max-width: 360px){
+  .nx-hero-v2 .wg-title{ font-size: clamp(20px, 6.8vw, 30px); }
+  .nx-hero-v2 .wg-card{ padding: 14px; }
+}
+
     </style>
   </head>
 
@@ -337,14 +526,16 @@
           <div class="brand-title">NextGen <span class="year">2k25</span></div>
         </div>
         <div class="spacer"></div>
-        <nav aria-label="Main">
-          <ul>
-            <li><a href="../index.html">Home</a></li>
-            <li><a href="#events">Events</a></li>
-            <li><a href="#schedule">Schedule</a></li>
-            <li><a href="#contact">Contact</a></li>
+        <nav class="nx-nav" aria-label="Main">
+          <ul class="nx-menu">
+            <li><a href="../index.html" class="nx-link">Home</a></li>
+            <li><a href="#events" class="nx-link">Events</a></li>
+            <li><a href="#schedule" class="nx-link">Schedule</a></li>
+            <li><a href="#contact" class="nx-link">Contact</a></li>
           </ul>
         </nav>
+               <a href="../dashboards/login.html" class="nx-login" aria-label="Login" style="color: white;">Login</a>
+
       </div>
     </header>
 
@@ -364,8 +555,8 @@
             </h1>
             <div class="wg-badges" role="list" aria-label="Streams">
               <span class="badge"><strong>EEE</strong></span>
-              <span class="badge"><strong>Power Systems</strong></span>
-              <span class="badge"><strong>Drives & Control</strong></span>
+              <!--<span class="badge"><strong>Power Systems</strong></span>
+              <span class="badge"><strong>Drives & Control</strong></span>-->
             </div>
             <p class="wg-sub">
               Dive into power systems, machines, control, and renewables with hands‑on workshops, competitions, and expert talks.
@@ -387,7 +578,7 @@
             <!-- Paper Presentation -->
             <div class="event-card">
               <div class="event-image">
-                <img src="../assets/images/eeepaperpresnetation.jpg" alt="Paper Presentation" />
+                <img src="../assets/images/csepaperpresentation.jpg" alt="Paper Presentation" />
               </div>
               <div class="event-content">
                 <h3 class="event-title">Paper Presentation</h3>
@@ -397,43 +588,53 @@
                   <li class="stat"><i class="fas fa-indian-rupee-sign"></i><div><span class="label">Fee</span><span class="value">₹200</span></div></li>
                 </ul>
                 <p class="event-description">Share research on power systems, machines, power electronics, and sustainable energy solutions. Participants will present their well-structured presentations, and effective communication.  </p>
-                
-                <a href="#" class="cta-btn register-trigger" data-event="Paper Presentation" data-fee="200" data-team="pair">Register Now</a>
+                                <div class="nx-button-group">
+
+                 <a href="#" class="nx-view-details openPopupBtn" data-src="paperpresentation.html">View Details</a>
+                <a href="#" class="nx-register-button cta-btn register-trigger" data-event="Paper Presentation" data-fee="200" data-team="pair">Register Now</a>
+                </div>
               </div>
             </div>
 
             <!-- Technical Quiz -->
             <div class="event-card">
               <div class="event-image">
-                <img src="../assets/images/ecetechnicalquiz.jpg" alt="Technical Quiz" />
+                <img src="../assets/images/Mindspark.jpg" alt="Technical Quiz" />
               </div>
               <div class="event-content">
                 <h3 class="event-title">MindSpark</h3>
                 <ul class="event-stats" aria-label="Technical Quiz quick facts">
                   <li class="stat"><i class="fas fa-clock"></i><div><span class="label">Time</span><span class="value">12 - 3 PM</span></div></li>
-                  <li class="stat"><i class="fas fa-user-friends"></i><div><span class="label">Team</span><span class="value">1 – 3</span></div></li>
+                  <li class="stat"><i class="fas fa-user-friends"></i><div><span class="label">Team</span><span class="value">1 –2</span></div></li>
                   <li class="stat"><i class="fas fa-indian-rupee-sign"></i><div><span class="label">Fee</span><span class="value">₹200</span></div></li>
                 </ul>
                 <p class="event-description">Put your knowledge to the test in the Technical Quiz! This event challenges participants with thought-provoking questions, testing their understanding of fundamental and advanced concepts. </p>
+                                <div class="nx-button-group">
+
+                 <a href="#" class="nx-view-details openPopupBtn" data-src="mindspark.html">View Details</a>
                 
-                <a href="#" class="cta-btn register-trigger" data-event="Technical Quiz" data-fee="200" data-team="pair">Register Now</a>
+                <a href="#" class="nx-register-button cta-btn register-trigger" data-event="Technical Quiz" data-fee="200" data-team="pair">Register Now</a>
+                </div>
               </div>
             </div>
 
-            <!-- Tinker Cad Master-->
+            <!-- Project Expo -->
             <div class="event-card">
               <div class="event-image">
-                <img src="../assets/images/eeecircuitmania.jpg" alt="Tinker Cad" />
+                <img src="../assets/images/eeecircuitmania.jpg" alt="Project Expo" />
               </div>
               <div class="event-content">
-                <h3 class="event-title">Tinker Cad Master</h3>
+                <h3 class="event-title">Projet Expo</h3>
                 <ul class="event-stats" aria-label="Tinker Cad quick facts">
                   <li class="stat"><i class="fas fa-clock"></i><div><span class="label">Time</span><span class="value">2 - 5 PM</span></div></li>
-                  <li class="stat"><i class="fas fa-user-friends"></i><div><span class="label">Team</span><span class="value">1 – 3</span></div></li>
+                  <li class="stat"><i class="fas fa-user-friends"></i><div><span class="label">Team</span><span class="value">1 – 4</span></div></li>
                   <li class="stat"><i class="fas fa-indian-rupee-sign"></i><div><span class="label">Fee</span><span class="value">₹300</span></div></li>
                 </ul>
                 <p class="event-description">Are you ready to unleash your creativity? Join the Tinker Cad Master event and design innovative circuits using Tinker Cad. Collaborate with your team to create efficient circuit designs that showcase your skills.</p>
-                <a href="#" class="cta-btn register-trigger" data-event="Tinker Cad Master" data-fee="300" data-team="trio">Register Now</a>
+                <div class="nx-button-group">
+                 <a href="#" class="nx-view-details openPopupBtn" data-src="tinkercad.html">View Details</a>
+                <a href="#" class="nx-register-button cta-btn register-trigger" data-event="Tinker Cad Master" data-fee="300" data-team="trio">Register Now</a>
+                </div>
               </div>
             </div>
           </div>
@@ -481,44 +682,55 @@
                 <label for="event">Event</label>
                 <select id="event" name="event" required>
                   <option value="Paper Presentation">Paper Presentation</option>
-                  <option value="Technical Quiz">Technical Quiz</option>
-                  <option value="Tinker Cad Master">Tinker Cad Master</option>
+                  <option value="Technical Quiz">MindSpark Quiz</option>
+                  <option value="Tinker Cad Master">Project Expo </option>
                 </select>
               </div>
               <div class="form-group">
                 <label for="fee">Event Fee (₹)</label>
                 <input type="text" id="fee" name="fee" readonly />
               </div>
+                            <div id="paperPresentation" style="display:none; grid-column:1 / -1;">
+            <div class="form-group">
+              <label for="paperMember1">Team Member 1 Name</label>
+              <input type="text" id="paperMember1" name="paperMember1" placeholder="Enter Team Member Name" />
+            </div>
+          </div>
+            <div id="MindSpak" style="display:none; grid-column:1 / -1;">
+            <div class="form-group">
+              <label for="mindMember1">Team Member 1 Name</label>
+              <input type="text" id="mindMember1" name="mindMember1" placeholder="Enter Team Member Name" />
+            </div>
+            <div class="form-group">
+              <label for="mindMember2">Team Member 2 Name</label>
+              <input type="text" id="mindMember2" name="mindMember2" placeholder="Enter Team Member Name" />
+            </div>
 
-              <div id="teamMembers" style="display:none;">
-                <div class="form-group">
-                  <label for="member1">Team Member 1 Name</label>
-                  <input type="text" id="member1" name="member1" />
-                </div>
-                <div class="form-group">
-                  <label for="member1Email">Team Member 1 Email</label>
-                  <input type="email" id="member1Email" name="member1Email" />
-                </div>
-                <div class="form-group">
-                  <label for="member2">Team Member 2 Name (Optional)</label>
-                  <input type="text" id="member2" name="member2" />
-                </div>
-                <div class="form-group">
-                  <label for="member2Email">Team Member 2 Email (Optional)</label>
-                  <input type="email" id="member2Email" name="member2Email" />
-                </div>
+          </div>
+          <div id="Tinker Cad Master" style="display:none; grid-column:1 / -1;">
+            <div class="form-group">
+              <label for="cadMember1">Team Member 1 Name</label>
+              <input type="text" id="cadMember1" name="cadMember1" placeholder="Enter Team Member 1 Name" />
+            </div>
+            <div class="form-group">
+              <label for="cadMember2">Team Member 2 Name</label>
+              <input type="text" id="cadMember2" name="cadMember2" placeholder="Enter Team Member 2 Name" />
+            </div>
+
+              
               </div>
 
               <div id="eventNote" style="display:none;">Note: This is a team event; provide member details as applicable.</div>
 
               <div class="qr-code">
-                <p>Scan this QR code for payment</p>
-                <img src="../assets/images/qr-code.jpg" alt="QR Code for Payment" />
+                  <h3><a href="https://p.ppsl.io/PYTMPS/A5gpdk" target="blank">Payment Link</a></h3>
+                <!--<p>Scan this QR code for payment</p>
+                <img src="../assets/images/qr-code.jpg" alt="QR Code for Payment" />-->
               </div>
 
               <div class="form-group utr-line">
-                <label for="utr">UTR Number</label>
-                <input type="text" id="utr" name="utr" pattern="^[A-Za-z0-9\-]{6,30}$" placeholder="Enter payment UTR" required />
+                <label for="utr">UTR Number / Order ID</label>
+                <input type="text" id="utr" name="utr" pattern="^[A-Za-z0-9 \-]{6,40}$" placeholder="Enter payment UTR / Order ID" required />
               </div>
 
               <button type="submit" id="submitBtn" class="cta-btn register-btn">Register</button>
@@ -527,6 +739,8 @@
         </div>
       </div>
 
+      <!-- Schedule -->
+      
       <!-- Schedule -->
       <section id="schedule" class="section">
         <div class="container">
@@ -537,7 +751,7 @@
               <div class="timeline-time">10:00 AM</div>
               <div class="timeline-content">
                 <h3 class="timeline-title">Opening Ceremony</h3>
-                <p class="timeline-desc">Welcome address and kickoff for NextZen 2k25.</p>
+                <p class="timeline-desc">Welcome address and kickoff for NextGen 2k25.</p>
               </div>
             </div>
             <div class="timeline-item">
@@ -550,14 +764,14 @@
             <div class="timeline-item">
               <div class="timeline-time">12:00 PM</div>
               <div class="timeline-content">
-                <h3 class="timeline-title">Technical Quiz</h3>
+                <h3 class="timeline-title">MindSpark Quiz</h3>
                 <p class="timeline-desc">Test your knowledge with our exciting technical quiz!</p>
               </div>
             </div>
             <div class="timeline-item">
               <div class="timeline-time">2:00 PM</div>
               <div class="timeline-content">
-                <h3 class="timeline-title">Tinker Cad Master</h3>
+                <h3 class="timeline-title">Project Expo</h3>
                 <p class="timeline-desc">Design innovative circuits using Tinker Cad.</p>
               </div>
             </div>
@@ -571,48 +785,48 @@
           </div>
         </div>
       </section>
-
-      <!-- Coordinators -->
+      
+     <!-- Coordinators -->
       <section id="contact" class="section">
         <div class="container">
           <h2 class="section-title">Contact Our Coordinators</h2>
           <p class="section-sub">Reach out for any EEE event-related queries.</p>
           <div class="coordinators-grid">
             <div class="coordinator-card">
-              <h4>Coordinator 1</h4>
-              <p>Assistant Professor</p>
+              <h4>Dr. G. Meeri Matha</h4>
+              <p>Associate Professor</p>
               <div class="contact-details">
-                <p><i class="fas fa-envelope"></i> coordinator1.eee@srit.ac.in</p>
-                <p><i class="fas fa-phone"></i> +91 98xxx xxxxx</p>
+                <p><i class="fas fa-envelope"></i> eeehod@srit.ac.in</p>
+                <p><i class="fas fa-phone"></i> +91 78930 05524</p>
               </div>
             </div>
             <div class="coordinator-card">
-              <h4>Coordinator 2</h4>
-              <p>Assistant Professor</p>
+              <h4>Mr. Manoj</h4>
+              <p>Student</p>
               <div class="contact-details">
-                <p><i class="fas fa-envelope"></i> coordinator2.eee@srit.ac.in</p>
-                <p><i class="fas fa-phone"></i> +91 85xxx xxxxx</p>
+                <p><i class="fas fa-envelope"></i> 244g5a0205@srit.ac.in</p>
+                <p><i class="fas fa-phone"></i> +91 87121 60145</p>
               </div>
             </div>
-            <div class="coordinator-card">
+            <!--<div class="coordinator-card">
               <h4>Coordinator 3</h4>
               <p>Assistant Professor</p>
               <div class="contact-details">
                 <p><i class="fas fa-envelope"></i> coordinator3.eee@srit.ac.in</p>
                 <p><i class="fas fa-phone"></i> +91 96xxx xxxxx</p>
               </div>
-            </div>
+            </div>-->
           </div>
         </div>
       </section>
     </main>
 
-    <footer role="contentinfo">
+    <!-- <footer role="contentinfo">
       <div class="container section" style="padding-block: 24px">
         <div class="footer">
           <div>
             <img src="../assets/images/SRIT-LOGO.png" alt="SRIT Logo" class="logo-small"/>
-            <p>Department of Electrical and Electronics Engineering<br/>Srinivasa Ramanujan Institute of Technology</p>
+            <p>Department of Electrical and Electronics Engineering<br/>Srinivasa Ramanujan Institute of Technology (Autonomous)</p>
           </div>
           <div>
             <h4>Quick Links</h4>
@@ -624,9 +838,9 @@
             </ul>
           </div>
         </div>
-        <div class="copyright">© 2025 EEE Dept, SRIT. All Rights Reserved.</div>
+        <div class="copyright">Designed by Digital Team, © 2025 EEE Dept, SRIT. All Rights Reserved.</div>
       </div>
-    </footer>
+    </footer> -->
 <script type="module">
   import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
@@ -641,6 +855,9 @@
     const feeInput = document.getElementById('fee');
     const teamWrap = document.getElementById('teamMembers');
     const eventNote = document.getElementById('eventNote');
+    const paperDiv = document.getElementById('paperPresentation');
+    const mindDiv = document.getElementById('MindSpark');
+    const tinkerDiv = document.getElementById('Project Expo');
     const closeBtn = modal.querySelector('[data-close]');
     const triggers = document.querySelectorAll('.register-trigger');
     let lastFocused = null;
@@ -648,12 +865,12 @@
     const fees = {
       'Paper Presentation': 200,
       'Technical Quiz': 200,
-      'Tinker Cad Master': 300
+      'Project Expo': 300
     };
     const teamMode = {
       'Paper Presentation': 'pair',
-      'Technical Quiz': 'pair',
-      'Tinker Cad Master': 'trio'
+      'Technical Quiz': 'trio',
+      'Project Expo': 'trio'
     };
 
     function openModal(prefillEvent){
@@ -690,7 +907,75 @@
         if(document.activeElement === last){ e.preventDefault(); first.focus(); }
       }
     }
+// --- Time-cutoff / temporary message helpers (paste here) ---
+// store original modal content so we can temporarily show an info message
+const originalModalBodyHTML = modal.querySelector('.modal-body')?.innerHTML || '';
+const originalModalTitle = modal.querySelector('.modal-header h3')?.textContent || 'Event Registration';
+let modalState = 'form'; // 'form' | 'closedMessage'
 
+// Show a temporary 'registrations closed' message in the modal
+function showRegistrationEnded() {
+  modalState = 'closedMessage';
+  lastFocused = document.activeElement;
+  modal.setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+  // change header title
+  modal.querySelector('.modal-header h3').textContent = 'Registrations Closed';
+  // replace body with informational content
+  const body = modal.querySelector('.modal-body');
+  body.innerHTML = `
+    <div style="padding:12px 6px; text-align:center;">
+      <p style="font-weight:800; font-size:1.05rem; margin:8px 0;">Online registrations are ended.</p>
+      <p style="margin:6px 0;" class="helper">Only Spot registrations are available at departments desk.</p>
+      <p style="margin:12px 0; color:var(--muted);">Please visit the department registration desk at 9:00 AM to register in person.</p>
+      <div style="margin-top:14px;"><button id="closeInfoBtn" class="cta-btn">OK</button></div>
+    </div>
+  `;
+  document.addEventListener('keydown', handleKeydown, true);
+  // wire close button in body
+  const closeInfoBtn = document.getElementById('closeInfoBtn');
+  if (closeInfoBtn) closeInfoBtn.addEventListener('click', closeModal);
+}
+
+// Bind triggers: open normal form before cutoff, otherwise show closed message
+triggers.forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const ev = btn.getAttribute('data-event');
+
+    try {
+        const now = new Date();
+        // Set cutoff date and time: 14 October 2025, 23:30 PM (local time)
+        const cutoff = new Date(2025, 9, 14, 23, 30, 0, 0); // Month is 0-based (9 = October)
+        if (now > cutoff) {
+            showRegistrationEnded();
+        return;
+            
+        }
+    } catch (err) {
+        // if anything goes wrong with time check, fall back to normal modal
+        console.warn('time check failed, opening modal', err);
+        
+    }
+
+    openModal(ev);
+  });
+});
+
+// Restore original modal content when closing the info message
+function restoreModalIfNeeded() {
+  if (modalState === 'closedMessage') {
+    const body = modal.querySelector('.modal-body');
+    if (body) body.innerHTML = originalModalBodyHTML;
+    const header = modal.querySelector('.modal-header h3');
+    if (header) header.textContent = originalModalTitle;
+    modalState = 'form';
+  }
+}
+
+// Ensure modal close restores the form when needed
+closeBtn.addEventListener('click', () => { closeModal(); restoreModalIfNeeded(); });
+modal.addEventListener('click', (e) => { if (e.target === modal) { closeModal(); restoreModalIfNeeded(); } });
     triggers.forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -708,17 +993,22 @@
     function updateFeeAndTeam(){
       const ev = eventSelect.value;
       feeInput.value = (fees[ev] ?? '').toString();
-      const mode = teamMode[ev];
-      if(mode === 'solo'){
-        teamWrap.style.display = 'none';
-        eventNote.style.display = 'none';
+
+      // Hide all team member divs initially
+      paperDiv.style.display = 'none';
+      mindDiv.style.display = 'none';
+      tinkerDiv.style.display = 'none';
+
+      eventNote.style.display = 'block';
+
+      if(ev === 'Paper Presentation'){
+        paperDiv.style.display = 'grid';
+      } else if(ev === 'Technical Quiz'){
+        mindDiv.style.display = 'grid';
+      } else if(ev === 'Project Expo'){
+        tinkerDiv.style.display = 'grid';
       } else {
-        teamWrap.style.display = 'grid';
-        eventNote.style.display = 'block';
-        // hide member2 if pair event
-        const member2 = form.querySelector('[name="member2"]').closest('.form-group');
-        if(mode === 'pair' && member2) member2.style.display = 'none';
-        else if(member2) member2.style.display = 'block';
+        eventNote.style.display = 'none';
       }
     }
 
@@ -762,6 +1052,73 @@
       }
     });
   })();
+</script>
+
+
+ 
+<div id="popupModal" style="
+  position: fixed;
+  inset: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+  z-index: 2000;
+">
+  <div style="
+    position: relative;
+    width: 90%;
+    max-width: 850px;
+    height: 90vh;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  ">
+    <button id="closePopupBtn" style="
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      z-index: 10;
+      background: none;
+      border: none;
+      font-size: 1.6rem;
+      cursor: pointer;
+      color: #ff6e40;
+    ">&times;</button>
+
+    <iframe id="popupIframe" src="" style="width:100%; height:100%; border:none;"></iframe>
+  </div>
+</div>
+
+<!-- ================ SCRIPT ================= -->
+<script>
+ document.addEventListener("DOMContentLoaded", () => {
+  const popup = document.getElementById('popupModal');
+  const closeBtn = document.getElementById('closePopupBtn');
+  const iframe = document.getElementById('popupIframe');
+
+  document.querySelectorAll('.openPopupBtn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      iframe.src = btn.dataset.src;  // Load event HTML dynamically
+      popup.style.display = 'flex';  // Show popup
+    });
+  });
+
+  closeBtn.onclick = () => {
+    popup.style.display = 'none';
+    iframe.src = "";  // Clear iframe
+  };
+
+  window.onclick = (e) => {
+    if (e.target === popup) {
+      popup.style.display = 'none';
+      iframe.src = "";
+    }
+  };
+});
 </script>
   </body>
 </html>

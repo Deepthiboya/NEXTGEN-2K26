@@ -190,7 +190,7 @@ await loadDashboardData();
       if (reg.name && reg.name.trim() && reg.name.toLowerCase() !== 'null') count++;
 
       // Team members & leader
-      ['teammember1','teammember2','teammember3','leader'].forEach(k => {
+      ['teammember1','teammember2','name'].forEach(k => {
         if (reg[k] && reg[k].trim() && reg[k].toLowerCase() !== 'null') count++;
       });
 
@@ -484,40 +484,6 @@ try {
   warn('registrations threw', err);
   registrations = [];
 }
-// ------------------- HEADCOUNT -------------------
-(async () => {
-  try {
-    // ✅ Fetch only from registrations_flat
-    const { data, error } = await supabase
-      .from('registrations_flat')
-      .select('name, teammember1, teammember2');
-
-    if (error) {
-      console.error('Error fetching registrations_flat:', error);
-      return;
-    }
-
-    let totalCount = 0;
-
-    data.forEach((reg, i) => {
-      let count = 0;
-
-      if (reg.name && reg.name.trim() && reg.name.toLowerCase() !== 'null') count++;
-      if (reg.teammember1 && reg.teammember1.trim() && reg.teammember1.toLowerCase() !== 'null') count++;
-      if (reg.teammember2 && reg.teammember2.trim() && reg.teammember2.toLowerCase() !== 'null') count++;
-
-      totalCount += count;
-    });
-
-    console.log('👥 Total Headcount:', totalCount);
-
-    const totalEl = document.getElementById('totalHeadCount');
-    if (totalEl) totalEl.textContent = totalCount;
-
-  } catch (err) {
-    console.error('Headcount error:', err);
-  }
-})();
 
 
     // save global
@@ -1200,58 +1166,33 @@ console.log(window.registrationData);
 // Render amounts table with detailed breakdown (Department × Event × College)
 function renderAmountsTable(registrations, page = 1, pageSize = 10) {
   try {
+    const amountsData = (registrations || []).map(r => ({
+      department: r.department || '—',
+      event: r.event || '—',
+      college: r.college || '—',      // ✅ Added College
+      total: Number(r.fee) || 0,
+      paid: r.status === 'paid' ? Number(r.fee) : 0,
+      pending: r.status === 'paid' ? 0 : Number(r.fee)
+    }));
+
+    // Compute summary counts
+    const totalRegs = registrations.length;
+    const pendingRegs = registrations.filter(r => r.status === 'pending').length;
+    const paidRegs = registrations.filter(r => r.status === 'paid').length;
+    const totalHeadCount = new Set(registrations.map(r => r.email)).size;
+
     const container = $('amounts-container');
     if (!container) return;
 
-    if (!registrations || registrations.length === 0) {
+    if (amountsData.length === 0) {
       container.innerHTML = "<p style='text-align:center; padding:20px; color:#666;'>No data available</p>";
       return;
     }
 
-    // Compute summary
-    const totalRegs = registrations.length;
-    const pendingRegs = registrations.filter(r => r.status === 'pending').length;
-    const paidRegs = registrations.filter(r => r.status === 'paid').length;
+    // Paginate data
+    const { pageData } = paginateAmounts(amountsData, page, pageSize);
 
-    // Master list of all events
-    const allEvents = ['IoT Hackathon', 'Paper Presentation', 'TinkerCAD', 'Circuit Master'];
-
-    // Aggregate data by event
-    const eventMap = {};
-    registrations.forEach(r => {
-      const eventName = r.event || '—';
-      const fee = Number(r.fee) || 0;
-      const paid = r.status === 'paid' ? fee : 0;
-      const pending = r.status === 'paid' ? 0 : fee;
-
-      if (!eventMap[eventName]) {
-        eventMap[eventName] = { paid: 0, pending: 0, total: 0 };
-      }
-
-      eventMap[eventName].paid += paid;
-      eventMap[eventName].pending += pending;
-      eventMap[eventName].total += fee;
-    });
-
-    // Ensure all events exist
-    allEvents.forEach(event => {
-      if (!eventMap[event]) {
-        eventMap[event] = { paid: 0, pending: 0, total: 0 };
-      }
-    });
-
-    const amountsData = Object.entries(eventMap).map(([event, data]) => ({
-      event,
-      paid: data.paid,
-      pending: data.pending,
-      total: data.total
-    }));
-
-    // Pagination
-    const totalPages = Math.ceil(amountsData.length / pageSize);
-    const pageData = amountsData.slice((page - 1) * pageSize, page * pageSize);
-
-    // Build summary and table
+    // Build table with summary at top
     let html = `
       <div style="margin-bottom: 20px; padding: 15px; background: #f9f9f9; border-radius: 8px; border: 1px solid #ddd;">
         <h3 style="margin: 0 0 10px 0;">Summary</h3>
@@ -1259,15 +1200,18 @@ function renderAmountsTable(registrations, page = 1, pageSize = 10) {
           <div><strong>Total Registrations:</strong> ${totalRegs}</div>
           <div><strong>Pending:</strong> ${pendingRegs}</div>
           <div><strong>Paid:</strong> ${paidRegs}</div>
+          <div><strong>Head Count:</strong> ${totalHeadCount}</div>
         </div>
       </div>
       <table style="width:100%; border-collapse:collapse; margin-top:15px;">
         <thead style="background:var(--accent); color:white;">
           <tr>
+            <th style="padding:12px; border:1px solid #ddd;">Department</th>
             <th style="padding:12px; border:1px solid #ddd;">Event</th>
             <th style="padding:12px; border:1px solid #ddd;">Paid Amount</th>
             <th style="padding:12px; border:1px solid #ddd;">Pending Amount</th>
             <th style="padding:12px; border:1px solid #ddd;">Total Fee</th>
+            <th style="padding:12px; border:1px solid #ddd;">College</th>
           </tr>
         </thead>
         <tbody>
@@ -1276,24 +1220,30 @@ function renderAmountsTable(registrations, page = 1, pageSize = 10) {
     pageData.forEach(row => {
       html += `
         <tr style="background:#f9f9f9;">
+          <td style="padding:10px; border:1px solid #ddd;">${escapeHtml(row.department)}</td>
           <td style="padding:10px; border:1px solid #ddd;">${escapeHtml(row.event)}</td>
           <td style="padding:10px; border:1px solid #ddd; color:green; font-weight:bold;">₹${row.paid}</td>
           <td style="padding:10px; border:1px solid #ddd; color:orange; font-weight:bold;">₹${row.pending}</td>
           <td style="padding:10px; border:1px solid #ddd; font-weight:bold;">₹${row.total}</td>
+          <td style="padding:10px; border:1px solid #ddd;">${escapeHtml(row.college)}</td>
         </tr>
       `;
     });
 
     html += '</tbody></table>';
 
-    // Pagination controls
+    // Add pagination
+    const totalPages = Math.ceil(amountsData.length / pageSize);
     if (totalPages > 1) {
       html += '<div id="amounts-pagination" style="margin:12px 0;text-align:center;"></div>';
-      renderAmountsPagination(totalPages, page);
     }
 
     container.innerHTML = html;
 
+    // Render pagination controls
+    if (totalPages > 1) {
+      renderAmountsPagination(totalPages);
+    }
   } catch (err) {
     console.warn('renderAmountsTable err', err);
   }
@@ -1649,7 +1599,7 @@ function renderDepartmentsCards(departments) {
     
     // Handle specific cases
     if (normalized.includes('civil')) return 'civil';
-    if (normalized.includes('civil') && normalized.length <= 4) return 'civil'; // CIV -> civil
+    if (normalized.includes('civ') && normalized.length <= 4) return 'civil'; // CIV -> civil
     if (normalized.includes('cse')) return 'cse';
     if (normalized.includes('ece')) return 'ece';
     if (normalized.includes('eee')) return 'eee';
@@ -1742,7 +1692,7 @@ function showDepartmentEvents(departmentName) {
   }
 
   // Build cards with per-event "View registrations" buttons
-  const deptMap = {
+const deptMap = {
   "CIV": "CIVIL",
   "CSE": "CSE",
   "ECE": "ECE",

@@ -73,7 +73,11 @@
             <a href="#" onclick="show('amounts','menu-amounts')">💰 Amounts</a>
           </li>
         </ul>
-        <div class="logout"><a id="logout" href="#">Logout</a></div>
+        <div class="logout">
+  <a id="resetPassword" href="#">Reset Password</a>
+  <a id="logout" href="#">Logout</a>
+</div>
+
       </aside>
 
       <!-- Main -->
@@ -89,6 +93,7 @@
             <div class="card">
               <h3>Total Registrations</h3>
               <p class="big" id="totalRegs">0</p>
+              <br>
               <button class="view-btn" onclick="showDeptBreakdown('total')">
                 View More
               </button>
@@ -102,20 +107,24 @@
             </div>
             <div class="card">
               <h3>Paid Registrations</h3>
-              <p class="big" id="paidRegs">0</p>
+              <p class="big" id="paidRegs">0</p> <br>
               <button class="view-btn" onclick="showDeptBreakdown('paid')">
                 View More
               </button>
             </div>
             <div class="card">
               <h3>Total Amount</h3>
-              <p class="big" id="totalAmount">₹0</p>
+              <p class="big" id="totalAmount">₹0</p> <br>
               <button class="view-btn" id="view-more-amounts" onclick="showDeptBreakdown('amount')">
                 View More
               </button>
             </div>
+            <div class="card">
+              <h3>Total Head Count</h3>
+              <p class="big" id="totalHeadCount">0</p>
+            </div>
           </div>
-          <div id="dashboardTablesAnchor"></div>  
+          <div id="dashboardTablesAnchor"></div>
 
           <!-- Analytics -->
           <div class="analytics-wrap">
@@ -186,10 +195,12 @@
                     <th>Email</th>
                     <th>Phone</th>
                     <th>Student ID</th>
+                    <th>College</th>
                     <th>Department</th>
                     <th>Event</th>
                     <th>Fee</th>
                     <th>Status</th>
+                   
                   </tr>
                 </thead>
                 <tbody id="registrations-body"></tbody>
@@ -285,6 +296,10 @@
                     <th>Paid Amount</th>
                     <th>Pending Amount</th>
                     <th>Total Fee</th>
+                     <th>College</th>
+
+
+                     
 
                   </tr>
                 </thead>

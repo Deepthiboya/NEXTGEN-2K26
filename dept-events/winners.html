@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>NextGen 2K25 — Winners (CSE & Allied)</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg: #f6f8fb;
+        --card: #ffffff;
+        --ink: #0b3d91;
+        --muted: #556070;
+        --accent: #f39c12;
+        --table-border: rgba(11, 61, 145, 0.08);
+        --shadow: 0 10px 30px rgba(16, 24, 40, 0.08);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: "Manrope", system-ui, -apple-system, Segoe UI, Roboto,
+          Helvetica, Arial, sans-serif;
+        background: linear-gradient(180deg, #fbfdff, #f3f7fb);
+        color: var(--muted);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        padding-bottom: 40px;
+      }
+
+      /* Header */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(255, 255, 255, 0.95);
+        border-bottom: 1px solid rgba(11, 61, 145, 0.06);
+        padding: 14px 18px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        box-shadow: var(--shadow);
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: var(--ink);
+      }
+      .logo {
+        width: 52px;
+        height: 52px;
+        border-radius: 8px;
+        object-fit: cover;
+        background: #fff;
+        box-shadow: 0 6px 18px rgba(11, 61, 145, 0.06);
+        display: inline-block;
+      }
+      header h1 {
+        font-size: 1.15rem;
+        margin: 0;
+        font-weight: 800;
+        color: var(--ink);
+      }
+      header small {
+        display: block;
+        color: var(--muted);
+        font-weight: 600;
+        font-size: 0.86rem;
+        margin-top: 2px;
+      }
+
+      /* Page container */
+      .wrap {
+        max-width: 1100px;
+        margin: 28px auto;
+        padding: 0 18px;
+      }
+
+      /* Page intro */
+      .hero {
+        background: linear-gradient(
+          90deg,
+          rgba(243, 156, 18, 0.06),
+          rgba(124, 211, 255, 0.05)
+        );
+        border-radius: 12px;
+        padding: 18px 20px;
+        display: flex;
+        gap: 18px;
+        align-items: center;
+        margin-bottom: 18px;
+        box-shadow: 0 6px 18px rgba(11, 61, 145, 0.03);
+      }
+      .hero .title {
+        font-weight: 800;
+        color: var(--ink);
+        font-size: 1.05rem;
+      }
+      .hero p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      /* Card for department table */
+      .card {
+        background: var(--card);
+        /* border-radius: 14px; */
+        padding: 18px;
+        box-shadow: var(--shadow);
+        border: 1px solid var(--table-border);
+        overflow: auto;
+      }
+
+      /* Table styling */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 820px; /* keep structure on wide screens; container scrolls on small viewports */
+      }
+      thead th {
+        text-align: left;
+        padding: 14px 12px;
+        background: linear-gradient(
+          180deg,
+          rgba(11, 61, 145, 0.03),
+          rgba(11, 61, 145, 0.01)
+        );
+        color: var(--ink);
+        font-weight: 800;
+        font-size: 0.95rem;
+        border-bottom: 1px solid rgba(11, 61, 145, 0.06);
+        vertical-align: middle;
+      }
+      tbody td {
+        padding: 12px;
+        vertical-align: middle;
+        border-bottom: 1px dashed rgba(11, 61, 145, 0.04);
+        color: #162034;
+        font-size: 0.95rem;
+      }
+
+      /* small helper classes */
+      .muted {
+        color: var(--muted);
+        font-weight: 600;
+        text-align: center;  /* center college names */
+      }
+      .amount {
+        font-weight: 800;
+        color: var(--ink);
+        text-align: center;  /* center amount values */
+      }
+      .event-name {
+        font-weight: 700;
+        color: var(--ink);
+      }
+      .award {
+        font-weight: 700;
+        color: var(--accent);
+      }
+      .student-list {
+        white-space: normal;
+        padding: 0;
+      } /* preserve multi-line names */
+
+      /* Each student entry inside the student-list gets a divider line */
+      .student-list .student-line{
+        padding:8px 0;
+        border-bottom:2px solid rgba(11,61,145,0.16); /* thicker, more visible divider */
+        line-height:1.35;
+      }
+      .student-list .student-line:last-child{
+        border-bottom:none;
+      }
+
+      /* responsive */
+      @media (max-width: 900px) {
+        table {
+          min-width: 720px;
+        }
+      }
+      @media (max-width: 700px) {
+        table {
+          min-width: 640px;
+        }
+      }
+      @media (max-width: 520px) {
+        .wrap {
+          padding: 0 10px;
+        }
+        header h1 {
+          font-size: 1rem;
+        }
+      }
+
+      /* small caption / footer */
+      .note {
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+      .page-footer {
+        text-align: center;
+        margin-top: 18px;
+        color: var(--muted);
+        font-size: 1rem;
+        font-weight: 800;
+      }
+      /* ===== Improved Table Styling (Nice Borders + Row Separation) ===== */
+table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  min-width:820px;
+  border:2px solid rgba(11,61,145,0.25);
+  /* border-radius:10px; */
+  overflow:hidden;
+}
+
+/* Header */
+thead th{
+  background:rgba(11,61,145,0.10);
+  text-align:center;
+  padding:14px 12px;
+  color:var(--ink);
+  font-weight:800;
+  font-size:1.1rem;
+  border-bottom:2px solid rgba(11,61,145,0.35);
+  border-right:1px solid rgba(11,61,145,0.25);
+}
+
+thead th:last-child {
+  border-right: none;
+}
+
+/* Body rows */
+tbody tr:nth-child(even){
+  background:#f9fbff;
+}
+tbody tr:hover{
+  background:#eef4ff;
+}
+
+/* Cells */
+tbody td{
+  padding:12px;
+  border-bottom:1px solid rgba(11,61,145,0.18);
+  border-right:1px solid rgba(11,61,145,0.18);
+  color:#162034;
+  font-size:.95rem;
+}
+
+tbody td:last-child {
+  border-right: none;
+}
+
+/* Strong border after each event group */
+tbody tr.event-end td{
+  border-bottom:2.4px solid rgba(11,61,145,0.35) !important;
+}
+
+/* Align right for amount column */
+.amount{
+  text-align:center;
+  font-weight:800;
+  color:var(--ink);
+}
+
+      :root{   --ink:#0b3d91;           /* deep blue */   --gold:#f39c12;          /* warm accent */   --sky:#7cd3ff;           /* cool accent */   --bg1:#f9fafc;   --bg2:#eef2f6;   --glass: rgba(255,255,255,.7);   --shadow: 0 10px 30px rgba(16,24,40,.12); }
+      /* Back button */
+      .back-btn {
+        position: fixed;
+        top: 12px;
+        left: 12px;
+        z-index: 1200;
+        padding: 8px 12px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.92);
+        color: #0b3d91;
+        font-weight: 800;
+        text-decoration: none;
+        box-shadow: 0 6px 16px rgba(16, 24, 40, 0.15);
+        border: 1px solid rgba(15, 23, 42, 0.08);
+      }
+      .back-btn:hover {
+        filter: brightness(1.03);
+      }
+      @media (max-width: 480px) {
+        .back-btn {
+          top: 10px;
+          left: 10px;
+          padding: 7px 10px;
+          font-size: 0.95rem;
+        }
+      }
+      .winner-header{   position:sticky; top:0; z-index:1000;   background: rgba(255,255,255,.85);   backdrop-filter: blur(10px) saturate(130%);   border-bottom: 1px solid rgba(15,23,42,.06);   padding: 14px 0;   box-shadow: 0 6px 14px rgba(16,24,40,.06); } .winner-header .container{ display:flex; justify-content:center; align-items:center; gap:12px; } .brand{ text-decoration:none; color:#111; display:flex; align-items:center; gap:10px; } .logo{ width:52px; height:auto; filter: drop-shadow(0 2px 6px rgba(16,24,40,.15)); } .brand h1{ font-weight:900; font-size:1.55rem; color:var(--ink); letter-spacing:.2px; } .brand span{ color:var(--gold); text-shadow:0 0 16px rgba(243,156,18,.35); }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-btn" aria-label="Go back to Home">
+      ← Back
+    </a>
+    <!-- Header -->
+    <header class="winner-header" style="justify-content: center;">
+      <div class="container">
+        <a href="index.html" class="brand" >
+          <img 
+            src="../assets/images/SRIT-LOGO.png"
+            alt="SRIT Logo"
+            class="logo"
+          />
+          <h1>NextGen 2K25 <span>Winners</span></h1>
+        </a>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="card" aria-labelledby="cse-table">
+        <h2
+          id="cse-table"
+          style="margin: 0 0 20px 0; font-size: 1.6rem; color: var(--accent); font-weight: 800; text-align: center; border-bottom: 2px solid rgba(11,61,145,0.15); padding-bottom: 15px;"
+        >
+          Department of Computer Science and Engineering &amp; Allied
+        </h2>
+
+        <div style="overflow: auto">
+          <table role="table" aria-describedby="table-note">
+            <thead>
+              <tr>
+                <th style="width: 59px">S.No</th>
+                <th style="width: 180px">Event Name</th>
+                <th style="width: 180px">Award</th>
+                <th>Name of the Student</th>
+                <th style="width: 160px">College Name</th>
+                <th style="width: 120px">
+                  Total Amount (Rs)
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <!-- Hackathon group -->
+              <tr>
+                <td rowspan="6" class="muted">1</td>
+                <td rowspan="6" class="event-name">Hackathon</td>
+                <td class="award">1st Prize</td>
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;Phaneeth kumar Vutla</div>
+                  <div class="student-line">&nbsp;&nbsp;G. Rudra Teja</div>
+                  <div class="student-line">&nbsp;&nbsp;P. Keerthika</div>
+                </td>
+                <td class="muted">MITS</td>
+                <td class="amount">3,000</td>
+              </tr>
+
+              <tr>
+                <td class="award">2nd Prize</td>
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;U. Bindu Sree</div>
+                  <div class="student-line">&nbsp;&nbsp;B. Deepthi</div>
+                  <div class="student-line">&nbsp;&nbsp;A. Shiva Reddy</div>
+                </td>
+                <td class="muted">SRIT</td>
+                <td class="amount">2,000</td>
+              </tr>
+
+              <tr>
+                <td class="award">3rd Prize</td>
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;Mohammed Rizwaan</div>
+                  <div class="student-line">&nbsp;&nbsp;Gnanendra Kumar</div>
+                </td>
+                <td class="muted">PVKK</td>
+                <td class="amount">1,000</td>
+              </tr>
+
+              <tr>
+                <td rowspan="3" class="award">Consolation Prize</td>
+                <td class="student-list">&nbsp;&nbsp;Karanam Shrivasta</td>
+                <td class="muted">Ushodaya School</td>
+                <td class="amount">1,000</td>
+              </tr>
+
+              <tr>
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;S. Mohammed Muzamil</div>
+                  <div class="student-line">&nbsp;&nbsp;K. Manobiram</div>
+                  <div class="student-line">&nbsp;&nbsp;P. Sulthan Mohiddin</div>
+                </td>
+                <td class="muted">SRIT</td>
+                <td class="amount">500</td>
+              </tr>
+
+              <tr >
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;G. Chandana</div>
+                  <div class="student-line">&nbsp;&nbsp;S. Sai Kumar</div>
+                  <div class="student-line">&nbsp;&nbsp;Fayaz</div>
+                </td>
+                <td class="muted">SRIT</td>
+                <td class="amount">500</td>
+              </tr>
+
+              <!-- Paper Presentation group -->
+              <tr>
+                <td rowspan="4" class="muted">2</td>
+                <td rowspan="4" class="event-name">Paper Presentation</td>
+                <td class="award">1st Prize</td>
+                <td class="student-list">&nbsp;&nbsp;Sai Hemanth</td>
+                <td class="muted">JNTUA</td>
+                <td class="amount">2,000</td>
+              </tr>
+
+              <tr>
+                <td class="award">2nd Prize</td>
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;J A Teja</div>
+                  <div class="student-line">&nbsp;&nbsp;K S Varshini</div>
+                </td>
+                <td class="muted">MITS</td>
+                <td class="amount">1,000</td>
+              </tr>
+
+              <tr>
+                <td rowspan="2" class="award">Consolation Prize</td>
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;B. Jagadeesh</div>
+                  <div class="student-line">&nbsp;&nbsp;S. Irfan</div>
+                </td>
+                <td class="muted">SRIT</td>
+                <td class="amount">500</td>
+              </tr>
+
+           
+
+              <tr>
+                <td class="student-list">&nbsp;&nbsp;C. Manjula</td>
+                <td class="muted">AWEC</td>
+                <td class="amount">500</td>
+              </tr>
+
+              <!-- Crossword Puzzle group -->
+              <tr>
+                <td rowspan="3" class="muted">3</td>
+                <td rowspan="3" class="event-name">Crossword Puzzle</td>
+                <td class="award">1st Prize</td>
+                <td class="student-list">&nbsp;&nbsp;K. Niveditha</td>
+                <td class="muted">SRIT</td>
+                <td class="amount">2,000</td>
+              </tr>
+
+              <tr>
+                <td class="award">2nd Prize</td>
+                <td class="student-list">&nbsp;&nbsp;V. Likith Kumar</td>
+                <td class="muted">SRIT</td>
+                <td class="amount">1,000</td>
+              </tr>
+
+              <tr>
+                <td class="award">Consolation Prize</td>
+                <td class="student-list">&nbsp;&nbsp;G. Shanusha</td>
+                <td class="muted">Gates</td>
+                <td class="amount">500</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        
+      </section>
+<br>
+<br>
+      <!-- 2nd Department -->
+
+            <section class="card" aria-labelledby="cse-table">
+        <h2
+          id="ece-table"
+          style="margin: 0 0 20px 0; font-size: 1.6rem; color: var(--accent); font-weight: 800; text-align: center; border-bottom: 2px solid rgba(11,61,145,0.15); padding-bottom: 15px;"
+        >
+          Department of Electronics and Communication Engineering 
+        </h2>
+
+        <div style="overflow: auto">
+          <table role="table" aria-describedby="table-note">
+            <thead>
+              <tr>
+                <th style="width: 59px">S.No</th>
+                <th style="width: 180px">Event Name</th>
+                <th style="width: 180px">Award</th>
+                <th>Name of the Student</th>
+                <th style="width: 160px">College Name</th>
+                <th style="width: 120px">
+                  Total Amount (Rs)
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <!-- Hackathon group -->
+              <tr>
+                <td rowspan="4" class="muted">1</td>
+                <td rowspan="4" class="event-name">IOT Hackathon</td>
+                <td class="award">1st Prize</td>
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;G. Sandhya Rani</div>
+                  <div class="student-line">&nbsp;&nbsp;B. Sai Balaji</div>
+                  <div class="student-line">&nbsp;&nbsp;B. Prathap</div>
+                </td>
+                <td class="muted">SRIT</td>
+                <td class="amount">3,000</td>
+              </tr>
+
+              <tr>
+                <td class="award">2nd Prize</td>
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;G. Md Wasif</div>
+                  <div class="student-line">&nbsp;&nbsp;K. Yashaswini</div>
+                  
+                </td>
+                <td class="muted">SRIT</td>
+                <td class="amount">2,000</td>
+              </tr>
+
+              <tr>
+                <td class="award">3rd Prize</td>
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;Gwori gari Amrutha</div>
+                  <div class="student-line">&nbsp;&nbsp;Amrutha B S</div>
+                  
+                </td>
+                <td class="muted">MITS</td>
+                <td class="amount">1,000</td>
+              </tr>
+              <tr>
+               <td class="award">Consolation Prize</td>
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;S. Aasraha Amara</div>
+                  <div class="student-line">&nbsp;&nbsp;T. Zhakiya Khanam</div>
+                </td>
+                <td class="muted">ALTS</td>
+                <td class="amount">500</td>
+              </tr>
+
+            
+
+              
+
+              <!-- Paper Presentation group -->
+              <tr>
+                <td rowspan="4" class="muted">2</td>
+                <td rowspan="4" class="event-name">Paper Presentation</td>
+                <tr>
+                <td class="award">1st Prize</td>
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;N. Hima Varshini</div>
+                  <div class="student-line">&nbsp;&nbsp;B. Geetha</div>
+                </td>
+                <td class="muted">SRIT</td>
+                <td class="amount">2,000</td>
+              </tr>
+ 
+                
+
+              <tr>
+                <td class="award">2nd Prize</td>
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;B.N Rishika</div>
+                  
+                </td>
+                <td class="muted">PVKK</td>
+                <td class="amount">1,000</td>
+              </tr>
+
+              <tr>
+                <td rowspan="1" class="award">Consolation Prize</td>
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;S. Azulfa Ayesha</div>
+                  <div class="student-line">&nbsp;&nbsp;V. Charitha</div>
+                </td>
+                <td class="muted">SRIT</td>
+                <td class="amount">500</td>
+              </tr>
+
+           
+
+              
+
+              <!-- Ciricuit master quiz -->
+              <tr>
+                <td rowspan="3" class="muted">3</td>
+                <td rowspan="3" class="event-name">Ciricuit Master Quiz</td>
+                <td class="award">1st Prize</td>
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;L. Phaneendra</div>
+                  <div class="student-line">&nbsp;&nbsp;A. Jagadeesh Babu</div>
+                </td>
+                 
+                <td class="muted">ALTS</td>
+                <td class="amount">2,000</td>
+              </tr>
+
+              <tr>
+                <td class="award">2nd Prize</td>
+                <td class="student-list"> 
+                  <div class="student-line">&nbsp;&nbsp;J. Manasa Bindu</div>
+                  <div class="student-line">&nbsp;&nbsp;K. Rajitha</div>
+                </td>
+                 
+                <td class="muted">SRIT</td>
+                <td class="amount">1,000</td>
+              </tr>
+
+              
+            </tbody>
+          </table>
+        </div>
+
+        
+      </section>
+      <br>
+<br>
+      <!-- 3rd section -->
+
+            <section class="card" aria-labelledby="cse-table">
+        <h2
+          id="eee-table"
+          style="margin: 0 0 20px 0; font-size: 1.6rem; color: var(--accent); font-weight: 800; text-align: center; border-bottom: 2px solid rgba(11,61,145,0.15); padding-bottom: 15px;"
+        >
+          Department of Electrical and Electronics Engineering
+        </h2>
+
+        <div style="overflow: auto">
+          <table role="table" aria-describedby="table-note">
+            <thead>
+              <tr>
+                <th style="width: 59px">S.No</th>
+                <th style="width: 180px">Event Name</th>
+                <th style="width: 180px">Award</th>
+                <th>Name of the Student</th>
+                <th style="width: 160px">College Name</th>
+                <th style="width: 120px">
+                  Total Amount (Rs)
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <!-- TINKERCAD MASTERS -->
+              <tr>
+                <td rowspan="3" class="muted">1</td>
+                <td rowspan="3" class="event-name">Tinkercad Masters</td>
+                <td class="award">1st Prize</td>
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;K. Vishnu Vardhan Reddy</div>
+                  <div class="student-line">&nbsp;&nbsp;K. Pavan Kumar</div>
+                  <div class="student-line">&nbsp;&nbsp;M. Manoj Kumar</div>
+                </td>
+                <td class="muted">SRIT</td>
+                <td class="amount">3,000</td>
+              </tr>
+
+              <tr>
+                <td class="award">2nd Prize</td>
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;M. Harshitha</div>
+                  <div class="student-line">&nbsp;&nbsp;S. Lekhana</div>
+                  <div class="student-line">&nbsp;&nbsp;P. B. Aishwarya</div>
+                </td>
+                <td class="muted">SRIT</td>
+                <td class="amount">2,000</td>
+              </tr>
+
+              <tr>
+                <td class="award">3rd Prize</td>
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;P. Pallavi</div>
+                  <div class="student-line">&nbsp;&nbsp;K. Charani</div>
+                  <div class="student-line">&nbsp;&nbsp;T. Mehatab Taj</div>
+                </td>
+                <td class="muted">SRIT</td>
+                <td class="amount">1,000</td>
+              </tr>
+             
+               
+
+              <!-- Paper Presentation group -->
+              <tr>
+                <td rowspan="2" class="muted">2</td>
+                <td rowspan="2" class="event-name">Paper Presentation</td>
+                <td class="award">1st Prize</td>
+                <td class="student-list">
+                <div class="student-line">&nbsp;&nbsp;J. Naveen Kumar</div>
+                <div class="student-line">&nbsp;&nbsp;K. Chaitanya Kumar Reddy</div>
+                </td>
+                <td class="muted">GPREC</td>
+                <td class="amount">2,000</td>
+              </tr>
+
+              <tr>
+                <td class="award">2nd Prize</td>
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;C. Jaya Krishna</div>
+                 
+                </td>
+                <td class="muted">SRIT</td>
+                <td class="amount">1,000</td>
+              </tr>
+
+              <!-- MINDSPARK QUIZ -->
+              <tr>
+                <td rowspan="2" class="muted">3</td>
+                <td rowspan="2" class="event-name">Mindspark Quiz</td>
+                <td class="award">1st Prize</td>
+                <td class="student-list">
+                <div class="student-line">&nbsp;&nbsp;K. Vishnu Vardhan Reddy</div>
+                <div class="student-line">&nbsp;&nbsp;M. Manoj Kumar</div>
+                <div class="student-line">&nbsp;&nbsp;K. Pavan Kumar</div>
+                </td>
+               <td class="muted">SRIT</td>
+                <td class="amount">2,000</td>
+              </tr>
+
+              <tr>
+                <td class="award">2nd Prize</td>
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;C. Jaya Krishna</div>
+                 <div class="student-line">&nbsp;&nbsp;S. Mohammad Sameer</div>
+                <div class="student-line">&nbsp;&nbsp;S. Huzeafa</div>
+                 </td>
+                <td class="muted">SRIT</td>
+                <td class="amount">1,000</td>
+              </tr>
+
+    
+            </tbody>
+          </table>
+        </div>
+
+        
+      </section>
+<br>
+<br>
+      <!-- 4th department 
+        -->
+
+              <section class="card" aria-labelledby="cse-table">
+        <h2
+          id="civil-table"
+          style="margin: 0 0 20px 0; font-size: 1.6rem; color: var(--accent); font-weight: 800; text-align: center; border-bottom: 2px solid rgba(11,61,145,0.15); padding-bottom: 15px;"
+        >
+          Department of Civil Engineering 
+        </h2>
+
+        <div style="overflow: auto">
+          <table role="table" aria-describedby="table-note">
+            <thead>
+              <tr>
+                <th style="width: 59px">S.No</th>
+                <th style="width: 180px">Event Name</th>
+                <th style="width: 180px">Award</th>
+                <th>Name of the Student</th>
+                <th style="width: 160px">College Name</th>
+                <th style="width: 120px">
+                  Total Amount (Rs)
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <!-- Hackathon group -->
+              <tr>
+                <td rowspan="3" class="muted">1</td>
+                <td rowspan="3" class="event-name">Bridge Blitz</td>
+                <td class="award">1st Prize</td>
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;C. Sai Dheeraj</div>
+                  <div class="student-line">&nbsp;&nbsp;S. Vikram</div>
+                  <div class="student-line">&nbsp;&nbsp;N. Ajath</div>
+                </td>
+                <td class="muted">SRIT</td>
+                <td class="amount">3,000</td>
+              </tr>
+
+              <tr>
+                <td class="award">2nd Prize</td>
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;T. Juveria Naaz</div>
+                  <div class="student-line">&nbsp;&nbsp;S. Vasavi</div>
+                  <div class="student-line">&nbsp;&nbsp;D. Mahalakshmi</div>
+                </td>
+                <td class="muted">SRIT</td>
+                <td class="amount">2,000</td>
+              </tr>
+
+              <tr>
+                <td class="award">3rd Prize</td>
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;K. Rohith</div>
+                  <div class="student-line">&nbsp;&nbsp;G. Saikesava Reddy</div>
+                  <div class="student-line">&nbsp;&nbsp;M. Madhu</div>
+                </td>
+                <td class="muted">SRIT</td>
+                <td class="amount">1,000</td>
+              </tr>
+
+        
+
+              <!-- Paper Presentation group -->
+              <tr>
+                <td rowspan="2" class="muted">2</td>
+                <td rowspan="2" class="event-name">Paper Presentation</td>
+                <td class="award">1st Prize</td>
+                <td class="student-list">
+               <div class="student-line">&nbsp;&nbsp;J. Naveen Kumar</div>
+                <div class="student-line">&nbsp;&nbsp;U. Samba Shiva Reddy</div>
+                </td>
+                <td class="muted">GPREC</td>
+                <td class="amount">2,000</td>
+              </tr>
+
+              <tr>
+                <td class="award">2nd Prize</td>
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;R. Bhavana</div>
+                  <div class="student-line">&nbsp;&nbsp;S. Jyoshna</div>
+                </td>
+                <td class="muted">MITS</td>
+                <td class="amount">1,000</td>
+              </tr>
+
+
+              <!-- Technical Quiz -->
+              <tr>
+                <td rowspan="2" class="muted">3</td>
+                <td rowspan="2" class="event-name">Technical Quiz</td>
+                <td class="award">1st Prize</td>
+                <td class="student-list">&nbsp;&nbsp;P. Charan</td>
+                    
+                <td class="muted">SRIT</td>
+                <td class="amount">2,000</td>
+              </tr>
+
+              <tr>
+                <td class="award">2nd Prize</td>
+                <td class="student-list">&nbsp;&nbsp;J. Mukesh</td>
+                <td class="muted">SRIT</td>
+                <td class="amount">1,000</td>
+              </tr>
+
+              
+            </tbody>
+          </table>
+        </div>
+
+        
+      </section>
+      <br>
+<br>
+      <!-- 5th  section 
+        -->
+            <section class="card" aria-labelledby="cse-table">
+        <h2
+          id="cse-table"
+          style="margin: 0 0 20px 0; font-size: 1.6rem; color: var(--accent); font-weight: 800; text-align: center; border-bottom: 2px solid rgba(11,61,145,0.15); padding-bottom: 15px;"
+        >
+          Department of Mechanical Engineering
+        </h2>
+
+        <div style="overflow: auto">
+          <table role="table" aria-describedby="table-note">
+            <thead>
+              <tr>
+                <th style="width: 59px">S.No</th>
+                <th style="width: 180px">Event Name</th>
+                <th style="width: 180px">Award</th>
+                <th>Name of the Student</th>
+                <th style="width: 160px">College Name</th>
+                <th style="width: 120px">
+                  Total Amount (Rs)
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+          
+
+              <!-- Paper Presentation group -->
+              <tr>
+                <td rowspan="2" class="muted">2</td>
+                <td rowspan="2" class="event-name">Paper Presentation</td>
+                <td class="award">1st Prize</td>
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;K. Praveen</div>
+                  <div class="student-line">&nbsp;&nbsp;S. Moizuddin</div>
+                  <div class="student-line">&nbsp;&nbsp;Sham Sheer Hussain</div>
+                </td>
+                <td class="muted">JNTUCEA</td>
+                <td class="amount">2,000</td>
+              </tr>
+
+              <tr>
+                <td class="award">2nd Prize</td>
+                <td class="student-list">
+                  <div class="student-line">&nbsp;&nbsp;B. Dinesh Kumar</div>
+                  <div class="student-line">&nbsp;&nbsp;B. Manoj Kumar</div>
+                  <div class="student-line">&nbsp;&nbsp;K. Reddy Teja</div>
+                </td>
+                <td class="muted">SRIT</td>
+                <td class="amount">1,000</td>
+              </tr>
+
+              <!-- Crossword Puzzle group -->
+              <tr>
+                <td rowspan="3" class="muted">3</td>
+                <td rowspan="3" class="event-name">Technical Quiz</td>
+                <td class="award">1st Prize</td>
+                <td class="student-list">&nbsp;&nbsp;P. Rehaman Fazil</td>
+                <td class="muted">JNTUCEA</td>
+                <td class="amount">2,000</td>
+              </tr>
+
+              <tr>
+                <td class="award">2nd Prize</td>
+                <td class="student-list">&nbsp;&nbsp;C. Lokesh Babu</td>
+                <td class="muted">SRIT</td>
+                <td class="amount">1,000</td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+        
+      </section>
+      
+        <div class="page-footer">
+        Designed by Unfazed Digital Team — © NextGen 2K25, SRIT
+      </div>
+    </main>
+  </body>
+</html>

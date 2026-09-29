@@ -4,6 +4,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Dept Coordinator — Dashboard</title>
+
+  <!-- Chart.js for the charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- jsPDF for PDF generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
   <style>
     :root{
       --primary-color: #ff6e40;
@@ -31,13 +38,15 @@
     .logout-btn{display:block;width:100%;background:var(--accent-red);border:none;padding:10px;border-radius:8px;color:#fff;cursor:pointer;margin-top:12px;}
     .logout-btn:active{transform:translateY(1px);}
     .main{flex:1;padding:22px;max-width:1200px;margin:20px auto;background:var(--card);border-radius:12px;box-shadow:0 12px 28px var(--shadow);}
-    .header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px;}
+    .header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px;border-bottom:4px solid var(--primary-color);padding-bottom:12px;}
     .title{color:var(--primary-color);font-size:1.6rem;margin-bottom:4px;}
     .sub{color:var(--muted);font-size:0.95rem;}
     .controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px;}
     .search{padding:10px 12px;border-radius:8px;border:1px solid #ddd;min-width:260px;}
-    .btn{padding:10px 14px;border-radius:8px;border:0;cursor:pointer;background:var(--primary-color);color:#fff;font-weight:600;}
+    .btn{padding:10px 14px;border-radius:8px;border:0;cursor:pointer;background:var(--primary-color);color:#fff;font-weight:600;transition:all 0.2s ease;}
+    .btn:hover{background:#ff5a2e;transform:translateY(-1px);box-shadow:0 4px 12px rgba(255,110,64,0.3);}
     .btn.secondary{background:#f5f5f5;color:#333;border:1px solid #eee;}
+    .btn.secondary:hover{background:#e9e9e9;transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.1);}
     .small-muted{font-size:0.85rem;color:var(--muted);}
     .table-wrap{overflow:auto;border-radius:10px;border:1px solid #eee;background:#fff;padding:6px;}
     table{width:100%;border-collapse:collapse;min-width:900px;}
@@ -55,6 +64,145 @@
     .debug{font-size:0.85rem;color:#b53;background:#fff4f4;padding:8px;border-radius:8px;border:1px solid #ffd1d1;display:none;}
     @media(max-width:980px){.sidebar{display:none;}body{padding:12px;}.main{margin:8px;width:100%;}table{min-width:700px;}}
     @media(max-width:600px){.search{min-width:100%;}th,td{padding:8px;}}
+
+    /* Added styles for cards and charts from convenor */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 8px 28px var(--shadow);
+    }
+    .card h3 {
+      margin: 0 0 10px;
+      color: #333;
+    }
+    .card p.big {
+      font-size: 22px;
+      margin: 6px 0;
+      color: #000;
+      font-weight: 700;
+    }
+    .view-btn {
+      margin-top: 10px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 6px;
+      background: var(--primary-color);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .view-btn:hover {
+      background: #ff5a2e;
+    }
+    .analytics-wrap {
+      max-width: 1100px;
+      margin: 8px auto 24px;
+      padding: 0 10px;
+    }
+    .chart-card {
+      min-height: 340px;
+      padding: 24px 18px 18px 18px;
+      display: flex;
+      flex-direction: column;
+      background: var(--card);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px var(--shadow);
+      border: 1px solid #f0f0f0;
+      margin-bottom: 24px;
+    }
+    .chart-card.clean {
+      background: var(--card);
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      margin: 18px 0;
+      overflow: hidden;
+      border: 1px solid #f0f0f0;
+    }
+    .chart-header {
+      padding: 10px 14px;
+      border-bottom: 1px solid #f3f3f3;
+    }
+    .chart-header h4 {
+      margin: 0;
+      font-size: 16px;
+      color: #333;
+    }
+    .chart-container {
+      position: relative;
+      width: 100%;
+      height: 380px;
+      padding: 0;
+    }
+    .chart-container.tall {
+      height: 420px;
+    }
+    .chart-container canvas {
+      width: 100% !important;
+      height: 100% !important;
+      min-height: 260px;
+      max-height: 380px;
+      display: block;
+      margin: 0 auto;
+    }
+    @media (max-width: 900px) {
+      .analytics-wrap {
+        max-width: 820px;
+        padding: 0 12px;
+      }
+      .chart-container { height: 260px; }
+      .chart-container.tall { height: 300px; }
+    }
+    @media (max-width: 600px) {
+      .analytics-wrap {
+        max-width: 560px;
+        padding: 0 10px;
+      }
+      .chart-card.clean {
+        margin: 14px 0;
+        border-radius: 12px;
+      }
+      .chart-header h4 { font-size: 15px; }
+      .chart-container { height: 180px; }
+      .chart-container.tall { height: 220px; }
+    }
+
+    /* Event grid styles */
+    .event-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+    .event-card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 8px 28px var(--shadow);
+      border: 1px solid #f0f0f0;
+    }
+    .event-card h4 {
+      margin: 0 0 12px;
+      color: var(--primary-color);
+      font-size: 1.2rem;
+    }
+    .event-card div {
+      margin: 8px 0;
+      font-size: 0.95rem;
+    }
+    .event-card .view-btn {
+      margin-top: 12px;
+      width: 100%;
+    }
+
+    
   </style>
 </head>
 <body>
@@ -67,23 +215,55 @@
       <li><a class="nav-link active" href="#" data-view="dashboard">📊 Dashboard</a></li>
       <li><a class="nav-link" href="#" data-view="events">🎯 Events</a></li>
       <li><a class="nav-link" href="#" data-view="amounts">💰 Amounts</a></li>
+      <li><a class="nav-link" href="#" data-view="amounts">Reports</a></li>
+      <li><a class="nav-link" href="forms.html">Spot Registration</a></li>
     </ul>
     <div class="nav-footer">
       <div style="margin-bottom:8px;">Signed in:</div>
       <div id="signedInAs" style="font-weight:700;color:#fff;"></div>
-      <button id="sidebarLogout" class="logout-btn" aria-label="Logout">Logout</button>
+      <!--<button id="sidebarLogout" class="logout-btn" aria-label="Logout">Logout</button>-->
+      
+<button id="resetPasswordBtn" class="logout-btn" style="background:#3498db;">Change Password</button>
+<button id="sidebarLogout" class="logout-btn" aria-label="Logout">Logout</button>
     </div>
   </aside>
 
   <main class="main" role="main">
+
     <div class="header">
-      <div>
-        <div class="title" id="title">Dept Coordinator Dashboard</div>
-        <div class="sub" id="subtitle">Loading...</div>
-      </div>
       <div style="display:flex;align-items:center;gap:12px;">
+        <div>
+          <div class="title" id="title">CSE Department Coordinator</div>
+          <div class="sub" id="subtitle"></div>
+        </div>
         <div id="counts" class="small-muted">—</div>
+      </div>
+      <div>
         <button id="topLogout" class="btn secondary" title="Logout quick">Logout</button>
+      </div>
+    </div>
+
+    <!-- Stats Cards Grid -->
+    <div class="card-grid" id="statsCards">
+      <div class="card">
+        <h3>Total Registrations</h3>
+        <p class="big" id="totalRegs">0</p>
+        <button class="view-btn" onclick="scrollToTable()">View More</button>
+      </div>
+      <div class="card">
+        <h3>Pending Registrations</h3>
+        <p class="big" id="pendingRegs">0</p>
+        <button class="view-btn" onclick="scrollToTable()">View More</button>
+      </div>
+      <div class="card">
+        <h3>Paid Registrations</h3>
+        <p class="big" id="paidRegs">0</p>
+        <button class="view-btn" onclick="scrollToTable()">View More</button>
+      </div>
+      <div class="card">
+        <h3>Total Amount</h3>
+        <p class="big" id="totalAmount">₹0</p>
+        <button class="view-btn" onclick="scrollToTable()">View More</button>
       </div>
     </div>
 
@@ -91,7 +271,49 @@
       <input id="searchInput" class="search" placeholder="Search by UTR number or name..." aria-label="Search registrations" />
       <button id="refreshBtn" class="btn secondary">Refresh</button>
       <button id="exportBtn" class="btn secondary">Export CSV</button>
+      <!-- Attendance / template selector (options populated dynamically per department) -->
+      <select id="attendanceTemplate" class="search" aria-label="Attendance Template" title="Choose template" style="min-width:220px;"></select>
+      <!-- Department selector (hidden but kept for compatibility) -->
+      <select id="attendanceDept" class="search" aria-label="Department" title="Choose department" style="display:none;">
+        <option value="Department of Computer Science and Engineering">Department of Computer Science and Engineering</option>
+        <option value="CSE (Data Science)">CSE (Data Science)</option>
+        <option value="CSE (AI & ML)">CSE (AI & ML)</option>
+      </select>
+      <button id="attendanceBtn" class="btn" title="Generate attendance / registration sheet PDF">Attendance (PDF)</button>
+      <button id="viewAttendanceBtn" class="btn secondary" title="View attendance PDF">View Attendance</button>
+      <button id="reportBtn" class="btn" title="Download report as PDF">Download Report (PDF)</button>
+      <button id="viewReportBtn" class="btn secondary" title="View report PDF">View Report</button>
+      <button id="branchReportsBtn" class="btn" title="Generate separate reports for each branch">Branch Reports</button>
+      <button id="eventReportsBtn" class="btn" title="Generate separate reports for each event">Event Reports</button>
       <div style="margin-left:auto;" class="small-muted">Tip: search is trimmed & case-insensitive</div>
+    </div>
+
+    <!-- Analytics Charts -->
+    <div class="analytics-wrap" id="analyticsWrap">
+      <div class="chart-card clean">
+        <div class="chart-header"><h4>Daily Registrations</h4></div>
+        <div class="chart-container"><canvas id="chartDaily"></canvas></div>
+      </div>
+      <div class="chart-card clean">
+        <div class="chart-header"><h4>Registrations per Event</h4></div>
+        <div class="chart-container"><canvas id="chartEvents"></canvas></div>
+      </div>
+      <div class="chart-card clean">
+        <div class="chart-header"><h4>Top Events (Top 5)</h4></div>
+        <div class="chart-container tall"><canvas id="chartTopEvents"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Amounts Charts -->
+    <div class="analytics-wrap" id="amountsCharts" style="display: none;">
+      <div class="chart-card clean">
+        <div class="chart-header"><h4>Total Paid vs Pending</h4></div>
+        <div class="chart-container"><canvas id="chartPaidPending"></canvas></div>
+      </div>
+      <div class="chart-card clean">
+        <div class="chart-header"><h4>Collected per Event</h4></div>
+        <div class="chart-container"><canvas id="chartPerEvent"></canvas></div>
+      </div>
     </div>
 
     <div class="table-wrap" id="tableWrap" aria-live="polite">
@@ -101,12 +323,12 @@
             <th>Roll No</th>
             <th>Name</th>
             <th>Email</th>
+            <th>college</th>
             <th>Phone</th>
             <th>Event</th>
             <th>Fee</th>
             <th>UTR Number</th>
             <th>Status</th>
-            <th>Year</th>
             <th>Registered On</th>
             <th>Action</th>
           </tr>
@@ -116,6 +338,8 @@
         </tbody>
       </table>
     </div>
+
+    <div id="eventsContent" class="event-grid" style="display: none;"></div>
 
     <div class="footer">
       <div id="paginationInfo">Showing <span id="showCount">0</span> registrations</div>
@@ -130,6 +354,15 @@
 
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script>
+  // preload SRIT header image (save image as ../assets/img/srit-header.png)
+  // Save the provided banner image to: dashboards/assets/img/srit-header.png
+  // (from dept_coordinator folder the relative path is ../assets/img/srit-header.png)
+  let sritHeaderImg = new Image();
+  sritHeaderImg.src = '../assets/img/srit-header.png';
+  sritHeaderImg.crossOrigin = 'Anonymous';
+  sritHeaderImg.onload = () => { console.log('SRIT header image loaded'); };
+  sritHeaderImg.onerror = () => { console.warn('Failed to load SRIT header image at ../assets/img/srit-header.png'); };
+
   const SUPABASE_URL = "https://jkqxisgkngxqlwuojuul.supabase.co";
   const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImprcXhpc2drbmd4cWx3dW9qdXVsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5OTMxODgsImV4cCI6MjA3NDU2OTE4OH0.88ga7OV0KRK44PlAdo3tOZzxARHdSYNBZqp1AIj43vY";
   const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -141,6 +374,7 @@
   const countsEl = document.getElementById('counts');
   const topLogout = document.getElementById('topLogout');
   const sidebarLogout = document.getElementById('sidebarLogout');
+  const resetPasswordBtn = document.getElementById('resetPasswordBtn');
   const refreshBtn = document.getElementById('refreshBtn');
   const exportBtn = document.getElementById('exportBtn');
   const searchInput = document.getElementById('searchInput');
@@ -150,11 +384,185 @@
   const showCount = document.getElementById('showCount');
   const prevBtn = document.getElementById('prevBtn');
   const nextBtn = document.getElementById('nextBtn');
+  const eventsContent = document.getElementById('eventsContent');
+  const tableWrap = document.getElementById('tableWrap');
+  const analyticsWrap = document.getElementById('analyticsWrap');
+  const amountsCharts = document.getElementById('amountsCharts');
 
   let registrations=[], filtered=[];
   let currentDept=null, currentUser=null;
   let page=0, PAGE_SIZE=20;
   let activeView='dashboard';
+  let currentEventFilter = null;
+
+  let chartDaily, chartEvents, chartTopEvents, chartPaidPending, chartPerEvent;
+
+  function scrollToTable() {
+    document.getElementById('tableWrap').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function updateStats() {
+    const total = filtered.length;
+    const pending = filtered.filter(r => ['pending','unpaid'].includes((r.status||'').toLowerCase())).length;
+    const paid = filtered.filter(r => ['paid','completed'].includes((r.status||'').toLowerCase())).length;
+    const totalAmount = filtered.reduce((sum, r) => {
+      if (['paid','completed'].includes((r.status||'').toLowerCase())) {
+        return sum + (Number(r.fee) || 0);
+      }
+      return sum;
+    }, 0);
+
+    document.getElementById('totalRegs').textContent = total;
+    document.getElementById('pendingRegs').textContent = pending;
+    document.getElementById('paidRegs').textContent = paid;
+    // use concatenation to avoid accidental template parsing issues
+    document.getElementById('totalAmount').textContent = '₹' + totalAmount.toLocaleString();
+  }
+
+  function createCharts() {
+    // Destroy existing charts if they exist
+    if (chartDaily) chartDaily.destroy();
+    if (chartEvents) chartEvents.destroy();
+    if (chartTopEvents) chartTopEvents.destroy();
+    if (chartPaidPending) chartPaidPending.destroy();
+    if (chartPerEvent) chartPerEvent.destroy();
+
+    if (filtered.length === 0) return;
+
+    // Daily Registrations (Line Chart)
+    const dailyMap = {};
+    filtered.forEach(r => {
+      if (r.created_at) {
+        const date = new Date(r.created_at).toDateString();
+        dailyMap[date] = (dailyMap[date] || 0) + 1;
+      }
+    });
+    const dates = Object.keys(dailyMap).sort();
+    const dailyData = dates.map(d => dailyMap[d]);
+
+    chartDaily = new Chart(document.getElementById('chartDaily'), {
+      type: 'line',
+      data: {
+        labels: dates,
+        datasets: [{
+          label: 'Registrations',
+          data: dailyData,
+          borderColor: '#ff6e40',
+          backgroundColor: 'rgba(255, 110, 64, 0.1)',
+          fill: true,
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+
+    // Registrations per Event (Bar Chart)
+    const eventMap = {};
+    filtered.forEach(r => {
+      const ev = safe(r.event, 'Unknown');
+      eventMap[ev] = (eventMap[ev] || 0) + 1;
+    });
+    const eventLabels = Object.keys(eventMap);
+    const eventCounts = eventLabels.map(e => eventMap[e]);
+
+    chartEvents = new Chart(document.getElementById('chartEvents'), {
+      type: 'bar',
+      data: {
+        labels: eventLabels,
+        datasets: [{
+          label: 'Registrations',
+          data: eventCounts,
+          backgroundColor: '#ff6e40'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+
+    // Top 5 Events (Pie Chart)
+    const sortedEvents = Object.entries(eventMap).sort(([,a], [,b]) => b - a).slice(0, 5);
+    const topLabels = sortedEvents.map(([e]) => e);
+    const topData = sortedEvents.map(([,c]) => c);
+
+    const colors = ['#ff6e40', '#2ecc71', '#f1c40f', '#e74c3c', '#9b59b6'];
+
+    chartTopEvents = new Chart(document.getElementById('chartTopEvents'), {
+      type: 'pie',
+      data: {
+        labels: topLabels,
+        datasets: [{
+          data: topData,
+          backgroundColor: colors.slice(0, topData.length)
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false
+      }
+    });
+
+    if (activeView === 'amounts') {
+      // Total Paid vs Pending (Pie Chart)
+      const paid = filtered.filter(r => ['paid','completed'].includes((r.status||'').toLowerCase())).length;
+      const pending = filtered.filter(r => ['pending','unpaid'].includes((r.status||'').toLowerCase())).length;
+      chartPaidPending = new Chart(document.getElementById('chartPaidPending'), {
+        type: 'pie',
+        data: {
+          labels: ['Paid', 'Pending'],
+          datasets: [{
+            data: [paid, pending],
+            backgroundColor: ['#2ecc71', '#f1c40f']
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      });
+
+      // Collected per Event (Bar Chart)
+      const eventAmtMap = {};
+      filtered.forEach(r => {
+        const ev = safe(r.event, 'Unknown');
+        const fee = Number(r.fee) || 0;
+        if (!eventAmtMap[ev]) eventAmtMap[ev] = 0;
+        if (['paid','completed'].includes((r.status||'').toLowerCase())) {
+          eventAmtMap[ev] += fee;
+        }
+      });
+      const eventLabels = Object.keys(eventAmtMap);
+      const eventAmounts = eventLabels.map(e => eventAmtMap[e]);
+      chartPerEvent = new Chart(document.getElementById('chartPerEvent'), {
+        type: 'bar',
+        data: {
+          labels: eventLabels,
+          datasets: [{
+            label: 'Collected Amount',
+            data: eventAmounts,
+            backgroundColor: '#ff6e40'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: { beginAtZero: true }
+          }
+        }
+      });
+    }
+  }
 
   function dbg(msg,show=false){ console.debug(msg); if(show){ debugBox.style.display='block'; debugBox.textContent=(new Date()).toLocaleTimeString()+' — '+String(msg); } }
   function safe(v,d=''){ return (v===null||v===undefined)?d:String(v); }
@@ -165,7 +573,7 @@
   async function getUser(){ const { data } = await supabase.auth.getUser(); return data?.user??null; }
   async function init(){
     currentUser = await getUser();
-    if(!currentUser){ window.location.href='/tarangnxtzen/dashboards/login.html'; return; }
+    if(!currentUser){ window.location.href='../login.html'; return; }
     signedInAs.textContent=currentUser.email||currentUser.id||'Coordinator';
     currentDept=currentUser?.user_metadata?.department||null;
     if(!currentDept){
@@ -175,14 +583,185 @@
     if(!currentDept){ titleEl.textContent='Department not found'; subtitleEl.textContent='Contact admin'; return; }
     titleEl.textContent=`${escapeHtml(currentDept)} Coordinator Dashboard`;
     subtitleEl.textContent=`Signed in as ${escapeHtml(currentUser.email||'')}`;
+    populateTemplatesForDept(currentDept);
     await loadRegistrations(currentDept);
+  }
+
+  function getDeptKey(dept){
+    const d = (dept||'').toLowerCase();
+    if(d.includes('civil')) return 'CIVIL';
+    if(d.includes('mechan')||d.includes('mech')) return 'MECH';
+    if(d.includes('electrical and electronics')||d.includes(' eee')||d.includes('(eee')||d.includes('eee')) return 'EEE';
+    if(d.includes('electronics')||d.includes(' ece')||d.includes('(ece')||d.includes('ece')) return 'ECE';
+    return 'CSE';
+  }
+
+  function populateTemplatesForDept(dept){
+    const key = getDeptKey(dept);
+    const templateMap = {
+      CSE: [
+        { value: 'paper', label: 'Paper Presentation Registration Sheet' },
+        { value: 'hackathon', label: 'Hackathon Registration Sheet' },
+        { value: 'crossword', label: 'Crossword Puzzle Registration Sheet' }
+      ],
+      ECE: [
+        { value: 'hackathon', label: 'Hackathon Registration Sheet' },
+        { value: 'paper', label: 'Paper Presentation Registration Sheet' },
+        { value: 'circuit_quiz', label: 'Circuit Master Quiz Registration Sheet' }
+      ],
+      EEE: [
+        { value: 'thinkercad', label: 'Thinkercad Registration Sheet' },
+        { value: 'paper', label: 'Paper Presentation Registration Sheet' },
+        { value: 'mind_spark_quiz', label: 'Mind Spark Quiz Registration Sheet' }
+      ],
+      MECH: [
+        { value: 'model_expo', label: 'Model Expo Registration Sheet' },
+        { value: 'paper', label: 'Paper Presentation Registration Sheet' },
+        { value: 'technical_quiz', label: 'Technical Quiz Registration Sheet' }
+      ],
+      CIVIL: [
+        { value: 'bridge_blitz', label: 'Bridge Blitz Registration Sheet' },
+        { value: 'paper', label: 'Paper Presentation Registration Sheet' },
+        { value: 'technical_quiz', label: 'Technical Quiz Registration Sheet' }
+      ]
+    };
+    const opts = templateMap[key]||templateMap.CSE;
+    attendanceTemplate.innerHTML = opts.map(o=>`<option value="${o.value}">${o.label}</option>`).join('');
+  }
+
+  function applyFilters() {
+    let temp = registrations.slice();
+    if (currentEventFilter) {
+      const filterEvent = normalizeQ(currentEventFilter);
+      temp = temp.filter(r => normalizeQ(safe(r.event, '')).includes(filterEvent));
+    }
+    const q = normalizeQ(searchInput.value);
+    if (q) {
+      temp = temp.filter(r => normalizeQ(safe(r.name, '')).includes(q) || normalizeQ(safe(r.utr_number, '')).includes(q));
+    }
+    filtered = temp;
   }
 
   async function loadRegistrations(dept){
     tableBody.innerHTML='<tr><td colspan="11" style="text-align:center;padding:28px;">Loading registrations…</td></tr>';
-    const { data, error } = await supabase.from('registrations').select('*').eq('department',dept).order('created_at',{ascending:false}).limit(2000);
-    if(error){ tableBody.innerHTML='<tr><td colspan="11" style="color:red;text-align:center;padding:18px;">Error loading data</td></tr>'; setCounts(0,0,0); return; }
-    registrations = data||[]; filtered=registrations.slice(); page=0; renderPage(); updateCounts();
+
+    try {
+      // First try a simple query to test connection
+      const { data: testData, error: testError } = await supabase
+        .from('registrations')
+        .select('id')
+        .limit(1);
+
+      if (testError) {
+        console.error('Supabase connection error:', testError);
+        console.error('Error details:', {
+          message: testError.message,
+          details: testError.details,
+          hint: testError.hint,
+          code: testError.code
+        });
+
+        // Try to check if the table exists
+        const { data: tableTest, error: tableError } = await supabase
+          .from('registrations')
+          .select('*')
+          .limit(0);
+
+        if (tableError) {
+          console.error('Table access error:', tableError);
+          tableBody.innerHTML='<tr><td colspan="11" style="color:red;text-align:center;padding:18px;">Database connection failed. Please check:<br>• Supabase URL and API key<br>• Table "registrations" exists<br>• Row Level Security settings<br>• Internet connection<br><small>Check console for details.</small></td></tr>';
+        } else {
+          tableBody.innerHTML='<tr><td colspan="11" style="color:red;text-align:center;padding:18px;">Database connection failed. Please check your internet connection and try again.<br><small>Check console for details.</small></td></tr>';
+        }
+        setCounts(0,0,0); updateStats(); return;
+      }
+
+      const key = getDeptKey(dept);
+      console.log('Department:', dept, 'Key:', key);
+
+      // Build a robust OR filter to match department naming variants
+      const filtersByKey = {
+        CSE: [
+          `department.eq.${dept}`,
+          'department.ilike.%computer%', 'department.ilike.%cse%'
+        ],
+        ECE: [
+          `department.eq.${dept}`,
+          'department.ilike.%electronics%', 'department.ilike.%ece%'
+        ],
+        EEE: [
+          `department.eq.${dept}`,
+          'department.ilike.%electrical%', 'department.ilike.%eee%'
+        ],
+        MECH: [
+          `department.eq.${dept}`,
+          'department.ilike.%mechanical%', 'department.ilike.%mech%'
+        ],
+        CIVIL: [
+          `department.eq.${dept}`,
+          'department.ilike.%civil%'
+        ]
+      };
+
+      const orFilter = (filtersByKey[key] || [`department.eq.${dept}`]).join(',');
+      console.log('Querying with filter:', orFilter);
+
+      // Also try a simple query without filters to see if data exists
+      const { data: allData, error: allError } = await supabase
+        .from('registrations')
+        .select('department, event')
+        .limit(5);
+
+      console.log('Sample data from table:', allData);
+      if (allError) {
+        console.error('Error fetching sample data:', allError);
+      }
+
+      // Try to fetch ALL data without any filters to see total records
+      const { data: totalData, error: totalError } = await supabase
+        .from('registrations')
+        .select('id, department, event')
+        .limit(10);
+
+      console.log('Total records in table (first 10):', totalData);
+      console.log('Total records count:', totalData?.length || 0);
+      if (totalError) {
+        console.error('Error fetching total data:', totalError);
+      }
+
+      const { data, error } = await supabase
+        .from('registrations')
+        .select('*')
+        .or(orFilter)
+        .order('created_at', { ascending: false })
+        .limit(2000);
+
+      if (error) {
+        console.error('Query error:', error);
+        console.error('Error details:', {
+          message: error.message,
+          details: error.details,
+          hint: error.hint,
+          code: error.code
+        });
+        tableBody.innerHTML='<tr><td colspan="11" style="color:red;text-align:center;padding:18px;">Error loading data. Please try refreshing the page.<br><small>Check console for details.</small></td></tr>';
+        setCounts(0,0,0); updateStats(); return;
+      }
+
+      console.log('Loaded registrations:', data?.length || 0);
+      registrations = data || [];
+      applyFilters();
+      page = 0;
+      updateStats();
+      createCharts();
+      renderPage();
+      updateCounts();
+
+    } catch (err) {
+      console.error('Unexpected error:', err);
+      tableBody.innerHTML='<tr><td colspan="11" style="color:red;text-align:center;padding:18px;">Unexpected error occurred. Please try again.</td></tr>';
+      setCounts(0,0,0); updateStats();
+    }
   }
 
   function updateCounts(){
@@ -192,12 +771,45 @@
     setCounts(total,pending,paid);
   }
 
+  function filterByEvent(ev) {
+    currentEventFilter = ev;
+    applyFilters();
+    updateStats();
+    createCharts();
+    // Switch to dashboard view
+    navList.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+    const dashboardLink = document.querySelector('[data-view="dashboard"]');
+    dashboardLink.classList.add('active');
+    activeView = 'dashboard';
+    page = 0;
+    renderPage();
+    updateCounts();
+  }
+
+  function clearEventFilter() {
+    currentEventFilter = null;
+    applyFilters();
+    updateStats();
+    createCharts();
+    page = 0;
+    renderPage();
+    updateCounts();
+  }
+
   function renderPage(){
+    // Stats cards are always visible
+    document.getElementById('statsCards').style.display = 'grid';
+
     if(activeView==='dashboard'){
+      tableWrap.style.display = 'block';
+      eventsContent.style.display = 'none';
+      analyticsWrap.style.display = 'block';
+      amountsCharts.style.display = 'none';
+
       const start=page*PAGE_SIZE, pageItems=filtered.slice(start,start+PAGE_SIZE);
       if(!pageItems.length){ tableBody.innerHTML='<tr><td colspan="11" style="text-align:center;padding:18px;">No registrations found.</td></tr>'; showCount.textContent='0'; return; }
       showCount.textContent=String(filtered.length);
-      tableHead.innerHTML='<tr><th>Roll No</th><th>Name</th><th>Email</th><th>Phone</th><th>Event</th><th>Fee</th><th>UTR Number</th><th>Status</th><th>Year</th><th>Registered On</th><th>Action</th></tr>';
+      tableHead.innerHTML='<tr><th>Roll No</th><th>Name</th><th>Email</th><th>college</th><th>Phone</th><th>Event</th><th>Fee</th><th>UTR Number</th><th>Status</th><th>Registered On</th><th>Action</th></tr>';
       tableBody.innerHTML=pageItems.map(r=>{
         const status=(r.status||'').toLowerCase();
         const badge=status==='paid'||status==='completed'?'<span class="status-badge status-paid">Paid</span>':status==='pending'||status==='unpaid'?'<span class="status-badge status-pending">Pending</span>':'<span class="status-badge status-na">N/A</span>';
@@ -206,46 +818,47 @@
           <td>${safe(r.student_id,'—')}</td>
           <td>${safe(r.name,'—')}</td>
           <td>${safe(r.email,'—')}</td>
+          <td>${safe(r.college,'—')}</td>
           <td>${safe(r.phone,'—')}</td>
           <td>${safe(r.event,'—')}</td>
           <td>${safe(r.fee,'0')}</td>
           <td>${safe(r.utr_number,'—')}</td>
           <td>${badge}</td>
-          <td>${safe(r.year,'—')}</td>
           <td>${r.created_at?escapeHtml(new Date(r.created_at).toLocaleString()):'—'}</td>
           <td>${action}</td>
         </tr>`;
       }).join('');
     } else if(activeView==='events'){
+      tableWrap.style.display = 'none';
+      analyticsWrap.style.display = 'none';
+      eventsContent.style.display = 'grid';
+      amountsCharts.style.display = 'none';
       const eventMap={}; registrations.forEach(r=>{ const ev=safe(r.event,'Unknown'); if(!eventMap[ev]) eventMap[ev]={total:0,paid:0,pending:0}; eventMap[ev].total++; const st=(r.status||'').toLowerCase(); if(st==='paid'||st==='completed') eventMap[ev].paid++; else if(st==='pending'||st==='unpaid') eventMap[ev].pending++; });
-      tableHead.innerHTML='<tr><th>Event</th><th>Total Registrations</th><th>Paid</th><th>Pending</th></tr>';
-      tableBody.innerHTML=Object.entries(eventMap).map(([ev,v])=>`<tr><td>${escapeHtml(ev)}</td><td>${v.total}</td><td>${v.paid}</td><td>${v.pending}</td></tr>`).join('');
+      const eventCards = Object.entries(eventMap)
+        .filter(([ev]) => ev !== 'Unknown')
+        .map(([ev, v]) => `
+          <div class="event-card">
+            <h4>${escapeHtml(ev)}</h4>
+            <div>Total: ${v.total}</div>
+            <div>Paid: ${v.paid}</div>
+            <div>Pending: ${v.pending}</div>
+            <button class="view-btn" onclick="filterByEvent('${escapeHtml(ev)}')">View Registrations</button>
+          </div>
+        `).join('');
+      eventsContent.innerHTML = eventCards || '<p>No events found.</p>';
     } else if(activeView==='amounts'){
-      const amtMap={};
-      registrations.forEach(r=>{
-        const ev = safe(r.event,'Unknown');
-        const fee = Number(r.fee)||0;
-        const st = (r.status||'').toLowerCase();
-        if(!amtMap[ev]) amtMap[ev] = { total:0, paid:0, pending:0 };
-        amtMap[ev].total += fee;
-        if(st==='paid'||st==='completed') amtMap[ev].paid += fee;
-        else if(st==='pending'||st==='unpaid') amtMap[ev].pending += fee;
-      });
-      tableHead.innerHTML = '<tr><th>Event</th><th>Total Amount</th><th>Paid</th><th>Pending</th></tr>';
-      tableBody.innerHTML = Object.entries(amtMap).map(([ev,v])=>
-        `<tr>
-          <td>${escapeHtml(ev)}</td>
-          <td>${v.total}</td>
-          <td>${v.paid}</td>
-          <td>${v.pending}</td>
-        </tr>`).join('');
+      tableWrap.style.display = 'none';
+      analyticsWrap.style.display = 'none';
+      eventsContent.style.display = 'none';
+      amountsCharts.style.display = 'block';
     }
   }
 
   // ---------- SEARCH ----------
   searchInput.addEventListener('input',()=>{
-    const q = normalizeQ(searchInput.value);
-    filtered = registrations.filter(r=>normalizeQ(r.name).includes(q)||normalizeQ(r.utr_number).includes(q));
+    applyFilters();
+    updateStats();
+    createCharts();
     page=0; renderPage(); updateCounts();
   });
 
@@ -258,7 +871,11 @@
     const link=e.target.closest('.nav-link'); if(!link) return;
     navList.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
     link.classList.add('active');
-    activeView=link.dataset.view; page=0; renderPage();
+    activeView=link.dataset.view;
+    if (activeView === 'events') {
+      currentEventFilter = null;
+    }
+    page=0; renderPage(); createCharts();
   });
 
   // ---------- APPROVE ----------
@@ -269,27 +886,978 @@
     const { error } = await supabase.from('registrations').update({status:'paid'}).eq('id',rid);
     if(error){ alert('Error approving'); btn.disabled=false; return; }
     const reg = registrations.find(r=>r.id==rid); if(reg) reg.status='paid';
-    filtered = filtered.map(r=>r.id==rid?{...r,status:'paid'}:r); renderPage(); updateCounts();
+    filtered = filtered.map(r=>r.id==rid?{...r,status:'paid'}:r);
+    updateStats();
+    createCharts();
+    renderPage(); updateCounts();
   });
 
   // ---------- REFRESH & EXPORT ----------
   refreshBtn.addEventListener('click',()=>loadRegistrations(currentDept));
-  exportBtn.addEventListener('click',()=>{
+    exportBtn.addEventListener('click',()=>{
     let csv = '';
     if(activeView==='dashboard'){
-      csv = filtered.map(r=>[r.student_id,r.name,r.email,r.phone,r.event,r.fee,r.utr_number,r.status,r.year,r.created_at].map(v=>`"${v}"`).join(',')).join('\n');
-      csv = 'Roll No,Name,Email,Phone,Event,Fee,UTR Number,Status,Year,Registered On\n'+csv;
+      csv = filtered.map(r=>[r.student_id,r.name,r.email,r.college,r.phone,r.event,r.fee,r.utr_number,r.status,r.created_at].map(v=>`"${v}"`).join(',')).join('\n');
+      csv = 'Roll No,Name,Email,college,Phone,Event,Fee,UTR Number,Status,Registered On\n'+csv;
     }
     const blob = new Blob([csv],{type:'text/csv'});
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a'); a.href=url; a.download='registrations.csv'; a.click(); URL.revokeObjectURL(url);
   });
 
-  // ---------- LOGOUT ----------
-  topLogout.addEventListener('click',()=>supabase.auth.signOut().then(()=>window.location.reload()));
-  sidebarLogout.addEventListener('click',()=>supabase.auth.signOut().then(()=>window.location.reload()));
+  // ---------- ATTENDANCE & REPORT BUTTONS ----------
+  const attendanceBtn = document.getElementById('attendanceBtn');
+  const reportBtn = document.getElementById('reportBtn');
+  const attendanceTemplate = document.getElementById('attendanceTemplate');
+  const attendanceDept = document.getElementById('attendanceDept');
 
+  attendanceBtn.addEventListener('click', () => {
+    const template = attendanceTemplate.value;
+    const dept = currentDept; // Use logged-in department instead of dropdown
+    generateAttendancePDF(template, dept);
+  });
+
+  reportBtn.addEventListener('click', () => {
+    const template = attendanceTemplate.value;
+    const dept = currentDept; // Use logged-in department instead of dropdown
+    generateReportPDF(template, dept);
+  });
+
+  const branchReportsBtn = document.getElementById('branchReportsBtn');
+  const eventReportsBtn = document.getElementById('eventReportsBtn');
+  const viewAttendanceBtn = document.getElementById('viewAttendanceBtn');
+  const viewReportBtn = document.getElementById('viewReportBtn');
+
+  branchReportsBtn.addEventListener('click', () => {
+    generateBranchReports();
+  });
+
+  eventReportsBtn.addEventListener('click', () => {
+    generateEventReports();
+  });
+
+  viewAttendanceBtn.addEventListener('click', () => {
+    const template = attendanceTemplate.value;
+    const dept = currentDept;
+    generateAttendancePDF(template, dept, 'view');
+  });
+
+  viewReportBtn.addEventListener('click', () => {
+    const template = attendanceTemplate.value;
+    const dept = currentDept;
+    generateReportPDF(template, dept, 'view');
+  });
+
+  async function generateAttendancePDF(template, department, mode = 'download') {
+    // Filter registrations by the template's event
+    const eventFilter = getEventFilterFromTemplate(template);
+    const templateFiltered = registrations.filter(reg =>
+      !eventFilter || (reg.event && reg.event.toLowerCase().includes(eventFilter.toLowerCase()))
+    );
+
+    if (templateFiltered.length === 0) {
+      alert('No registrations found for the selected template.');
+      return;
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Add header with logo and spot registration format
+    addSpotRegistrationHeader(doc, department, template, 'attendance');
+
+    // Group registrations by teams
+    const teamGroups = groupRegistrationsByTeam(templateFiltered, eventFilter);
+
+    // Create attendance table with new structure
+    const tableData = [];
+    let serialNumber = 1;
+
+    Object.entries(teamGroups).forEach(([teamId, members]) => {
+      // Determine number of members based on event
+      const info = deptEvents[getDeptKey(department)] && deptEvents[getDeptKey(department)][template];
+      const numMembers = info ? info.members : 2;
+
+      // Leader Name (Student Name 1)
+      const leaderName = members[0]?.name || '';
+
+      // Student Name 2 (if exists)
+      const member2Name = members[1]?.name || '';
+
+      // Student Name 3 (if 3 members)
+      const member3Name = numMembers > 2 ? (members[2]?.name || '') : '';
+
+      const row = [
+        serialNumber,
+        leaderName,
+        teamId,
+        members[0]?.student_id || '',
+        leaderName,
+        member2Name,
+        ...(numMembers > 2 ? [member3Name] : []),
+        getBranchCodeFromDepartment(department),
+        members[0]?.college || 'SRIT',
+        '' // Signature column - empty
+      ];
+      tableData.push(row);
+      serialNumber++;
+    });
+
+    // Define table headers based on number of members
+    const info = deptEvents[getDeptKey(department)] && deptEvents[getDeptKey(department)][template];
+    const numMembers = info ? info.members : 2;
+    const tableHead = numMembers === 2
+      ? [['S.No', 'Leader Name', 'Team ID', 'Roll No 1', 'Student Name 1', 'Student Name 2', 'Branch', 'College Name', 'Signature']]
+      : [['S.No', 'Leader Name', 'Team ID', 'Roll No 1', 'Student Name 1', 'Student Name 2', 'Student Name 3', 'Branch', 'College Name', 'Signature']];
+
+    const columnStyles = numMembers === 2 ? {
+      0: { cellWidth: 12, halign: 'center' }, // S.No
+      1: { cellWidth: 25, halign: 'left' },   // Leader Name
+      2: { cellWidth: 20, halign: 'center' }, // Team ID
+      3: { cellWidth: 20, halign: 'center' }, // Roll No 1
+      4: { cellWidth: 25, halign: 'left' },   // Student Name 1
+      5: { cellWidth: 25, halign: 'left' },   // Student Name 2
+      6: { cellWidth: 15, halign: 'center' }, // Branch
+      7: { cellWidth: 20, halign: 'center' }, // College Name
+      8: { cellWidth: 18, halign: 'center' }  // Signature
+    } : {
+      0: { cellWidth: 12, halign: 'center' }, // S.No
+      1: { cellWidth: 20, halign: 'left' },   // Leader Name
+      2: { cellWidth: 18, halign: 'center' }, // Team ID
+      3: { cellWidth: 18, halign: 'center' }, // Roll No 1
+      4: { cellWidth: 20, halign: 'left' },   // Student Name 1
+      5: { cellWidth: 20, halign: 'left' },   // Student Name 2
+      6: { cellWidth: 20, halign: 'left' },   // Student Name 3
+      7: { cellWidth: 15, halign: 'center' }, // Branch
+      8: { cellWidth: 20, halign: 'center' }, // College Name
+      9: { cellWidth: 18, halign: 'center' }  // Signature
+    };
+
+    // Add table - properly aligned to page
+    doc.autoTable({
+      head: tableHead,
+      body: tableData,
+      startY: 90, // Adjusted gap from header due to logo
+      margin: { left: 10, right: 10, top: 90, bottom: 20 }, // Standard margins for A4 page
+      styles: {
+        font: 'verdana', // Use Verdana font
+        fontSize: 8, // Smaller font to fit more columns
+        cellPadding: { top: 3, right: 2, bottom: 3, left: 2 },
+        lineColor: [0, 0, 0],
+        lineWidth: 0.5,
+        halign: 'center' // Center align all cells by default
+      },
+      headStyles: {
+        fillColor: '#ff6e40',
+        textColor: '#fff',
+        fontStyle: 'bold',
+        halign: 'center',
+        fontSize: 8,
+        font: 'verdana'
+      },
+      columnStyles: columnStyles,
+      tableWidth: 'auto' // Auto-fit table to page width
+    });
+
+    // Save the PDF
+    doc.save(`${template}_attendance_${department.replace(/\s+/g, '_')}.pdf`);
+  }
+
+  async function generateReportPDF(template, department) {
+    // Filter registrations by the template's event
+    const eventFilter = getEventFilterFromTemplate(template);
+    const templateFiltered = registrations.filter(reg =>
+      !eventFilter || (reg.event && reg.event.toLowerCase().includes(eventFilter.toLowerCase()))
+    );
+
+    if (templateFiltered.length === 0) {
+      alert('No registrations found for the selected template.');
+      return;
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Add header with logo and spot registration format
+    addSpotRegistrationHeader(doc, department, template, 'report');
+
+    // Group registrations by teams
+    const teamGroups = groupRegistrationsByTeam(templateFiltered, eventFilter);
+
+    // Create report table with new structure
+    const tableData = [];
+    let serialNumber = 1;
+    const teamAmounts = {};
+
+    Object.entries(teamGroups).forEach(([teamId, members]) => {
+      // Determine number of members based on event
+      const info = deptEvents[getDeptKey(department)] && deptEvents[getDeptKey(department)][template];
+      const numMembers = info ? info.members : 2;
+      const teamAmount = info ? info.fee : 200;
+      teamAmounts[teamId] = teamAmount;
+
+      // Leader Name (Student Name 1)
+      const leaderName = members[0]?.name || '';
+
+      // Student Name 2 (if exists)
+      const member2Name = members[1]?.name || '';
+
+      // Student Name 3 (if 3 members)
+      const member3Name = numMembers > 2 ? (members[2]?.name || '') : '';
+
+      const row = [
+        serialNumber,
+        teamId,
+        members[0]?.student_id || '',
+        leaderName,
+        leaderName,
+        member2Name,
+        ...(numMembers > 2 ? [member3Name] : []),
+        getBranchCodeFromDepartment(department),
+        members[0]?.college || 'SRIT',
+        teamAmount // Amount column
+      ];
+      tableData.push(row);
+      serialNumber++;
+    });
+
+    // Define table headers based on number of members
+    const info = deptEvents[getDeptKey(department)] && deptEvents[getDeptKey(department)][template];
+    const numMembers = info ? info.members : 2;
+    const tableHead = numMembers === 2
+      ? [['S.No', 'Team ID', 'Roll No 1', 'Leader Name', 'Student Name 1', 'Student Name 2', 'Branch', 'College Name', 'Amount']]
+      : [['S.No', 'Team ID', 'Roll No 1', 'Leader Name', 'Student Name 1', 'Student Name 2', 'Student Name 3', 'Branch', 'College Name', 'Amount']];
+
+    const columnStyles = numMembers === 2 ? {
+      0: { cellWidth: 12, halign: 'center' }, // S.No
+      1: { cellWidth: 20, halign: 'center' }, // Team ID
+      2: { cellWidth: 20, halign: 'center' }, // Roll No 1
+      3: { cellWidth: 25, halign: 'left' },   // Leader Name
+      4: { cellWidth: 25, halign: 'left' },   // Student Name 1
+      5: { cellWidth: 25, halign: 'left' },   // Student Name 2
+      6: { cellWidth: 15, halign: 'center' }, // Branch
+      7: { cellWidth: 20, halign: 'center' }, // College Name
+      8: { cellWidth: 18, halign: 'center' }  // Amount
+    } : {
+      0: { cellWidth: 12, halign: 'center' }, // S.No
+      1: { cellWidth: 18, halign: 'center' }, // Team ID
+      2: { cellWidth: 18, halign: 'center' }, // Roll No 1
+      3: { cellWidth: 20, halign: 'left' },   // Leader Name
+      4: { cellWidth: 20, halign: 'left' },   // Student Name 1
+      5: { cellWidth: 20, halign: 'left' },   // Student Name 2
+      6: { cellWidth: 20, halign: 'left' },   // Student Name 3
+      7: { cellWidth: 15, halign: 'center' }, // Branch
+      8: { cellWidth: 20, halign: 'center' }, // College Name
+      9: { cellWidth: 18, halign: 'center' }  // Amount
+    };
+
+    // Add table - properly aligned to page
+    doc.autoTable({
+      head: tableHead,
+      body: tableData,
+      startY: 90, // Adjusted gap from header due to logo
+      margin: { left: 10, right: 10, top: 90, bottom: 20 }, // Standard margins for A4 page
+      styles: {
+        font: 'verdana', // Use Verdana font
+        fontSize: 8, // Smaller font to fit more columns
+        cellPadding: { top: 3, right: 2, bottom: 3, left: 2 },
+        lineColor: [0, 0, 0],
+        lineWidth: 0.5,
+        halign: 'center' // Center align all cells by default
+      },
+      headStyles: {
+        fillColor: '#ff6e40',
+        textColor: '#fff',
+        fontStyle: 'bold',
+        halign: 'center',
+        fontSize: 8,
+        font: 'verdana'
+      },
+      columnStyles: columnStyles,
+      tableWidth: 'auto' // Auto-fit table to page width
+    });
+
+    // Add total amount at the bottom
+    const totalAmount = Object.values(teamAmounts).reduce((sum, amount) => sum + amount, 0);
+    doc.setFontSize(12);
+    doc.text(`Total Amount Collected: ₹${totalAmount}`, 10, doc.lastAutoTable.finalY + 20);
+
+    // Save the PDF
+    doc.save(`${template}_report_${department.replace(/\s+/g, '_')}.pdf`);
+  }
+
+
+  function addSRITHeader(doc, department, template) {
+    const pageWidth = doc.internal.pageSize.getWidth();
+
+    // Add SRIT logo image above the heading text
+    try {
+      // Logo dimensions and position
+      const logoWidth = 100;
+      const logoHeight = 20;
+      const logoX = (pageWidth - logoWidth) / 2;
+      const logoY = 15;
+
+      // Add logo image (assuming it's available at the path)
+      doc.addImage('../assets/img/srit.Logo.jpg', 'jpg', logoX, logoY, logoWidth, logoHeight);
+    } catch (error) {
+      console.warn('Failed to load SRIT logo image:', error);
+    }
+
+    // Department-specific header text
+    const deptHeader = getDepartmentHeader(department);
+
+    // Document title
+    const title = getTemplateTitle(template);
+
+    // Center the text with minimal gaps - same font size for all headings
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(14);
+    doc.setFont(undefined, 'bold');
+    doc.text(deptHeader, pageWidth / 2, 45, { align: 'center' });
+    doc.setFont(undefined, 'normal');
+    doc.text('NEXTGEN 2K25', pageWidth / 2, 55, { align: 'center' });
+    doc.setFont(undefined, 'bold');
+    doc.text(title, pageWidth / 2, 65, { align: 'center' });
+  }
+
+  function addSpotRegistrationHeader(doc, department, template, type) {
+    const pageWidth = doc.internal.pageSize.getWidth();
+
+    // Add SRIT logo image spanning the entire width
+    try {
+      // Logo dimensions and position - span entire width
+      const logoWidth = pageWidth - 20; // Span almost entire width with small margins
+      const logoHeight = 25; // Slightly taller for better visibility
+      const logoX = 10; // Start from left margin
+      const logoY = 15;
+
+      // Add logo image (assuming it's available at the path)
+      doc.addImage('../assets/img/srit-header.png', 'png', logoX, logoY, logoWidth, logoHeight);
+    } catch (error) {
+      console.warn('Failed to load SRIT logo image:', error);
+    }
+
+    // Department-specific header text
+    const deptHeader = getDepartmentHeader(department);
+
+    // Event name from template
+    const eventName = getTemplateTitle(template);
+
+    // Center the text with minimal gaps - same font size for all headings
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(14);
+    doc.setFont(undefined, 'bold');
+    doc.text(deptHeader, pageWidth / 2, 50, { align: 'center' });
+    doc.setFont(undefined, 'normal');
+    doc.text('NEXTGEN 2K25', pageWidth / 2, 60, { align: 'center' });
+    doc.setFont(undefined, 'bold');
+    doc.text(eventName, pageWidth / 2, 70, { align: 'center' });
+    doc.setFont(undefined, 'normal');
+    doc.text('Spot Registration Form', pageWidth / 2, 80, { align: 'center' });
+
+  }
+
+  function getTemplateTitle(template) {
+    const titles = {
+      'paper': 'Paper Presentation Registration Sheet',
+      'codebuzz': 'Code Buzz Registration Sheet',
+      'crossword': 'Crossword Puzzle Registration Sheet',
+      'hackathon': 'Hackathon Registration Sheet',
+      'circuit_quiz': 'Circuit Master Quiz Registration Sheet',
+      'thinkercad': 'Thinkercad Registration Sheet',
+      'mind_spark_quiz': 'Mind Spark Quiz Registration Sheet',
+      'model_expo': 'Model Expo Registration Sheet',
+      'technical_quiz': 'Technical Quiz Registration Sheet',
+      'bridge_blitz': 'Bridge Blitz Registration Sheet',
+      'techfest': 'Tech Fest Registration Sheet',
+      'workshop': 'Workshop Registration Sheet',
+      'seminar': 'Seminar Registration Sheet'
+    };
+    return titles[template] || 'Registration Sheet';
+  }
+
+  function getDepartmentHeader(department) {
+    const dept = (department || '').toLowerCase();
+    if (dept.includes('computer science') || dept.includes('cse')) {
+      return 'Department of Computer Science and Engineering And Allied';
+    } else if (dept.includes('electronics') || dept.includes('ece')) {
+      return 'Department of Electrical & Communication Engineering';
+    } else if (dept.includes('electrical') || dept.includes('eee')) {
+      return 'Department of Electrical & Electronics Engineering';
+    } else if (dept.includes('mechanical') || dept.includes('mech')) {
+      return 'Department of Mechanical Engineering';
+    } else if (dept.includes('civil')) {
+      return 'Department of Civil Engineering';
+    }
+    return department || 'Department';
+  }
+
+  async function fetchTeamsFromSupabase(department, eventFilter = null) {
+    try {
+      let query = supabase.from('teams').select('*');
+
+      // Filter by department if provided
+      if (department) {
+        query = query.eq('department', department);
+      }
+
+      // Filter by event if provided
+      if (eventFilter) {
+        query = query.ilike('event', `%${eventFilter}%`);
+      }
+
+      const { data, error } = await query;
+      if (error) {
+        console.error('Error fetching teams:', error);
+        return {};
+      }
+
+      // Transform data to expected format
+      const teams = {};
+      data.forEach(team => {
+        const members = (team.members || []).map(member => ({
+          student_id: member.student_id || member.id || '',
+          name: member.name || member.full_name || '',
+          branch: member.branch || getBranchCode(team.department),
+          college_name: member.college_name || 'SRIT'
+        }));
+
+        teams[team.id] = {
+          name: team.name || `Team ${team.id}`,
+          members: members
+        };
+      });
+
+      console.log('Fetched teams from Supabase:', teams); // Debug log
+      return teams;
+    } catch (err) {
+      console.error('Unexpected error fetching teams:', err);
+      return {};
+    }
+  }
+
+  function groupRegistrationsByTeam(registrations, eventFilter = null) {
+    const teams = {};
+    // First, group by event
+    const eventGroups = {};
+    registrations.forEach(reg => {
+      if (eventFilter && reg.event && !reg.event.toLowerCase().includes(eventFilter.toLowerCase())) {
+        return;
+      }
+      const event = reg.event || 'Unknown';
+      if (!eventGroups[event]) eventGroups[event] = [];
+      eventGroups[event].push(reg);
+    });
+    // Now, for each event, create teams of 2 members
+    Object.entries(eventGroups).forEach(([event, regs]) => {
+      let teamCounter = 1;
+      for (let i = 0; i < regs.length; i += 2) {
+        const teamId = generateTeamId(currentDept, event, teamCounter);
+        teams[teamId] = regs.slice(i, i + 2).map((reg, index) => ({
+          student_id: reg.student_id || `CS${1000 + i + index + 1}`,
+          name: reg.name || '',
+          branch: getBranchCode(reg.branch || reg.department),
+          college_name: reg.college_name || 'SRIT'
+        }));
+        teamCounter++;
+      }
+    });
+    return teams;
+  }
+
+  function getEventPrefix(event) {
+    if (event && event.toLowerCase().includes('paper')) return 'PP';
+    if (event && event.toLowerCase().includes('code')) return 'CB';
+    if (event && event.toLowerCase().includes('hackathon') || event.toLowerCase().includes('hack')) return 'HK';
+    if (event && event.toLowerCase().includes('tech')) return 'TF';
+    if (event && event.toLowerCase().includes('workshop')) return 'WS';
+    if (event && event.toLowerCase().includes('seminar')) return 'SM';
+    if (event && event.toLowerCase().includes('crossword')) return 'CW';
+    if (event && event.toLowerCase().includes('circuit')) return 'CM';
+    if (event && event.toLowerCase().includes('thinkercad') || event.toLowerCase().includes('thinker')) return 'TK';
+    if (event && event.toLowerCase().includes('mind')) return 'MS';
+    if (event && event.toLowerCase().includes('model')) return 'ME';
+    if (event && event.toLowerCase().includes('bridge')) return 'BB';
+    return 'PP'; // Default
+  }
+
+  function generateTeamId(department, event, teamNumber) {
+    const deptCode = getDeptCodeForTeamId(department);
+    const eventCode = getEventCodeForTeamId(event, department);
+    const paddedNumber = String(teamNumber).padStart(3, '0');
+    return `${deptCode}${eventCode}${paddedNumber}`;
+  }
+
+  function getDeptCodeForTeamId(department) {
+    const dept = (department || '').toLowerCase();
+    if (dept.includes('computer science') || dept.includes('cse')) return 'CSE';
+    if (dept.includes('electronics') || dept.includes('ece')) return 'ECE';
+    if (dept.includes('electrical') || dept.includes('eee')) return 'EEE';
+    if (dept.includes('mechanical') || dept.includes('mech')) return 'MEC';
+    if (dept.includes('civil')) return 'CIV';
+    return 'CSE';
+  }
+
+  function getEventCodeForTeamId(event, dept) {
+    if (!event) return 'PP';
+    const ev = event.toLowerCase();
+    const deptKey = getDeptKey(dept);
+    if (ev.includes('paper')) return 'PP';
+    if (ev.includes('hackathon') || ev.includes('hack')) {
+      if (deptKey === 'CSE') return 'HK';
+      if (deptKey === 'ECE') return 'IoT';
+      if (deptKey === 'EEE') return 'TK';
+      if (deptKey === 'MEC') return 'ME';
+      if (deptKey === 'CIV') return 'BB';
+      return 'HK';
+    }
+    if (ev.includes('crossword')) return 'CW';
+    if (ev.includes('circuit')) return 'CM';
+    if (ev.includes('thinkercad') || ev.includes('thinker')) return 'TK';
+    if (ev.includes('mind')) return 'MS';
+    if (ev.includes('model')) return 'ME';
+    if (ev.includes('bridge')) return 'BB';
+    if (ev.includes('technical')) return 'TQ';
+    return 'PP';
+  }
+
+  function getBranchCode(branch) {
+    if (!branch) return 'CSE';
+    if (branch.toLowerCase().includes('data science') || branch.toLowerCase().includes('csd')) return 'CSD';
+    if (branch.toLowerCase().includes('ai') || branch.toLowerCase().includes('ml') || branch.toLowerCase().includes('csm')) return 'CSM';
+    return 'CSE';
+  }
+
+  function getBranchCodeFromDepartment(department) {
+    const dept = (department || '').toLowerCase();
+    if (dept.includes('computer science') || dept.includes('cse')) {
+      if (dept.includes('data science')) return 'CSD';
+      if (dept.includes('ai') || dept.includes('ml')) return 'CSM';
+      return 'CSE';
+    } else if (dept.includes('electronics') || dept.includes('ece')) {
+      return 'ECE';
+    } else if (dept.includes('electrical') || dept.includes('eee')) {
+      return 'EEE';
+    } else if (dept.includes('mechanical') || dept.includes('mech')) {
+      return 'MECH';
+    } else if (dept.includes('civil')) {
+      return 'CIVIL';
+    }
+    return 'CSE';
+  }
+
+  function generateBranchReports() {
+    if (filtered.length === 0) {
+      alert('No registrations found to generate branch reports.');
+      return;
+    }
+
+    // Group registrations by branch
+    const branchGroups = {};
+    filtered.forEach(reg => {
+      const branch = getBranchCode(reg.branch || reg.department);
+      if (!branchGroups[branch]) {
+        branchGroups[branch] = [];
+      }
+      branchGroups[branch].push(reg);
+    });
+
+    // Generate separate PDFs for each branch
+    Object.entries(branchGroups).forEach(([branch, registrations]) => {
+      const template = attendanceTemplate.value;
+      const dept = getBranchDepartment(branch);
+      
+      // Generate attendance PDF for this branch
+      generateBranchAttendancePDF(template, dept, branch, registrations);
+      
+      // Generate report PDF for this branch
+      generateBranchReportPDF(template, dept, branch, registrations);
+    });
+
+    alert(`Generated separate reports for ${Object.keys(branchGroups).length} branches.`);
+  }
+
+  function generateEventReports() {
+    if (filtered.length === 0) {
+      alert('No registrations found to generate event reports.');
+      return;
+    }
+
+    // Group registrations by event
+    const eventGroups = {};
+    filtered.forEach(reg => {
+      const event = reg.event || 'Unknown Event';
+      if (!eventGroups[event]) {
+        eventGroups[event] = [];
+      }
+      eventGroups[event].push(reg);
+    });
+
+    // Generate separate PDFs for each event
+    Object.entries(eventGroups).forEach(([event, registrations]) => {
+      const template = getTemplateFromEvent(event);
+      const dept = attendanceDept.value;
+      
+      // Filter registrations to only include this specific event
+      const filteredRegistrations = registrations.filter(reg => 
+        reg.event && reg.event.toLowerCase().includes(event.toLowerCase())
+      );
+      
+      // Generate attendance PDF for this event
+      generateEventAttendancePDF(template, dept, event, filteredRegistrations);
+      
+      // Generate report PDF for this event
+      generateEventReportPDF(template, dept, event, filteredRegistrations);
+    });
+
+    alert(`Generated separate reports for ${Object.keys(eventGroups).length} events.`);
+  }
+
+  function generateBranchAttendancePDF(template, department, branch, registrations) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Add spot registration header with branch-specific department
+    addSpotRegistrationHeader(doc, department, template, 'attendance');
+
+    // Group registrations by teams - filter by specific event
+    const eventFilter = getEventFilterFromTemplate(template);
+    const teamGroups = groupRegistrationsByTeam(registrations, eventFilter);
+
+    // Create attendance table in spot registration format
+    const tableData = [];
+    let serialNumber = 1;
+
+    Object.entries(teamGroups).forEach(([teamId, members]) => {
+      // One row per team, fill up to 3 students
+      const row = [
+        serialNumber,
+        members[0]?.student_id || '',
+        members[0]?.email || '',
+        members[0]?.name || '',
+        members[1]?.name || '',
+        members[2]?.name || '',
+        members[0]?.phone || '',
+        branch, // Use the specific branch
+        members[0]?.college_name || 'SRIT',
+        '' // Signature column - empty
+      ];
+      tableData.push(row);
+      serialNumber++;
+    });
+
+    // Add table
+    doc.autoTable({
+      head: [['S. No', 'Roll No', 'Email ID', 'Name ','Student Name 2', 'Student Name 3', 'Mobile No', 'Branch', 'College Name', 'Sign']],
+      body: tableData,
+      startY: 90,
+      margin: { left: 10, right: 10, top: 90, bottom: 20 },
+      styles: {
+        font: 'verdana',
+        fontSize: 8,
+        cellPadding: { top: 3, right: 2, bottom: 3, left: 2 },
+        lineColor: [0, 0, 0],
+        lineWidth: 0.5,
+        halign: 'center'
+      },
+      headStyles: {
+        fillColor: '#ff6e40',
+        textColor: '#fff',
+        fontStyle: 'bold',
+        halign: 'center',
+        fontSize: 8,
+        font: 'verdana'
+      },
+      columnStyles: {
+        0: { cellWidth: 12, halign: 'center' },
+        1: { cellWidth: 20, halign: 'center' },
+        2: { cellWidth: 20, halign: 'center' },
+        3: { cellWidth: 20, halign: 'left' },
+        4: { cellWidth: 20, halign: 'left' },
+        5: { cellWidth: 20, halign: 'left' },
+        6: { cellWidth: 20, halign: 'center' },
+        7: { cellWidth: 15, halign: 'center' },
+        8: { cellWidth: 20, halign: 'center' },
+        9: { cellWidth: 18, halign: 'center' }
+      },
+      tableWidth: 'auto'
+    });
+
+    doc.save(`${template}_attendance_${branch}_${department.replace(/\s+/g, '_')}.pdf`);
+  }
+
+  function generateBranchReportPDF(template, department, branch, registrations) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    addSpotRegistrationHeader(doc, department, template, 'report');
+
+    const teamGroups = groupRegistrationsByTeam(registrations);
+    const tableData = [];
+    let serialNumber = 1;
+    const teamAmounts = {};
+
+    Object.entries(teamGroups).forEach(([teamId, members]) => {
+      const teamAmount = 200;
+      teamAmounts[teamId] = teamAmount;
+
+      // One row per team, fill up to 3 students
+      const row = [
+        serialNumber,
+        teamId, // Team ID
+        members[0]?.student_id || '',
+        members[0]?.email || '',
+        members[0]?.name || '',
+        members[1]?.name || '',
+        members[2]?.name || '',
+        members[0]?.phone || '',
+        branch,
+        members[0]?.college_name || 'SRIT',
+        teamAmount // Amount column
+      ];
+      tableData.push(row);
+      serialNumber++;
+    });
+
+    doc.autoTable({
+      head: [['S. No', 'Team ID', 'Roll No 1', 'Email ID 1', 'Student Name 1', 'Student Name 2', 'Student Name 3', 'Mobile No', 'Branch', 'College Name', 'Amount']],
+      body: tableData,
+      startY: 85,
+      margin: { left: 10, right: 10, top: 85, bottom: 20 },
+      styles: {
+        font: 'verdana',
+        fontSize: 8,
+        cellPadding: { top: 3, right: 2, bottom: 3, left: 2 },
+        lineColor: [0, 0, 0],
+        lineWidth: 0.5,
+        halign: 'center'
+      },
+      headStyles: {
+        fillColor: '#ff6e40',
+        textColor: '#fff',
+        fontStyle: 'bold',
+        halign: 'center',
+        fontSize: 8,
+        font: 'verdana'
+      },
+      columnStyles: {
+        0: { cellWidth: 12, halign: 'center' },
+        1: { cellWidth: 20, halign: 'center' },
+        2: { cellWidth: 20, halign: 'center' },
+        3: { cellWidth: 20, halign: 'center' },
+        4: { cellWidth: 20, halign: 'left' },
+        5: { cellWidth: 20, halign: 'left' },
+        6: { cellWidth: 20, halign: 'left' },
+        7: { cellWidth: 20, halign: 'center' },
+        8: { cellWidth: 15, halign: 'center' },
+        9: { cellWidth: 20, halign: 'center' },
+        10: { cellWidth: 18, halign: 'center' }
+      },
+      tableWidth: 'wrap'
+    });
+
+    const totalAmount = Object.values(teamAmounts).reduce((sum, amount) => sum + amount, 0);
+    doc.setFontSize(12);
+    doc.text(`Total Amount Collected for ${branch}: ₹${totalAmount}`, 10, doc.lastAutoTable.finalY + 20);
+
+    doc.save(`${template}_report_${branch}_${department.replace(/\s+/g, '_')}.pdf`);
+  }
+
+  function generateEventAttendancePDF(template, department, event, registrations) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    addSpotRegistrationHeader(doc, department, template, 'attendance');
+
+    const teamGroups = groupRegistrationsByTeam(registrations);
+    const tableData = [];
+    let serialNumber = 1;
+
+    Object.entries(teamGroups).forEach(([teamId, members]) => {
+      // One row per team, fill up to 3 students
+      const row = [
+        serialNumber,
+        members[0]?.student_id || '',
+        members[0]?.email || '',
+        members[0]?.name || '',
+        members[1]?.name || '',
+        members[2]?.name || '',
+        members[0]?.phone || '',
+        members[0]?.branch || getBranchCodeFromDepartment(department),
+        members[0]?.college_name || 'SRIT',
+        '' // Signature column - empty
+      ];
+      tableData.push(row);
+      serialNumber++;
+    });
+
+    doc.autoTable({
+      head: [['S. No', 'Roll No 1', 'Email ID 1', 'Student Name 1', 'Student Name 2', 'Student Name 3', 'Mobile No', 'Branch', 'College Name', 'Sign']],
+      body: tableData,
+      startY: 85,
+      margin: { left: 10, right: 10, top: 85, bottom: 20 },
+      styles: {
+        font: 'verdana',
+        fontSize: 8,
+        cellPadding: { top: 3, right: 2, bottom: 3, left: 2 },
+        lineColor: [0, 0, 0],
+        lineWidth: 0.5,
+        halign: 'center'
+      },
+      headStyles: {
+        fillColor: '#ff6e40',
+        textColor: '#fff',
+        fontStyle: 'bold',
+        halign: 'center',
+        fontSize: 8,
+        font: 'verdana'
+      },
+      columnStyles: {
+        0: { cellWidth: 12, halign: 'center' },
+        1: { cellWidth: 20, halign: 'center' },
+        2: { cellWidth: 20, halign: 'center' },
+        3: { cellWidth: 20, halign: 'left' },
+        4: { cellWidth: 20, halign: 'left' },
+        5: { cellWidth: 20, halign: 'left' },
+        6: { cellWidth: 20, halign: 'center' },
+        7: { cellWidth: 15, halign: 'center' },
+        8: { cellWidth: 20, halign: 'center' },
+        9: { cellWidth: 18, halign: 'center' }
+      },
+      tableWidth: 'wrap'
+    });
+
+    doc.save(`${template}_attendance_${event.replace(/\s+/g, '_')}_${department.replace(/\s+/g, '_')}.pdf`);
+  }
+
+  function generateEventReportPDF(template, department, event, registrations) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    addSpotRegistrationHeader(doc, department, template, 'report');
+
+    const teamGroups = groupRegistrationsByTeam(registrations);
+    const tableData = [];
+    let serialNumber = 1;
+    const teamAmounts = {};
+
+    Object.entries(teamGroups).forEach(([teamId, members]) => {
+      const teamAmount = 200;
+      teamAmounts[teamId] = teamAmount;
+
+      // One row per team, fill up to 3 students
+      const row = [
+        serialNumber,
+        teamId, // Team ID
+        members[0]?.student_id || '',
+        members[0]?.email || '',
+        members[0]?.name || '',
+        members[1]?.name || '',
+        members[2]?.name || '',
+        members[0]?.phone || '',
+        members[0]?.branch || getBranchCodeFromDepartment(department),
+        members[0]?.college_name || 'SRIT',
+        teamAmount // Amount column
+      ];
+      tableData.push(row);
+      serialNumber++;
+    });
+
+    doc.autoTable({
+      head: [['S. No', 'Team ID', 'Roll No 1', 'Email ID 1', 'Student Name 1', 'Student Name 2', 'Student Name 3', 'Mobile No', 'Branch', 'College Name', 'Amount']],
+      body: tableData,
+      startY: 85,
+      margin: { left: 10, right: 10, top: 85, bottom: 20 },
+      styles: {
+        font: 'verdana',
+        fontSize: 8,
+        cellPadding: { top: 3, right: 2, bottom: 3, left: 2 },
+        lineColor: [0, 0, 0],
+        lineWidth: 0.5,
+        halign: 'center'
+      },
+      headStyles: {
+        fillColor: '#ff6e40',
+        textColor: '#fff',
+        fontStyle: 'bold',
+        halign: 'center',
+        fontSize: 8,
+        font: 'verdana'
+      },
+      columnStyles: {
+        0: { cellWidth: 12, halign: 'center' },
+        1: { cellWidth: 20, halign: 'center' },
+        2: { cellWidth: 20, halign: 'center' },
+        3: { cellWidth: 20, halign: 'center' },
+        4: { cellWidth: 20, halign: 'left' },
+        5: { cellWidth: 20, halign: 'left' },
+        6: { cellWidth: 20, halign: 'left' },
+        7: { cellWidth: 20, halign: 'center' },
+        8: { cellWidth: 15, halign: 'center' },
+        9: { cellWidth: 20, halign: 'center' },
+        10: { cellWidth: 18, halign: 'center' }
+      },
+      tableWidth: 'wrap'
+    });
+
+    const totalAmount = Object.values(teamAmounts).reduce((sum, amount) => sum + amount, 0);
+    doc.setFontSize(12);
+    doc.text(`Total Amount Collected for ${event}: ₹${totalAmount}`, 10, doc.lastAutoTable.finalY + 20);
+
+    doc.save(`${template}_report_${event.replace(/\s+/g, '_')}_${department.replace(/\s+/g, '_')}.pdf`);
+  }
+
+  function getBranchDepartment(branch) {
+    const branchDepts = {
+      'CSE': 'Department of Computer Science and Engineering',
+      'CSD': 'CSE (Data Science)',
+      'CSM': 'CSE (AI & ML)'
+    }; 
+    return branchDepts[branch] || 'Department of Computer Science and Engineering';
+  }
+
+  function getTemplateFromEvent(event) {
+    if (!event) return 'paper';
+    const ev = event.toLowerCase();
+    if (ev.includes('paper')) return 'paper';
+    if (ev.includes('hack')) return 'hackathon';
+    if (ev.includes('crossword')) return 'crossword';
+    if (ev.includes('circuit')) return 'circuit_quiz';
+    if (ev.includes('thinker')) return 'thinkercad';
+    if (ev.includes('mind')) return 'mind_spark_quiz';
+    if (ev.includes('model')) return 'model_expo';
+    if (ev.includes('technical')) return 'technical_quiz';
+    if (ev.includes('bridge')) return 'bridge_blitz';
+    if (ev.includes('code')) return 'codebuzz';
+    if (ev.includes('tech')) return 'techfest';
+    if (ev.includes('workshop')) return 'workshop';
+    if (ev.includes('seminar')) return 'seminar';
+    return 'paper';
+  }
+
+  function getEventFilterFromTemplate(template) {
+    const filters = {
+      'paper': 'paper',
+      'codebuzz': 'code',
+      'crossword': 'crossword',
+      'hackathon': 'hack',
+      'circuit_quiz': 'circuit',
+      'thinkercad': 'thinker',
+      'mind_spark_quiz': 'mind',
+      'model_expo': 'model',
+      'technical_quiz': 'technical',
+      'bridge_blitz': 'bridge',
+      'techfest': 'tech',
+      'workshop': 'workshop',
+      'seminar': 'seminar'
+    };
+    return filters[template] || null;
+  }
+
+  // Initialize the app
   init();
-  </script>
+
+</script>
 </body>
 </html>

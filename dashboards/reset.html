@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Reset Password</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #f4f4f4; display:flex;align-items:center;justify-content:center;height:100vh;}
+    .box { background:#fff; padding:30px; border-radius:12px; box-shadow:0 5px 15px rgba(0,0,0,0.1); max-width:350px; width:100%; text-align:center;}
+    input { width:100%; padding:10px; margin:10px 0; border:1px solid #ccc; border-radius:8px;}
+    button { padding:10px 14px; background:#ff6e40; color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:600; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Set New Password</h2>
+    <input id="newPassword" type="password" placeholder="Enter new password" required />
+    <button id="updatePasswordBtn">Update Password</button>
+  </div>
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = "https://jkqxisgkngxqlwuojuul.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImprcXhpc2drbmd4cWx3dW9qdXVsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5OTMxODgsImV4cCI6MjA3NDU2OTE4OH0.88ga7OV0KRK44PlAdo3tOZzxARHdSYNBZqp1AIj43vY";
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    async function handlePasswordResetFlow() {
+      // Capture hash fragment (tokens) from URL after reset link
+      const hash = window.location.hash;
+      if (hash) {
+        const params = Object.fromEntries(new URLSearchParams(hash.substring(1)));
+        if (params.access_token) {
+          // Set session so user can change password
+          const { data, error } = await supabase.auth.setSession({
+            access_token: params.access_token,
+            refresh_token: params.refresh_token
+          });
+          if (error) {
+            console.error("Error setting session:", error);
+            alert("Invalid or expired reset link. Please try again.");
+          }
+        }
+      }
+    }
+
+    document.getElementById('updatePasswordBtn').addEventListener('click', async () => {
+      const newPassword = document.getElementById('newPassword').value.trim();
+      if (newPassword.length < 6) {
+        alert('Password must be at least 6 characters.');
+        return;
+      }
+
+      const { error } = await supabase.auth.updateUser({ password: newPassword });
+      if (error) {
+        alert('Error updating password: ' + error.message);
+      } else {
+        alert('Password updated successfully! You can now log in again.');
+        window.location.href = '/nextgen/dashboards/login.html';
+      }
+    });
+
+    handlePasswordResetFlow();
+  </script>
+</body>
+</html>

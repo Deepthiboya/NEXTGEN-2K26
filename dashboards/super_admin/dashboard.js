@@ -511,6 +511,40 @@ function renderAmounts(registrations) {
 
 // ---------------- Coordinator Form ----------------
 
+// ---------------- Sidebar Logout Button ----------------
+
+function wireLogout() {
+  const logoutBtn = document.getElementById("logout");
+  if (!logoutBtn) return console.warn("Logout button not found");
+
+  logoutBtn.addEventListener("click", async () => {
+    try {
+      await supabase.auth.signOut(); // Optional: only if you use Supabase auth
+      window.location.href = "/nextgen/index.html"; // redirect to login
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+ // Logout button
+const logoutBtn = document.getElementById("logout-btn");
+
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    // Optional: clear any session info here
+    alert("Logging out...");
+    // Redirect to login page (adjust path if needed)
+    window.location.href = "../login.html"; // <- change path if login.html is elsewhere
+  });
+} else {
+  console.warn("Logout button not found");
+}
+});
+
+
 
 // ---------------- Refresh Button ----------------
 document.getElementById("refresh-all").addEventListener("click", () => {

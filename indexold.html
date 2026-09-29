@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@500;700;800&display=swap');
+>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>SRIT Tech Fest 2026 — NEXTGEN 2K26</title>
+  
+  <!-- Font and Icon Imports -->
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<!-- @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@500;700;800&display=swap'); -->
+
+  
+  <style>
+    :root{
+      --blue:#56CCF2;
+      --blue-700:#0b84ae;
+      --blue-dark:#187aad;
+      --orange:#FF8A1E;
+      --orange-700:#c25a00;
+      --yellow:#FFD166;
+      --bg:#f6f9ff;
+      --bg-grad1:#f0f7ff;
+      --bg-grad2:#fff3e0;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#475569;
+      --shadow-xl:0 24px 60px rgba(16,24,40,.10);
+      --shadow-lg:0 16px 40px rgba(16,24,40,.10);
+    
+      --shadow:0 8px 24px #10182814;
+      --radius:18px;
+      --radius-lg:22px;
+      --radius-sm:12px;
+      --container:1120px;
+      --pad:clamp(16px,2.5vw,28px);
+      --gap:clamp(16px,2vw,24px);
+    }
+    
+    
+    *{box-sizing:border-box}
+    html{scroll-behavior: smooth;}
+    body{
+      font-family:Manrope, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu;
+      color:var(--text);
+      line-height:1.6;
+      background:
+        radial-gradient(1000px 280px at 20% -120px, #dff3ff 20%, transparent 60%),
+        radial-gradient(900px 260px at 80% -140px, #ffe9cc 10%, transparent 70%),
+        linear-gradient(180deg, var(--bg-grad1), var(--bg));
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    /* Background Animations */
+    @keyframes floatAnimation {
+      0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
+      50% { transform: translateY(-25px) translateX(20px) rotate(10deg); }
+    }
+    .background-anim {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none; overflow: hidden; z-index: -1;
+    }
+    .anim-circle {
+      position: absolute; border-radius: 50%;
+      animation: floatAnimation 10s ease-in-out infinite;
+      filter: blur(8px) drop-shadow(0 0 10px rgba(255,138,30,0.3));
+    }
+    .anim-circle.orange { background: #ff990022; }
+    .anim-circle.blue { background: #56ccf222; animation-duration: 12s; }
+    .anim-circle.s1 { width: 220px; height: 220px; top: 10%; left: 30%; animation-delay: 0s; }
+    .anim-circle.s2 { width: 150px; height: 150px; top: 40%; left: 10%; animation-delay: 2s; }
+    .anim-circle.s3 { width: 250px; height: 250px; top: 60%; left: 65%; animation-delay: 3s; }
+    .anim-circle.s4 { width: 180px; height: 180px; top: 20%; left: 75%; animation-delay: 1s; }
+    .anim-circle.s5 { width: 120px; height: 120px; top: 75%; left: 25%; animation-delay: 4s; }
+
+    /* Utilities */
+    .container{ max-width:var(--container); margin-inline:auto; padding-inline:var(--pad) }
+    .section{ padding-block: clamp(44px, 7vw, 90px); position:relative; z-index: 2; }
+    
+    /* Section Title Glow Effect */
+    .section-title{
+      font-family:"Plus Jakarta Sans", system-ui, -apple-system;
+      font-weight:800; letter-spacing:.2px;
+      font-size: clamp(24px, 3.4vw, 36px);
+      text-align:center; margin:0 0 10px;
+      text-shadow: 0 0 10px rgba(255, 138, 30, 0.4);
+      transition: text-shadow 0.3s ease;
+    }
+    .section-title:hover {
+      text-shadow: 0 0 20px rgba(255, 138, 30, 0.7);
+    }
+    .section-sub{ text-align:center; color:var(--muted); margin:0 auto 26px; max-width:780px }
+
+    /* Header */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+
+/* Base container */
+.nx-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: saturate(140%) blur(6px);
+  background:
+    linear-gradient(90deg, #6fd4f2 0%, #9fd9b9 45%, #f1cd6e 100%);
+  box-shadow:
+    0 2px 0 rgba(255,255,255,0.3) inset,
+    0 12px 30px rgba(18, 42, 66, 0.18);
+  border-bottom: 1px solid rgba(255,255,255,0.35);
+}
+
+/* Subtle light sweep animation at top edge */
+.nx-header::after{
+  content:'';
+  position:absolute; left:0; right:0; top:0; height:3px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.8), transparent);
+  animation: sweep 5s linear infinite;
+  opacity:.6;
+}
+@keyframes sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.nx-container {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: 12px 18px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 18px;
+}
+
+/* Brand */
+.nx-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+.nx-logo {
+  width: 52px; height: 52px; object-fit: contain;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow:
+    0 6px 16px rgba(0,0,0,.18),
+    0 0 0 6px rgba(255,255,255,.35) inset;
+  transition: transform .25s ease, filter .25s ease;
+  filter: drop-shadow(0 6px 14px rgba(0, 180, 255, .35));
+}
+.nx-brand:hover .nx-logo { transform: translateY(-2px) scale(1.03); filter: drop-shadow(0 10px 18px rgba(0, 180, 255, .55)); }
+
+.nx-brand-text { display:flex; align-items:center; gap:10px; }
+.nx-title {
+  font-family: "Plus Jakarta Sans", Inter, system-ui, -apple-system, Segoe UI;
+  font-weight: 800;
+  font-size: clamp(20px, 2.6vw, 28px);
+  letter-spacing: .2px;
+  color: #0f172a;
+  text-shadow: 0 1px 0 rgba(255,255,255,.8);
+}
+.nx-badge {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 13px;
+  color: #0f172a;
+  background: linear-gradient(90deg, #ff8a1e, #56ccf2);
+  box-shadow: 0 8px 18px rgba(86, 204, 242, .35);
+  border: 1px solid rgba(255,255,255,.5);
+}
+
+/* Navigation */
+.nx-nav { justify-self: center; }
+.nx-menu {
+  display: flex; gap: clamp(12px, 3vw, 34px);
+  margin: 0; padding: 0; list-style: none;
+}
+.nx-link {
+  position: relative;
+  display: inline-block;
+  padding: 8px 6px;
+  font-family: Inter, system-ui, -apple-system, Segoe UI;
+  font-weight: 700;
+  color: #0f172a;
+  text-decoration: none;
+  transition: color .2s ease;
+}
+.nx-link::after {
+  content:'';
+  position: absolute;
+  left: 10%; right: 10%; bottom: 0;
+  height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, #0ea5e9, #f59e0b);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s ease;
+}
+.nx-link:hover { color: #0a2540; }
+.nx-link:hover::after { transform: scaleX(1); }
+
+/* Gradient pill Login */
+.nx-login {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-family: Inter, system-ui;
+  font-weight: 800;
+  text-align:center;
+  color: #fff;
+  background: linear-gradient(90deg, #ff8a1e, #56ccf2);
+  box-shadow:
+    0 10px 22px rgba(17, 94, 164, .25),
+    0 2px 0 rgba(255,255,255,.6) inset;
+  text-decoration: none;
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+.nx-login:hover { transform: translateY(-2px); filter: saturate(115%); box-shadow: 0 14px 30px rgba(17, 94, 164, .35); }
+.nx-login:active { transform: translateY(0); }
+
+/* Responsive */
+@media (max-width: 860px) {
+  .nx-container { grid-template-columns: auto auto; }
+  .nx-nav { grid-column: 1 / -1; order: 3; }
+  .nx-menu { justify-content: center; flex-wrap: wrap; }
+}
+
+    header{
+      position:sticky; top:0; z-index:50;
+      background:linear-gradient(90deg, var(--blue), var(--yellow));
+      box-shadow: 0 20px 40px rgba(86,204,242,0.3);
+      animation: fadeInDown 1s ease forwards;
+    }
+    .nav{ display:flex; align-items:center; gap:16px; padding-block:12px }
+    .brand{ display:flex; align-items:center; gap:12px }
+    .brand img{ width:56px; height:56px; object-fit:contain; filter: drop-shadow(0 4px 10px #98dffe) }
+    .brand-title{
+      font-family:"Plus Jakarta Sans"; font-weight:800;
+      font-size: clamp(20px, 3vw, 28px); letter-spacing:.4px;
+      display:flex; align-items:center; gap:10px;
+    }
+    .year{
+      background:var(--orange); color:#111; border-radius:999px;
+      padding:4px 10px; font-weight:900; box-shadow:0 10px 24px #ff8a1e1f;
+      font-size: clamp(12px, 1.8vw, 14px);
+    }
+    nav ul{ display:flex; gap: clamp(10px, 2vw, 22px); list-style:none; margin:0; padding:0 }
+    nav a{
+      text-decoration:none; color:#0b2239; font-weight:800; font-size:15px;
+      padding:8px 12px; border-radius:10px; transition: all .18s ease;
+    }
+    nav a:hover{ background:#ffffffb5 }
+    .spacer{ flex:1 }
+    .login-btn, .hero-cta, .dept-link {
+      border:0; border-radius:999px; cursor:pointer;
+      color:#fff; font-weight:900; text-decoration: none;
+      background:linear-gradient(90deg, var(--orange), var(--blue));
+      box-shadow:0 14px 30px #56ccf233;
+      transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), box-shadow 0.25s ease;
+    }
+    .login-btn{ padding:10px 18px; }
+    .login-btn:hover, .hero-cta:hover, .dept-link:hover{
+        transform: translateY(-2px) scale(1.07);
+        box-shadow: 0 16px 40px rgba(255, 138, 30, 0.4);
+    }
+
+    /* Hero & Shining Title Effect */
+    .hero{ padding-block: clamp(48px, 8vw, 110px) }
+    .hero-wrap{
+      position: relative;
+      background:
+        radial-gradient(1200px 380px at 50% -200px, #fdf4e7 30%, transparent 70%),
+        radial-gradient(1200px 360px at 50% -260px, #e6f7ff 20%, transparent 75%),
+        linear-gradient(120deg, #ecf7ff 0%, #fff4e1 100%);
+      border-radius: var(--radius-lg);
+      padding: clamp(22px, 5vw, 52px);
+      box-shadow: 0 12px 48px rgba(255, 138, 30, 0.3), inset 0 0 80px rgba(255, 204, 0, 0.2);
+      text-align:center;
+      transition: box-shadow 0.3s ease;
+    }
+    .hero-wrap:hover {
+        box-shadow: 0 20px 60px rgba(255, 138, 30, 0.5), inset 0 0 120px rgba(255, 204, 0, 0.4);
+    }
+    .hero-eyebrow{
+      color: var(--blue-dark); font-weight:800; letter-spacing:.3px;
+      text-transform: uppercase; font-size: 18px;
+    }
+    @keyframes shine {
+        0% { background-position: 200% center; }
+        100% { background-position: -200% center; }
+    }
+    .hero-title{
+      font-family:""; font-weight:900; letter-spacing:.6px;
+      font-size: clamp(34px, 6.5vw, 64px); margin: 8px 0 8px;
+      background: linear-gradient(to right, #0f172a 20%, #ff8a1e 40%, #ff8a1e 60%, #0f172a 80%);
+      background-size: 200% auto;
+      color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: shine 5s linear infinite;
+      font-weight: bolder;
+    }
+    .hero-sub{ max-width:860px; margin: 10px auto 18px; color:#0b2239 }
+    .kpis{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap }
+    .kpi{
+      display:flex; align-items:center; gap:8px;
+      padding:10px 14px; background:#fff; border-radius:14px; font-weight:800;
+      box-shadow: var(--shadow); border-left: 5px solid var(--orange);
+    }
+    .hero-cta{
+        display:inline-block; margin-top: 14px; padding:12px 26px;
+    }
+
+    /* Countdown Panel Glow Effect */
+    .panel{
+      background: linear-gradient(90deg, #e9f7fe 40%, #fffbd9 100%);
+      border-radius: 18px; padding: 22px;
+      box-shadow: 0 10px 40px rgba(255, 204, 50, 0.4);
+      text-align:center;
+      transition: box-shadow 0.3s ease;
+    }
+    .panel:hover {
+      box-shadow: 0 16px 50px rgba(255, 204, 50, 0.6);
+    }
+    .timer{ display:flex; justify-content:center; gap: 18px; flex-wrap: wrap; margin-top: 10px }
+    .tick{
+      background:#fff; border-radius: 16px; padding: 16px 18px; min-width: 96px;
+      box-shadow: var(--shadow); border-bottom: 4px solid var(--orange);
+      transform: translateZ(0);
+    }
+    .value{ color: var(--blue-700); font-size: clamp(22px, 4.5vw, 28px); font-weight: 900; line-height: 1.1 }
+    .label{ color: var(--orange-700); font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: .5px }
+
+    /* Cards grid (Highlights) */
+    .cards{
+      display:grid; gap: var(--gap);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      perspective: 1200px;
+    }
+    .card{
+      position:relative; overflow:hidden; background: #ffffff;
+      border-radius: 18px; padding: 22px; text-align: center;
+      box-shadow: 0 16px 42px rgba(255, 153, 0, 0.25);
+      border-left: 6px solid var(--orange);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s ease, background 0.35s ease;
+      will-change: transform;
+    }
+    .card:hover{
+      transform: translateY(-10px) scale(1.05) rotateZ(-1deg);
+      background: #fff8ed;
+      box-shadow: 0 24px 58px rgba(255, 153, 0, 0.47);
+    }
+    .card i{
+      font-size: 30px; color: var(--blue-700); margin-bottom: 6px;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    .card:hover i{
+      transform: translateY(-4px) scale(1.2);
+      color: var(--orange);
+    }
+    .card h3{
+      margin: 6px 0 2px; font-size: clamp(20px, 3.4vw, 26px);
+      color: var(--orange-700); font-family:"Plus Jakarta Sans"; font-weight:900;
+    }
+    .card p{ margin:0; color: var(--muted) }
+
+    /* Enhanced Departments Section */
+    .dept{ background: linear-gradient(180deg, #fffef9, #ffffff) }
+    .dept-grid{
+      display:grid; gap: var(--gap);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .dept-card {
+      background: linear-gradient(135deg, #ecf8ff, #fffdf6);
+      border-radius: 24px;
+      box-shadow: 0 12px 48px rgba(86, 204, 242, 0.24);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s ease;
+      padding: 22px 26px;
+      will-change: transform;
+      display:flex; flex-direction:column; gap:8px;
+    }
+    .dept-card:hover {
+      transform: translateY(-14px) perspective(800px) rotateX(6deg) rotateZ(-3deg);
+      box-shadow: 0 32px 88px rgba(86, 204, 242, 0.48);
+      background: linear-gradient(135deg, #d4e8ff, #fffdf2);
+    }
+    .dept-card .dept-icon {
+      font-size: 26px;
+      color: var(--orange);
+      transition: color 0.32s ease, transform 0.32s ease;
+    }
+    .dept-card:hover .dept-icon {
+      color: var(--blue);
+      transform: scale(1.25) rotate(12deg);
+    }
+    .dept-title {
+      font-family:"Plus Jakarta Sans";
+      font-weight: 900;
+      letter-spacing: .5px;
+      font-size: clamp(18px, 2.8vw, 22px);
+      transition: color 0.3s ease;
+    }
+    .dept-card:hover .dept-title {
+      color: var(--blue-dark);
+    }
+    .dept-desc {
+      font-size: 1rem;
+      color: #435466;
+      line-height: 1.4;
+      transition: color 0.3s ease;
+    }
+    .dept-card:hover .dept-desc {
+      color: #1a2233;
+    }
+    .dept-link{
+      margin-top: 6px; align-self: flex-middle; padding: 8px 14px;
+    }
+
+    /* Advanced Event Timeline Section */
+    .timeline {
+      background: linear-gradient(180deg, #e2f0fc, #f9fdff);
+    }
+    .tl {
+      max-width: 720px;
+      margin-inline: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      padding-left: 30px;
+      position: relative;
+    }
+    .tl::before {
+      content: '';
+      position: absolute;
+      left: 14px;
+      top: 10px;
+      bottom: 10px;
+      width: 4px;
+      background: linear-gradient(180deg, var(--orange), var(--blue));
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(255,138,30,.3);
+    }
+    @keyframes bounceIn {
+      0% { opacity: 0; transform: scale(0.8) translateX(-20px); }
+      60% { opacity: 1; transform: scale(1.05) translateX(0); }
+      80% { transform: scale(0.98); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .tl-item {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 26px;
+      align-items: center;
+      position: relative;
+      opacity: 0;
+      animation: bounceIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    .tl-time {
+      flex-shrink: 0;
+      width: 130px;
+      font-weight: 900;
+      color: var(--orange-700);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.1rem;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      user-select: none;
+    }
+    .tl-time::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: -38px;
+      width: 20px;
+      height: 20px;
+      background: var(--orange);
+      border: 4px solid #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--orange-700);
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+    .tl-content {
+      background: #fff;
+      border-radius: 20px;
+      padding: 18px 24px;
+      box-shadow: var(--shadow-lg);
+      flex: 1;
+      transform-origin: left center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .tl-item:hover .tl-content {
+      transform: scale(1.03);
+      box-shadow: 0 30px 65px rgba(86, 204, 242, 0.3);
+    }
+    .tl-title {
+      font-weight: 900;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 20px;
+      color: var(--blue-dark);
+      margin: 0 0 4px 0;
+      letter-spacing: .5px;
+    }
+    .tl-text {
+      font-size: 1rem;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* Leadership */
+    .leaders{
+        display: grid;
+        gap: var(--gap);
+        grid-template-columns: repeat(4,minmax(0,1fr));
+    }
+    .leader{
+      background:#fff; border-radius:18px; box-shadow:0 8px 20px rgba(255, 153, 0, 0.2);
+      padding:16px; text-align:center; border-top:5px solid var(--orange);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-top-color 0.3s ease;
+    }
+    .leader:hover{
+      transform: translateY(-8px) rotateZ(1deg);
+      box-shadow: 0 24px 48px rgba(255, 153, 0, 0.45);
+      border-top-color: var(--blue);
+    }
+    .leader img{
+      width:72px; height:72px; object-fit:cover; border-radius:50%;
+      border:3px solid var(--orange); box-shadow:0 8px 22px #ffd16655; background:#fff;
+    }
+    .leader h4{ margin:10px 0 4px; color:#c25a00; font-size:clamp(14px,2.4vw,16px); font-family:"Plus Jakarta Sans"; font-weight:800; }
+    .leader p{ margin:0; color:var(--muted); font-size:14px }
+    
+    /* Contact */
+    .contact{ background: linear-gradient(90deg, #ebfff5, #f3d6ff) }
+    .contact-grid{
+      display:grid; gap: var(--gap);
+      grid-template-columns: 1fr 1fr; max-width: 860px; margin-inline: auto;
+    }
+    .contact-info{ display:grid; gap:10px; align-content:start }
+    .ci{ display:flex; gap:10px; color: var(--muted); align-items:center; }
+    .ci i{ color: var(--blue-dark); font-size:1.2em; }
+    .form{
+      background:#fff; border-radius: 16px; box-shadow: var(--shadow-lg);
+      padding: 16px; display:grid; gap: 10px;
+    }
+    .form input,.form textarea{
+      width:100%; border:1px solid #ffd16666; border-radius: 12px;
+      padding: 12px 14px; font: inherit; color: var(--text); background: #fffef8;
+    }
+    .form button{
+      justify-self: start; padding: 10px 18px;
+    }
+    #msg{ color:#065f46; font-weight:800; min-height:18px }
+    
+    /* Footer */
+    footer{ background: linear-gradient(90deg, var(--blue), var(--orange)) }
+    .footer{
+      display:grid; gap: var(--gap); grid-template-columns: 2fr 1fr 1fr; align-items:start; color:#0b2239;
+    }
+    .logo-small{ width:56px; border-radius:12px; box-shadow: var(--shadow) }
+    .footer h4{ margin:0 0 10px; color:#0b5e89; font-family:"Plus Jakarta Sans"; font-weight:900 }
+    .footer ul{ list-style:none; padding:0; margin:0; display:grid; gap:8px }
+    .footer a{ color:#0b2239; text-decoration:none; font-weight:800 }
+    .copyright{
+      text-align:center; color:#334155; padding: 16px 0 10px; font-size: 14px; font-weight:700;
+    }
+    /* ========================== */
+/* NextZen Super Enhancement  */
+/* Scoped, non-breaking CSS   */
+/* ========================== */
+
+/* 0) Root motion tokens (lightweight additions) */
+:root {
+  --nxz-ease: cubic-bezier(.22,1,.36,1);
+  --nxz-ease-fast: cubic-bezier(.2,.8,.2,1);
+  --nxz-rotate: 0.6deg;
+  --nxz-tilt: 6deg;
+}
+
+/* 1) Header: glass + underline morph + scroll-hide */
+.nx-header {
+  position: sticky;
+  top: 0;
+  backdrop-filter: saturate(140%) blur(8px);
+  background: linear-gradient(90deg, #6fd4f2aa, #f1cd6eaa);
+  transition: transform .5s var(--nxz-ease), box-shadow .35s var(--nxz-ease);
+  box-shadow: 0 8px 24px rgba(16,24,40,.12);
+}
+.nx-header.scrolled-up { transform: translateY(0); }
+.nx-header.scrolled-down { transform: translateY(-100%); }
+.nx-header .nx-link {
+  position: relative;
+  isolation: isolate;
+}
+.nx-header .nx-link::after {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #0ea5e9, #f59e0b);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s var(--nxz-ease-fast);
+}
+.nx-header .nx-link:hover::after { transform: scaleX(1); }
+
+/* 2) Hero: parallax shimmer + specular glow */
+.hero .hero-wrap {
+  position: relative;
+  overflow: hidden;
+}
+.hero .hero-wrap::before {
+  /* soft, slow shimmering highlight sweeping diagonally */
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background: conic-gradient(from 180deg at 50% 50%, #ffffff10 0deg, #ffffff00 140deg, #ffffff10 360deg);
+  animation: nxz-sweep 14s linear infinite;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+}
+@keyframes nxz-sweep {
+  0% { transform: rotate(0deg) translate3d(0,0,0); }
+  100% { transform: rotate(360deg) translate3d(0,0,0); }
+}
+/* Title sheen refinement */
+.hero .hero-title {
+  background-size: 220% auto;
+  animation: nxz-title-sheen 6s linear infinite;
+}
+@keyframes nxz-title-sheen {
+  0%, 100% { background-position: 200% center; }
+  50% { background-position: -200% center; }
+}
+
+/* 3) KPI and panel micro-interactions */
+.panel {
+  position: relative;
+  overflow: hidden;
+}
+.panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 40% at 80% 0%, rgba(255, 209, 102, .18), transparent 65%);
+  pointer-events: none;
+}
+
+/* 4) Cards: 3D tilt + highlight sweep */
+.cards {
+  perspective: 1200px;
+}
+.card {
+  transform-style: preserve-3d;
+  transition: transform .35s var(--nxz-ease), box-shadow .35s var(--nxz-ease), background .35s var(--nxz-ease);
+  will-change: transform;
+}
+.card::after {
+  /* moving highlight */
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background: linear-gradient(120deg, rgba(255,255,255,.16), rgba(255,255,255,0) 40%);
+  transform: translateX(-60%) rotate(8deg);
+  transition: transform .5s var(--nxz-ease);
+  pointer-events: none;
+}
+.card:hover {
+  transform: translateY(-10px) rotateX(3deg) rotateY(-2deg);
+  box-shadow: 0 28px 70px rgba(255, 153, 0, .35);
+}
+.card:hover::after { transform: translateX(20%) rotate(8deg); }
+@supports (text-wrap: balance) {
+  .card h3 { text-wrap: balance; }
+}
+
+/* 5) Departments: magnetic hover lift */
+.dept-grid {
+  perspective: 1000px;
+}
+.dept-card {
+  transform-origin: center 80%;
+  transition: transform .4s var(--nxz-ease), box-shadow .35s var(--nxz-ease);
+}
+.dept-card:hover {
+  transform: translateY(-12px) rotateX(4deg) rotateZ(-2deg);
+  box-shadow: 0 28px 78px rgba(86,204,242,.38);
+}
+
+/* 6) Timeline: rail glow + in-view pulse */
+.timeline .tl::before {
+  box-shadow: 0 0 14px rgba(255,138,30,.45), 0 0 30px rgba(24,122,173,.25);
+  filter: saturate(120%);
+}
+.tl-item .tl-content {
+  transition: transform .28s var(--nxz-ease), box-shadow .28s var(--nxz-ease);
+}
+.tl-item:hover .tl-content {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 48px rgba(7,71,140,.18);
+}
+/* in-view accent (JS adds .in-view) */
+.tl-item.in-view .tl-time {
+  text-shadow: 0 0 10px rgba(255,138,30,.6);
+}
+.tl-item.in-view .tl-content {
+  box-shadow: 0 22px 60px rgba(86,204,242,.28);
+}
+
+/* 7) Leaders: smooth pop */
+.leader {
+  transition: transform .35s var(--nxz-ease), box-shadow .35s var(--nxz-ease);
+}
+.leader:hover {
+  transform: translateY(-10px) rotateZ(1deg);
+  box-shadow: 0 28px 60px rgba(255,153,0,.35);
+}
+
+/* 8) Contact form: paper sheet + focus rings + message reveal */
+.contact .form {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #ffffff, #fffdf6);
+}
+.contact .form::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 80% at 0% -20%, rgba(255,165,0,.12), transparent 60%);
+  pointer-events: none;
+}
+.contact .form input,
+.contact .form textarea {
+  transition: border-color .18s var(--nxz-ease-fast), box-shadow .18s var(--nxz-ease-fast), background .18s var(--nxz-ease-fast);
+}
+.contact .form :where(input, textarea):focus {
+  outline: 0;
+  border-color: rgba(255,138,30,.6);
+  box-shadow: 0 0 0 3px rgba(255,138,30,.25);
+  background: #fff;
+}
+#msg {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .28s var(--nxz-ease), transform .28s var(--nxz-ease);
+}
+#msg.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 9) Background orbs: smoother motion if present */
+.background-anim .anim-circle {
+  filter: blur(10px) drop-shadow(0 0 10px rgba(255,138,30,.28));
+  animation-timing-function: ease-in-out;
+}
+
+/* 10) Responsive finetune: clamp spacing without layout changes */
+.section {
+  padding-block: clamp(40px, 6.5vw, 90px);
+}
+.cards, .dept-grid, .leaders, .contact-grid {
+  gap: clamp(14px, 2vw, var(--gap));
+}
+.section-title {
+  font-size: clamp(24px, 3.4vw, 36px);
+}
+
+/* 11) Focus-visible improvements (keyboard navigation) */
+:where(a, button, .nx-login, .dept-link):focus-visible {
+  outline: 3px solid rgba(24,122,173,.45);
+  outline-offset: 2px;
+  border-radius: 12px;
+}
+
+/* 12) Micro-utilities without affecting layout */
+.nxz-raise { transform: translateY(-6px); transition: transform .25s var(--nxz-ease); }
+.nxz-raise:hover { transform: translateY(-10px); }
+
+/* 13) Light parallax hint for hero badges (if exists) */
+.stream-badges span {
+  transition: transform .25s var(--nxz-ease), box-shadow .25s var(--nxz-ease);
+}
+.stream-badges span:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(255,138,30,.35);
+}
+
+/* 14) Smooth image rendering */
+img { image-rendering: -webkit-optimize-contrast; }
+
+/* 15) Reduce motion respect: calm transitions for prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .nx-header, .card, .dept-card, .leader, .tl-item .tl-content, .panel, .hero .hero-wrap::before {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Responsive */
+@media (max-width:1100px){
+  .cards, .dept-grid, .leaders { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+  .footer{ grid-template-columns: 1fr 1fr }
+    }
+    @media (max-width:720px){
+      .nav{ flex-wrap:wrap; gap:8px }
+      nav{ width:100% } nav ul{ justify-content:center; flex-wrap:wrap }
+      .cards, .dept-grid, .contact-grid, .leaders, .footer { grid-template-columns: 1fr }
+      .tl-item { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .tl-time { width: auto; }
+      .tl-time::after { left: -26px; }
+      .login-btn{ width:100%; order:3 }
+    }
+    /* ============================= */
+/* NEXTZEN TECH CRYSTAL BACKDROP */
+/* ============================= */
+
+/* Activate by adding class="nx-tech" to <body> and inserting
+   the three layers near the top of <body> (see instructions below). */
+
+.nx-tech {
+  position: relative;
+  background:
+    linear-gradient(180deg, #0a0f1a 0%, #0b1222 35%, #0e152a 100%); /* deep tech blue base */
+  color: #0f172a; /* keep existing text color reference */
+  overflow-x: clip;
+}
+
+/* 1) Isometric grid (no bubbles) */
+.nx-tech-grid {
+  position: fixed;
+  inset: -10% -10% 0 -10%;
+  z-index: -3;
+  pointer-events: none;
+  background:
+    /* grid lines using conic and repeating gradients */
+    radial-gradient(1200px 400px at 50% -240px, rgba(255, 199, 120, .08), transparent 70%),
+    repeating-linear-gradient(60deg, rgba(86, 204, 242, .06) 0 2px, transparent 2px 60px),
+    repeating-linear-gradient(-60deg, rgba(255, 138, 30, .06) 0 2px, transparent 2px 60px),
+    linear-gradient(180deg, rgba(255, 255, 255, .025), rgba(255, 255, 255, 0));
+  filter: saturate(120%) contrast(105%);
+  transform: translateZ(0);
+  animation: nxTechGridDrift 32s linear infinite;
+}
+@keyframes nxTechGridDrift {
+  0%   { transform: translate3d(0,0,0) }
+  50%  { transform: translate3d(1.2%, -1.2%, 0) }
+  100% { transform: translate3d(0,0,0) }
+}
+
+/* 2) Crystalline facet sheen layer (moving, shimmering) */
+.nx-tech-crystals {
+  position: fixed;
+  inset: -8% -8% -8% -8%;
+  z-index: -2;
+  pointer-events: none;
+  /* a subtle faceted pattern via multiple clipped gradients */
+  background:
+    conic-gradient(from 180deg at 70% 40%, rgba(255, 245, 230, 0.035), transparent 60%),
+    conic-gradient(from 0deg at 30% 20%, rgba(212, 239, 255, 0.035), transparent 60%),
+    linear-gradient(135deg, rgba(24, 122, 173, .05), rgba(24, 122, 173, 0) 50%),
+    linear-gradient(225deg, rgba(255, 138, 30, .05), rgba(255, 138, 30, 0) 50%);
+  mix-blend-mode: screen;
+  filter: blur(6px) saturate(130%);
+  animation: nxCrystalRoll 24s ease-in-out infinite alternate;
+}
+@keyframes nxCrystalRoll {
+  0%   { transform: translate3d(0, 0, 0) rotate(0deg) }
+  50%  { transform: translate3d(-1%, .8%, 0) rotate(6deg) }
+  100% { transform: translate3d(.5%, -1%, 0) rotate(-4deg) }
+}
+
+/* 3) Neon circuit tracers (diagonal, techy) */
+.nx-tech-circuits {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.nx-tech-circuits::before,
+.nx-tech-circuits::after {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 2px;
+  top: 30%;
+  left: -50%;
+  background:
+    linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 138, 30, .0) 5%,
+      rgba(255, 138, 30, .85) 15%,
+      rgba(86, 204, 242, .9) 25%,
+      rgba(255, 209, 102, .9) 35%,
+      rgba(86, 204, 242, .9) 45%,
+      rgba(255, 138, 30, .85) 55%,
+      rgba(255, 138, 30, .0) 65%,
+      transparent 100%);
+  filter: blur(.4px) drop-shadow(0 0 10px rgba(255, 165, 0, .35));
+  transform: rotate(-18deg);
+  animation: nxCircuitRun 9s linear infinite;
+}
+.nx-tech-circuits::after {
+  top: 65%;
+  transform: rotate(18deg);
+  animation-duration: 12s;
+  animation-delay: -4s;
+}
+@keyframes nxCircuitRun {
+  0%   { transform: translateX(-10%) rotate(var(--angle, -18deg)); }
+  100% { transform: translateX(10%) rotate(var(--angle, -18deg)); }
+}
+
+/* Shining “facet glints” sprinkled subtly */
+.nx-tech .nx-glints {
+  position: fixed; inset: 0; pointer-events:none; z-index:-1;
+  background:
+    radial-gradient(3px 3px at 18% 22%, rgba(255, 255, 255, .35), transparent 55%),
+    radial-gradient(2px 2px at 65% 38%, rgba(255, 255, 255, .25), transparent 55%),
+    radial-gradient(3px 3px at 78% 68%, rgba(255, 255, 255, .28), transparent 55%),
+    radial-gradient(2px 2px at 34% 76%, rgba(255, 255, 255, .22), transparent 55%);
+  mix-blend-mode: screen;
+  animation: nxGlintBlink 6s ease-in-out infinite alternate;
+  opacity: .4;
+}
+@keyframes nxGlintBlink {
+  0%   { opacity: .25; transform: translate3d(0,0,0) }
+  100% { opacity: .45; transform: translate3d(.3%, -.3%, 0) }
+}
+
+/* Section lift-on-scroll accent (optional subtle rail) */
+.nx-tech .section.nx-rail {
+  position: relative;
+}
+.nx-tech .section.nx-rail::after {
+  content:"";
+  position:absolute; left: 5%; right:5%; bottom:-1px; height:3px; border-radius:4px;
+  background: linear-gradient(90deg, rgba(255,138,30,.85), rgba(86,204,242,.85));
+  box-shadow: 0 0 18px rgba(255,138,30,.45), 0 0 22px rgba(86,204,242,.40);
+  opacity: .65;
+}
+
+/* Mobile and reduced motion safety */
+@media (max-width: 640px){
+  .nx-tech-grid    { opacity:.6; animation-duration: 38s; }
+  .nx-tech-crystals{ opacity:.45; filter: blur(8px); }
+  .nx-tech-circuits::before,
+  .nx-tech-circuits::after { opacity:.65; }
+}
+@media (prefers-reduced-motion: reduce){
+  .nx-tech-grid,
+  .nx-tech-crystals,
+  .nx-tech-circuits::before,
+  .nx-tech-circuits::after,
+  .nx-tech .nx-glints {
+    animation: none !important;
+  }
+}
+.section-title1{
+  color: whitesmoke;
+  text-shadow: 0 0 20px rgba(255, 138, 30, 0.7);
+}
+/* ============================== */
+/* Warm Glow Hero (shining yellow) */
+/* Scoped to .nx-hero-v2.nx-warm  */
+/* ============================== */
+
+.nx-hero-v2.nx-warm{
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  padding: clamp(28px, 6vw, 56px);
+  /* remove blue glass feel; neutral base for glow */
+  box-shadow: 0 18px 60px rgba(0,0,0,.18);
+}
+
+/* Background glow layers */
+.nx-hero-v2.nx-warm .wg{
+  position: absolute; inset: -16% -10%;
+  pointer-events: none; z-index: 0;
+}
+
+/* Big outer halo (soft yellow) */
+.nx-hero-v2.nx-warm .halo{
+  background:
+    radial-gradient(1200px 420px at 50% -180px, #fff1cb 20%, transparent 70%),
+    radial-gradient(1400px 520px at 50% -260px, #ffe8b3 18%, transparent 75%);
+  filter: saturate(115%);
+}
+
+/* Inner vignette panel with warm tint and subtle border light */
+.nx-hero-v2.nx-warm .vignette{
+  inset: -6% -6%;
+  background:
+    radial-gradient(90% 70% at 50% 50%, rgba(255, 217, 145, 0.65), rgba(255, 235, 186, 0.45) 45%, rgba(255, 248, 223, 0.15) 70%, rgba(255,255,255,0) 100%),
+    linear-gradient(180deg, rgba(255, 239, 198, .55), rgba(255, 247, 219, .35));
+  box-shadow:
+    inset 0 0 120px rgba(255, 209, 102, .35),
+    inset 0 0 300px rgba(255, 209, 102, .25);
+  border-radius: inherit;
+}
+
+/* Animated sweep highlight (gentle) */
+.nx-hero-v2.nx-warm .sweep{
+  inset: -20%;
+  background:
+    linear-gradient(120deg, rgba(255,255,255,0) 30%, rgba(255,255,255,.35) 50%, rgba(255,255,255,0) 70%);
+  mix-blend-mode: soft-light;
+  transform: translateX(-60%) rotate(10deg);
+  animation: wgSweep 10s linear infinite;
+  filter: blur(12px);
+}
+@keyframes wgSweep{
+  0%   { transform: translateX(-60%) rotate(10deg); opacity:.35 }
+  50%  { transform: translateX(0%)   rotate(10deg); opacity:.45 }
+  100% { transform: translateX(60%)  rotate(10deg); opacity:.35 }
+}
+
+/* Content card (no obvious glass; warm surface with depth) */
+.nx-hero-v2.nx-warm .wg-card{
+  position: relative; z-index: 1;
+  max-width: 980px; margin-inline: auto; text-align: center;
+  padding: clamp(24px, 5vw, 42px);
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgba(255, 248, 223, .65), rgba(255, 242, 204, .45));
+  border: 1px solid rgba(255, 184, 86, .35);
+  box-shadow:
+    0 28px 80px rgba(255, 184, 86, .28),
+    0 18px 50px rgba(0,0,0,.12);
+}
+
+/* Kicker */
+.nx-hero-v2.nx-warm .wg-kicker{
+  margin: 0 0 8px;
+  font-weight: 900;
+  letter-spacing: .18em;
+  color: #a77819;
+}
+
+/* Title with gold accent */
+.nx-hero-v2.nx-warm .wg-title{
+  margin: 0;
+  line-height: 1.06;
+  font-family: "Poppins","Plus Jakarta Sans",sans-serif;
+  font-weight: 900;
+  font-size: clamp(34px, 6vw, 64px);
+  color: #3a4d63;
+  text-shadow: 0 3px 16px rgba(0,0,0,.12);
+}
+.nx-hero-v2.nx-warm .wg-title .gold{
+  background: linear-gradient(90deg, #c08118, #f0b544, #ffe08a, #c08118);
+  background-size: 200% auto;
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+  animation: goldSheen 6s linear infinite;
+}
+@keyframes goldSheen{
+  0%,100% { background-position: 200% center; }
+  50%     { background-position: -200% center; }
+}
+
+/* Subtext readable on warm panel */
+.nx-hero-v2.nx-warm .wg-sub{
+  max-width: 820px; margin: 10px auto 14px;
+  color: #445b72;
+  font-size: clamp(1rem, 2.3vw, 1.15rem);
+}
+
+/* Badges row */
+.nx-hero-v2.nx-warm .wg-badges{
+  display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin: 8px 0 16px;
+}
+.nx-hero-v2.nx-warm .badge{
+  display:inline-flex; align-items:center; gap:8px;
+  padding: 8px 12px; border-radius: 999px;
+  background: #fffdf5;
+  color: #2c3f55;
+  font-weight: 800;
+  border: 1px solid rgba(192, 129, 24, .25);
+  box-shadow: 0 8px 20px rgba(255, 184, 86, .25);
+}
+
+/* CTA */
+.nx-hero-v2.nx-warm .wg-cta .cta-strong{
+  display:inline-block;
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-weight: 900;
+  color: #0b0b0b;
+  text-decoration: none;
+  background: linear-gradient(90deg, #ffb451, #ffd166);
+  border: 1px solid rgba(0,0,0,.08);
+  box-shadow: 0 12px 28px rgba(255, 184, 86, .35);
+  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
+}
+.nx-hero-v2.nx-warm .wg-cta .cta-strong:hover{
+  transform: translateY(-2px);
+  filter: brightness(1.03);
+}
+
+/* Mobile paddings */
+@media (max-width:640px){
+  .nx-hero-v2.nx-warm{ padding: 18px; }
+  .nx-hero-v2.nx-warm .wg-card{ padding: 18px; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .nx-hero-v2.nx-warm .sweep{ animation: none !important; }
+  .nx-hero-v2.nx-warm .wg-title .gold{ animation: none !important; }
+}
+.college{
+  font-size: 35px;
+  color: #f74737;
+  font-family: 'Verdana', Times, serif;
+}
+
+.leaders {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(240px, 1fr));
+  gap: clamp(16px, 2.2vw, 28px);
+  align-items: start;
+}
+
+/* Column utility classes */
+.col-1 { grid-column: 1; }
+.col-2 { grid-column: 2; }
+.col-3 { grid-column: 3; }
+.col-4 { grid-column: 4; }
+
+/* If a card should span two columns (not used below, but handy) */
+/* .span-2 { grid-column: span 2; } */
+
+/* Responsive stacking */
+@media (max-width: 980px){
+  .leaders { grid-template-columns: repeat(2, minmax(240px, 1fr)); }
+  /* On 2-col layout, keep convenors centered under the two middle chiefs by occupying both columns */
+  .leaders.convenors .leader { grid-column: auto; }
+}
+@media (max-width: 560px){
+  .leaders { grid-template-columns: 1fr; }
+}
+.nx-nav .nx-link{
+  position:relative; display:inline-block; padding:10px 14px;
+  font-weight:800; font-size:1.20rem; color:#eaf4ff; border-radius:12px;
+  background: linear-gradient(90deg,#010b15 0%,#ffe08a 20%,#eaf4ff 40%,#7cd3ff 60%,#eaf4ff 80%);
+  -webkit-background-clip: text; background-clip:text; color: transparent;
+  background-size: 200% 100%;
+  animation: navSheen 3.2s linear infinite;
+  text-shadow: 0 0 10px rgba(255,209,102,.35);
+}
+@keyframes navSheen{
+  0%{ background-position: 0% 0; }
+  100%{ background-position: 200% 0; }
+}
+.nx-nav .nx-link:hover{ transform:translateY(-1px) scale(1.04); }
+
+/* thin gradient underline always visible */
+.nx-nav .nx-link::after{
+  content:""; position:absolute; left:14px; right:14px; bottom:6px; height:2px; border-radius:2px;
+  background: linear-gradient(90deg,#7cd3ff,#ffd166,#ff8a1e,#7cd3ff);
+  background-size: 200% 100%; animation: navSheen 3.2s linear infinite;
+  box-shadow: 0 0 10px rgba(124,211,255,.35);
+}
+
+/* fixed copyright bar */
+footer .copyright{
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 1000;
+  padding: 10px 16px;
+  text-align: center;
+  background:linear-gradient(90deg, var(--orange), var(--blue));    /* dark glass */
+  color: black;
+  backdrop-filter: saturate(140%) blur(6px);
+  border-top: 1px solid rgba(28, 43, 63, 0.727);
+}
+
+/* add bottom space so last content isn't hidden behind the bar */
+@media (min-width: 0){
+  body{ padding-bottom: 44px; } /* match bar height */
+}
+
+
+  </style>
+</head>
+
+<body class="nx-tech">
+  <div class="nx-tech-grid" aria-hidden="true"></div>
+<div class="nx-tech-crystals" aria-hidden="true"></div>
+<div class="nx-tech-circuits" aria-hidden="true"></div>
+<div class="nx-glints" aria-hidden="true"></div>
+  <!-- Animated background -->
+  <div class="background-anim">
+    <div class="anim-circle orange s1"></div>
+    <div class="anim-circle blue s2"></div>
+    <div class="anim-circle orange s3"></div>
+    <div class="anim-circle blue s4"></div>
+    <div class="anim-circle orange s5"></div>
+  </div>
+
+  <!-- Header -->
+<!-- Enhanced Header -->
+<header class="nx-header" role="banner">
+  <!-- add this inside the header as the first child -->
+<div class="nx-glow" id="nxGlow"></div>
+
+  <div class="nx-container">
+    <a class="nx-brand" href="#home" aria-label="NextZen Home">
+      <img src="assets/images/SRIT-LOGO.png" alt="SRIT Logo" class="nx-logo" />
+      <div class="nx-brand-text">
+        <span class="nx-title">NextGen</span>
+        <span class="nx-badge">2k25</span>
+      </div>
+    </a>
+
+    <nav class="nx-nav" aria-label="Main">
+      <ul class="nx-menu">
+        <li><a href="#home" class="nx-link">Home</a></li>
+        <li><a href="#departments" class="nx-link">Departments</a></li>
+        <li><a href="#management" class="nx-link">Leadership</a></li>
+        <li><a href="#contact" class="nx-link">Contact</a></li>
+      </ul>
+    </nav>
+
+    <a href="dashboards/login.html" class="nx-login" aria-label="Login">Login</a>
+  </div>
+</header>
+
+
+  <main>
+    <!-- Hero -->
+    <section id="home" class="hero section">
+      <div class="container">
+        <div class="hero-wrap">
+          <h1 class="college">Srinivasa Ramanujan  Institute of Technology <div style="color: black;">(Autonomous)</div> </h1>
+          <div class="hero-eyebrow">Welcome to</div>
+          <h1 class="hero-title">NextGen 2K25</h1>
+          <p class="hero-sub">Join us for an exciting celebration of technology and innovation at Srinivasa Ramanujan Institute of Technology</p>
+          <div class="kpis" role="list">
+            <div class="kpi" role="listitem"><i class="fas fa-calendar"></i> 15 October, 2025</div>
+            <div class="kpi" role="listitem"><i class="fas fa-map-marker-alt"></i> SRIT Campus, ATP.</div>
+          </div>
+          <a class="hero-cta" href="#departments">Explore Events</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Countdown -->
+    <section class="section" aria-labelledby="count-title">
+      <div class="container">
+        <h2 id="count-title" class="section-title section-title1" >Event Starts In</h2>
+        <p class="section-sub section-title1">Mark the calendar and get ready to participate in challenges, workshops, and celebrations.</p>
+        <div class="panel">
+          <div class="timer" aria-live="polite">
+            <div class="tick"><div class="value" id="days">7</div><div class="label">Days</div></div>
+            <div class="tick"><div class="value" id="hours">12</div><div class="label">Hours</div></div>
+            <div class="tick"><div class="value" id="minutes">45</div><div class="label">Minutes</div></div>
+            <div class="tick"><div class="value" id="seconds">22</div><div class="label">Seconds</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Highlights -->
+    <section class="section" aria-labelledby="highlights-title">
+      <div class="container">
+        <h2 id="highlights-title" class="section-title section-title1">Event Highlights</h2>
+        <div class="cards">
+          <article class="card" aria-label="Prize Pool"><i class="fas fa-trophy"></i><h3>₹ 50,000+</h3><p>Prize Pool</p></article>
+          <article class="card" aria-label="Participants"><i class="fas fa-users"></i><h3>1000+</h3><p>Participants</p></article>
+          <article class="card" aria-label="Events Count"><i class="fas fa-calendar-day"></i><h3>15+</h3><p>Events</p></article>
+          <article class="card" aria-label="Certificates"><i class="fas fa-university"></i><h3>Certificates</h3><p>From college management</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Departments -->
+    <section id="departments" class="dept section" aria-labelledby="dept-title">
+      <div class="container">
+        <h2 id="dept-title" class="section-title">Departments</h2>
+        <div class="dept-grid">
+            <article class="dept-card" align="center"><div class="dept-icon"><i class="fas fa-hard-hat"></i></div><h3 class="dept-title">Civil Engineering</h3><br><p class="dept-desc">Construct the future with structural challenges</p><a class="dept-link" href="dept-events/civ_events.html">View Events</a></article>
+            <article class="dept-card" align="center"><div class="dept-icon"><i class="fas fa-laptop-code"></i></div><h3 class="dept-title" align="center">Computer Science and Engineering & Allied</h3><p class="dept-desc">Explore the digital frontier with cutting-edge tech events</p><a class="dept-link" href="dept-events/cse_events.html">View Events</a></article>
+            <article class="dept-card"align="center"><div class="dept-icon"><i class="fas fa-bolt"></i></div><h3 class="dept-title">Electrical & Electronics Engineering</h3><p class="dept-desc">Power up with electrifying competitions</p><a class="dept-link" href="dept-events/eee_events.html">View Events</a></article>
+            <article class="dept-card" align="center"><div class="dept-icon"><i class="fas fa-microchip"></i></div><h3 class="dept-title" align="center">Electronics and Communication Engineering</h3><p class="dept-desc">Circuit challenges and electronic innovations</p><a class="dept-link" href="dept-events/ece_events.html">View Events</a></article>
+            <article class="dept-card" align="center"><div class="dept-icon"><i class="fas fa-cog"></i></div><br><h3 class="dept-title">Mechanical Engineering</h3><br><p class="dept-desc">Design, build, and test your mechanical prowess</p><a class="dept-link" href="dept-events/mech_events.html">View Events</a></article>
+          
+          <!-- <article class="dept-card"><div class="dept-icon"><i class="fas fa-lightbulb"></i></div><h3 class="dept-title">Humanities & Sciences</h3><p class="dept-desc">Bridging Science and Society for a Better Tomorrow</p><a class="dept-link" href="dept-events/h_and_s_events.html">View Events</a></article> -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="timeline section" aria-labelledby="timeline-title">
+        <div class="container">
+            <h2 id="timeline-title" class="section-title">Event Timeline</h2>
+            <div class="tl">
+                <div class="tl-item" style="animation-delay: 0.1s;">
+                    <div class="tl-time">10:00 AM</div>
+                    <div class="tl-content">
+                        <h3 class="tl-title">Opening Ceremony</h3>
+                        <p class="tl-text">The fest begins with an inaugural session.</p>
+                    </div>
+                </div>
+                <div class="tl-item" style="animation-delay: 0.2s;">
+                    <div class="tl-time">11:00 AM</div>
+                    <div class="tl-content">
+                        <h3 class="tl-title">Events Distribution</h3>
+                        <p class="tl-text">Participants disperse to their respective events.</p>
+                    </div>
+                </div>
+                <div class="tl-item" style="animation-delay: 0.3s;">
+                    <div class="tl-time">1:00 - 2:00 PM</div>
+                    <div class="tl-content">
+                        <h3 class="tl-title">Lunch Time</h3>
+                        <p class="tl-text">Enjoy delicious meals and refreshments.</p>
+                    </div>
+                </div>
+                <div class="tl-item" style="animation-delay: 0.4s;">
+                    <div class="tl-time">2:00 PM</div>
+                    <div class="tl-content">
+                        <h3 class="tl-title">Event Resumption</h3>
+                        <p class="tl-text">Events continue post lunch break.</p>
+                    </div>
+                </div>
+                <div class="tl-item" style="animation-delay: 0.5s;">
+                    <div class="tl-time">3:00 - 4:20 PM</div>
+                    <div class="tl-content">
+                        <h3 class="tl-title">Award Ceremony</h3>
+                        <p class="tl-text">Certificates and awards distributed to participants.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Leadership -->
+    <section id="management" class="section" aria-labelledby="lead-title">
+      <div class="container">
+        <h2 id="lead-title" class="section-title section-title1" >Chief Patrons &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Patrons</h2>
+        <div class="leaders">
+          <article class="leader col-1"><img src="assets/images/padma.png" alt="Jonnalagadda Padmavathy" /><h4>Jonnalagadda Padmavathy</h4><p>Chairperson, SRIT</p></article>
+          <article class="leader col-2"><img src="assets/images/samba.png" alt="Aluru Sambasiva Reddy" /><h4>Aluru Sambasiva Reddy</h4><p>Secretary & Correspondent, SRIT</p></article>
+          <article class="leader col-3"><img src="assets/images/ranjit.png" alt="Dr. M. Ranjit Reddy" /><h4>Dr. M. Ranjit Reddy</h4><p>Vice President, SRIT</p></article>
+          <article class="leader col-4"><img src="assets/images/Principal.jpg" alt="Dr. G. Balakrishna" /><h4>Dr. G. Balakrishna</h4><p>Principal, SRIT</p></article>
+        </div>
+      </div>
+      <div class="container" align="center">
+        <h2 id="lead-title" class="section-title section-title1" >Convenors    Digital Team Lead</h2>
+        <center><div class="leaders">
+          <article class="leader col-2"><img src="assets/images/csechitralingappa.jpg" alt="Dr. P. Chitralingappa" /><h4>Dr. P. Chitralingappa</h4><p>Associate Professor & HoD - CSE (AI&ML, Data Science), SRIT</p></article>
+          <article class="leader col-3"><img src="assets/images/csehemanth.jpg" alt="Dr. G. Hemanth Humar" /><h4>Dr. G. Hemanth Humar</h4><p>Associate Professor & III Cell Coordinator, SRIT</p></article>
+          <article class="leader col-4"><img src="assets/images/csevenkatesh.jpg" alt="Mr. K. Venkatesh" /><h4>Mr. K. Venkatesh</h4><p>Assistant Professor, Dept. of CSE (Data Science), SRIT</p></article>
+        </div></center>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact section" aria-labelledby="contact-title">
+      <div class="container">
+        <h2 id="contact-title" class="section-title">Contact Us</h2>
+        <div class="contact-grid">
+          <div class="contact-info">
+            <div class="ci"><i class="fas fa-envelope"></i> <p>hemanth.cse@srit.ac.in</p></div>
+            <div class="ci"><i class="fas fa-phone"></i> <p>+91 9849913200, 9848169943</p></div>
+            <div class="ci"><i class="fas fa-map-marker-alt"></i> <p>SRIT Campus, Anantapur District</p></div>
+          </div>
+          <form name="submit-to-google-sheet" class="form" aria-label="Contact form">
+            <input type="text" name="Name" placeholder="Your Name" required />
+            <input type="email" name="Email" placeholder="Your Email" required />
+            <textarea name="Message" rows="6" placeholder="Your Message"></textarea>
+            <button type="submit" class="login-btn">Send Message</button>
+            <div id="msg" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer role="contentinfo">
+    <div class="container section" style="padding-block:24px">
+      <div class="footer">
+        <div>
+          <img src="assets/images/SRIT-LOGO.png" alt="SRIT Logo" class="logo-small"/>
+          <h5>Srinivasa Ramanujan Institute of Technology (Autonomous)</h5>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#departments">Departments</a></li>
+            <li><a href="#management">Leadership</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Convenors</h4><h5>
+          <p>Dr. P. CHITRALINGAPPA</p>
+          <p style="font-size:12px">chitralingappa.cs@srit.ac.in</p>
+          <p>Dr. G. HEMANTH KUMAR YADAV</p>
+          <p style="font-size:12px">hemanth.cs@srit.ac.in</p></h5>
+        </div>
+      </div>
+      <div class="copyright">Designed by Digital Team, © NextGen 2K25, SRIT. All Rights Reserved.</div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxaLnMrJsOt1ehE3jCOrlq-CqDB7JLkpGWrzpB5TEsI55pjBLZZXGSieUgwgpAM3L2lKA/exec';
+    const form = document.forms['submit-to-google-sheet'];
+    const msg = document.getElementById('msg');
+    if(form){
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        fetch(scriptURL, { method:'POST', body: new FormData(form) })
+          .then(() => { msg.textContent = 'Message Sent Successfully'; setTimeout(()=> msg.textContent='', 4000); form.reset(); })
+          .catch(() => { msg.textContent = 'Error sending message. Try again.'; });
+      });
+        const glow = document.getElementById('nxGlow');
+  document.querySelector('.nx-header').addEventListener('mousemove', (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    glow.style.left = `${e.clientX - rect.left}px`;
+    glow.style.top  = `${e.clientY - rect.top}px`;
+  });
+    
+    // Set the date for the event countdown
+    const countdownDate = new Date("October 15, 2025 00:00:00").getTime();
+
+    // Update the timer every second
+    const timerInterval = setInterval(function() {
+      // Get today's date and time
+      const now = new Date().getTime();
+      
+      // Find the distance between now and the countdown date
+      const distance = countdownDate - now;
+      
+      // Time calculations for days, hours, minutes and seconds
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+      // Display the results in the elements with corresponding IDs
+      document.getElementById("days").innerText = days;
+      document.getElementById("hours").innerText = hours;
+      document.getElementById("minutes").innerText = minutes;
+      document.getElementById("seconds").innerText = seconds;
+      
+      // If the countdown is finished, display a message
+      if (distance < 0) {
+        clearInterval(timerInterval);
+        document.querySelector(".timer").innerHTML = "<div class='tick'><div class='value'>Event is Live!</div></div>";
+      }
+    }, 1000);
+    }
+  </script>
+  <script>
+  // 1) Header smart hide on scroll
+  (function(){
+    const header = document.querySelector('.nx-header');
+    if(!header) return;
+    let lastY = window.scrollY;
+    function onScroll(){
+      const y = window.scrollY;
+      if (y < 10) { header.classList.remove('scrolled-down'); header.classList.add('scrolled-up'); return; }
+      if (y > lastY + 6) {
+        header.classList.add('scrolled-down');
+        header.classList.remove('scrolled-up');
+      } else if (y < lastY - 6) {
+        header.classList.add('scrolled-up');
+        header.classList.remove('scrolled-down');
+      }
+      lastY = y;
+    }
+    header.classList.add('scrolled-up');
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+
+  // 2) Timeline: mark items when they enter the viewport
+  (function(){
+    const items = document.querySelectorAll('.tl-item');
+    if (!items.length) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('in-view');
+      });
+    }, { threshold: 0.35 });
+    items.forEach(el => io.observe(el));
+  })();
+
+  // 3) Contact message reveal (ties into #msg.show)
+  (function(){
+    const msg = document.getElementById('msg');
+    if (!msg) return;
+    const observer = new MutationObserver(() => {
+      msg.classList.toggle('show', !!msg.textContent.trim());
+    });
+    observer.observe(msg, { childList: true, subtree: true, characterData: true });
+  })();
+</script>
+
+</body>
+</html>

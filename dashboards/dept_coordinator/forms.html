@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Spot Registration — Dept Coordinator</title>
+
+  <link rel="stylesheet" href="forms.css" />
+
+  <!-- use ESM supabase client -->
+  <script type="module" src="forms.js" defer></script>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div class="brand">
+        <img src="../assets/images/SRIT-LOGO.png" alt="SRIT" />
+        <div>
+          <div class="title">Dept — Spot Registration</div>
+          <div class="subtitle">Coordinator form · auto UTR & members JSON</div>
+        </div>
+      </div>
+    </header>
+
+    <section class="card">
+      <h2>Register Participant / Team</h2>
+      <form id="regForm" autocomplete="off" novalidate>
+        <div class="row">
+          <label>Coordinator / Leader name
+            <input id="name" name="name" type="text" required placeholder="Full name (leader)" />
+          </label>
+
+          <label>Email
+            <input id="email" name="email" type="email" required placeholder="leader@example.com" />
+          </label>
+        </div>
+
+        <div class="row">
+          <label>Phone
+            <input id="phone" name="phone" type="tel" pattern="^[6-9][0-9]{9}$" placeholder="10-digit Indian number" />
+          </label>
+
+          <label>Student ID
+            <input id="student_id" name="student_id" type="text" placeholder="Roll / student id" />
+          </label>
+        </div>
+
+        <div class="row">
+          <label>Department
+            <select id="department" required>
+              <option value="">Select department</option>
+              <option value="CSE">CSE & Allied</option>
+              <option value="ECE">ECE</option>
+              <option value="EEE">EEE</option>
+              <option value="MEC">MEC</option>
+              <option value="CIV">CIV</option>
+            </select>
+          </label>
+
+          <label>Event
+            <select id="eventSelect" required>
+              <option value="">Select event</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="row">
+          <label>Fee (₹)
+            <input id="fee" type="text" readonly placeholder="Auto" />
+          </label>
+
+          <label>College
+            <input id="college" type="text" required placeholder="College name" />
+          </label>
+        </div>
+
+        <div id="membersBlock" class="members-block">
+          <!-- dynamic member inputs will be injected here -->
+        </div>
+
+        <div class="row small">
+          <label>UTR (auto will be generated on submit — you can leave blank)
+            <input id="utr_number" type="text" placeholder="(optional) leave blank to auto-generate" />
+          </label>
+          <div class="hint">If you want custom UTR paste it here; otherwise leave blank.</div>
+        </div>
+
+        <div class="actions">
+          <button id="submitBtn" class="btn primary" type="submit">Register & Generate UTR</button>
+          <button id="resetBtn" class="btn ghost" type="button">Reset</button>
+        </div>
+
+        <div id="statusMsg" class="status" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <footer class="footer">
+      <small>UTR format: <code>cash&lt;DEPT&gt;&lt;EVENTCODE&gt;NNN</code> — e.g. <code>cashCSEhk001</code></small>
+    </footer>
+  </main>
+</body>
+</html>
+
+
