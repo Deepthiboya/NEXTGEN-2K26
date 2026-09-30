@@ -907,75 +907,46 @@ footer .copyright{
         if(document.activeElement === last){ e.preventDefault(); first.focus(); }
       }
     }
-// --- Time-cutoff / temporary message helpers (paste here) ---
-// store original modal content so we can temporarily show an info message
-const originalModalBodyHTML = modal.querySelector('.modal-body')?.innerHTML || '';
-const originalModalTitle = modal.querySelector('.modal-header h3')?.textContent || 'Event Registration';
-let modalState = 'form'; // 'form' | 'closedMessage'
+   /* Registration-closed behavior, disabled for now.
+       To restore it, uncomment this block and the cutoff check in the click handler,
+       then replace the active close listeners with the restore-aware listeners below.
 
-// Show a temporary 'registrations closed' message in the modal
-function showRegistrationEnded() {
-  modalState = 'closedMessage';
-  lastFocused = document.activeElement;
-  modal.setAttribute('aria-hidden','false');
-  document.body.style.overflow = 'hidden';
-  // change header title
-  modal.querySelector('.modal-header h3').textContent = 'Registrations Closed';
-  // replace body with informational content
-  const body = modal.querySelector('.modal-body');
-  body.innerHTML = `
-    <div style="padding:12px 6px; text-align:center;">
-      <p style="font-weight:800; font-size:1.05rem; margin:8px 0;">Online registrations are ended.</p>
-      <p style="margin:6px 0;" class="helper">Only Spot registrations are available at departments desk.</p>
-      <p style="margin:12px 0; color:var(--muted);">Please visit the department registration desk at 9:00 AM to register in person.</p>
-      <div style="margin-top:14px;"><button id="closeInfoBtn" class="cta-btn">OK</button></div>
-    </div>
-  `;
-  document.addEventListener('keydown', handleKeydown, true);
-  // wire close button in body
-  const closeInfoBtn = document.getElementById('closeInfoBtn');
-  if (closeInfoBtn) closeInfoBtn.addEventListener('click', closeModal);
-}
+    const originalModalBodyHTML = modal.querySelector('.modal-body')?.innerHTML || '';
+    const originalModalTitle = modal.querySelector('.modal-header h3')?.textContent || 'Event Registration';
+    let modalState = 'form';
 
-// Bind triggers: open normal form before cutoff, otherwise show closed message
-triggers.forEach(btn => {
-  btn.addEventListener('click', (e) => {
-    e.preventDefault();
-    const ev = btn.getAttribute('data-event');
-
-    try {
-        const now = new Date();
-        // Set cutoff date and time: 14 October 2025, 23:30 PM (local time)
-        const cutoff = new Date(2025, 9, 14, 23, 30, 0, 0); // Month is 0-based (9 = October)
-        if (now > cutoff) {
-            showRegistrationEnded();
-        return;
-            
-        }
-    } catch (err) {
-        // if anything goes wrong with time check, fall back to normal modal
-        console.warn('time check failed, opening modal', err);
-        
+    function showRegistrationEnded(){
+      modalState = 'closedMessage';
+      lastFocused = document.activeElement;
+      modal.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+      modal.querySelector('.modal-header h3').textContent = 'Registrations Closed';
+      modal.querySelector('.modal-body').innerHTML = `
+        <div style="padding:12px 6px; text-align:center;">
+          <p style="font-weight:800; font-size:1.05rem; margin:8px 0;">Online registrations are ended.</p>
+          <p style="margin:6px 0;" class="helper">Only Spot registrations are available at departments desk.</p>
+          <p style="margin:12px 0; color:var(--muted);">Please visit the department registration desk at 9:00 AM to register in person.</p>
+          <div style="margin-top:14px;"><button id="closeInfoBtn" class="cta-btn">OK</button></div>
+        </div>
+      `;
+      document.addEventListener('keydown', handleKeydown, true);
+      document.getElementById('closeInfoBtn')?.addEventListener('click', closeModal);
     }
 
-    openModal(ev);
-  });
-});
+    function restoreModalIfNeeded(){
+      if(modalState !== 'closedMessage') return;
+      modal.querySelector('.modal-body').innerHTML = originalModalBodyHTML;
+      modal.querySelector('.modal-header h3').textContent = originalModalTitle;
+      modalState = 'form';
+    }
 
-// Restore original modal content when closing the info message
-function restoreModalIfNeeded() {
-  if (modalState === 'closedMessage') {
-    const body = modal.querySelector('.modal-body');
-    if (body) body.innerHTML = originalModalBodyHTML;
-    const header = modal.querySelector('.modal-header h3');
-    if (header) header.textContent = originalModalTitle;
-    modalState = 'form';
-  }
-}
+    // Use these close listeners when re-enabling the closed-registration flow.
+    closeBtn.addEventListener('click', () => { closeModal(); restoreModalIfNeeded(); });
+    modal.addEventListener('click', (e) => {
+      if(e.target === modal){ closeModal(); restoreModalIfNeeded(); }
+    });
+    */
 
-// Ensure modal close restores the form when needed
-closeBtn.addEventListener('click', () => { closeModal(); restoreModalIfNeeded(); });
-modal.addEventListener('click', (e) => { if (e.target === modal) { closeModal(); restoreModalIfNeeded(); } });
     triggers.forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -983,10 +954,18 @@ modal.addEventListener('click', (e) => { if (e.target === modal) { closeModal();
         const fee = btn.getAttribute('data-fee');
         if(ev) eventSelect.value = ev;
         if(fee) feeInput.value = fee;
+
+        /* Re-enable this check with the closed-registration helper above when needed:
+        const cutoff = new Date(2025, 9, 14, 23, 30, 0, 0);
+        if(new Date() > cutoff){
+          showRegistrationEnded();
+          return;
+        }
+        */
+
         openModal(ev);
       });
     });
-
     closeBtn.addEventListener('click', closeModal);
     modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
 
