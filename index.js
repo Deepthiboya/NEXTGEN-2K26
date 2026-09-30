@@ -1,5 +1,3 @@
-
-  
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxaLnMrJsOt1ehE3jCOrlq-CqDB7JLkpGWrzpB5TEsI55pjBLZZXGSieUgwgpAM3L2lKA/exec';
     const form = document.forms['submit-to-google-sheet'];
     const msg = document.getElementById('msg');

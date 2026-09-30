@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>CSE Events - NEXTZEN</title>
+    <title>Humanities and Sciences Events - NEXTGEN</title>
 
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet" />
@@ -934,6 +934,37 @@ footer .copyright{
 @media (min-width: 0){
   body{ padding-bottom: 44px; } /* match bar height */
 }
+
+/* Match the compact dark department header and hero layout. */
+header{
+  background: linear-gradient(180deg, rgba(7,12,22,0.75), rgba(7,12,22,0.35) 65%, transparent);
+  backdrop-filter: saturate(140%) blur(10px);
+  border-bottom: 1px solid rgba(148,163,184,0.18);
+  box-shadow: 0 12px 30px rgba(7,12,22,0.35);
+}
+.brand-title{ color:#eaf4ff; text-shadow:0 6px 20px rgba(0,0,0,.35); }
+nav a{ color:#d5e6f7; }
+.nx-hero-v2 .wg-card{
+  max-width: min(940px, 94vw);
+  margin-inline: auto;
+  padding: clamp(16px, 4vw, 28px);
+  min-width: 0;
+}
+.nx-hero-v2 .wg-title{
+  margin: 0 0 clamp(8px, 2.4vw, 14px);
+  line-height: 1.12;
+  font-size: clamp(22px, 6.2vw, 44px);
+  word-break: keep-all;
+  overflow-wrap: normal;
+  white-space: normal;
+  text-wrap: balance;
+}
+.nx-hero-v2 .wg-title > span{ display:inline; white-space:normal; }
+.nx-hero-v2 .wg-sub{ font-size:clamp(14px, 3.6vw, 18px); line-height:1.45; margin-top:clamp(8px, 2vw, 12px); }
+@media (max-width:360px){
+  .nx-hero-v2 .wg-title{ font-size:clamp(20px, 6.8vw, 30px); }
+  .nx-hero-v2 .wg-card{ padding:14px; }
+}
   /* always-on shiny text + subtle pop on hover */
 .nx-login {
   display: inline-block;
@@ -1110,20 +1141,20 @@ footer .copyright{
 
     <!-- Headline changed to match your screenshot text -->
     <h1 class="wg-title">
-      <span>Computer Science</span>
-      <span class="gold">&amp; Engineering</span>
+      <span>Humanities</span>
+      <span class="gold">&amp; Sciences</span>
     </h1>
 
     <!-- Streams as chips -->
     <div class="wg-badges" role="list" aria-label="Streams">
-      <span class="badge"><strong>CSE</strong></span>
-      <span class="badge"><strong>CSE (AI & ML)</strong></span>
-      <span class="badge"><strong>CSE (AI & DS)</strong></span>
+      <span class="badge"><strong>H&amp;S</strong></span>
+      <span class="badge"><strong>Fun</strong></span>
+      <span class="badge"><strong>Learning</strong></span>
     </div>
 
     <!-- Subline exactly like the screenshot text -->
     <p class="wg-sub">
-      Join us for the biggest tech event of the year, featuring workshops, hackathons, and industry experts designed to inspire the next generation of coders.
+      Join us for engaging challenges that bring together creativity, teamwork, communication, and problem-solving.
     </p>
 
     <!-- Primary CTA -->
@@ -1139,70 +1170,68 @@ footer .copyright{
       <section id="events" class="section">
         <div class="container">
           <h2 class="section-title">Featured Events</h2>
-          <p class="section-sub">Participate in our exciting events designed to challenge skills and expand knowledge in computer science.</p>
+          <p class="section-sub">Participate in exciting Humanities and Sciences events designed to challenge skills and encourage teamwork.</p>
 
           <div class="events-grid">
-            <!-- Paper Presentation -->
+            <!-- Flashmob -->
             <div class="event-card">
               <div class="event-image">
-                <img src="../assets/images/csepaperpresentation.jpg" alt="Paper Presentation" />
+                <img src="../assets/images/Flashmob.png" alt="Flashmob" />
               </div>
               <div class="event-content">
-                <h3 class="event-title">Paper Presentation</h3>
-                <ul class="event-stats" aria-label="Paper quick facts">
-                  <li class="stat"><i class="fas fa-clock"></i><div><span class="label">Time</span><span class="value">11 - 1 PM</span></div></li>
-                  <li class="stat"><i class="fas fa-user-friends"></i><div><span class="label">Team</span><span class="value">1 – 2</span></div></li>
-                  <li class="stat"><i class="fas fa-indian-rupee-sign"></i><div><span class="label">Fee</span><span class="value"><span class="rupee">₹</span>200</span></div></li>
+                <h3 class="event-title">Flashmob</h3>
+                <ul class="event-stats" aria-label="Flashmob quick facts">
+                  <li class="stat"><i class="fas fa-users"></i><div><span class="label">Participants</span><span class="value">60 max</span></div></li>
+                  <li class="stat"><i class="fas fa-music"></i><div><span class="label">Format</span><span class="value">Group performance</span></div></li>
+                  <li class="stat"><i class="fas fa-indian-rupee-sign"></i><div><span class="label">Fee</span><span class="value">Free</span></div></li>
                 </ul>
-                <p class="event-description">Showcase research and ideas on emerging technologies with well-structured, original work and clear communication.</p>
-                <p ><strong style="color: white;">Registration Fee:</strong> ₹200/-</p>
+                <p class="event-description">Bring energy, rhythm, and teamwork to a lively group performance that transforms the campus into a celebration.</p>
+                <p><strong style="color: white;">Registration Fee:</strong> Free</p>
                 <div class="nx-button-group">
-                 <a href="#" class="nx-view-details openPopupBtn" data-src="paperpresentation.html">View Details</a>
-                <a href="#" class="nx-register-button cta-btn register-trigger" data-event="Paper Presentation" data-fee="200" data-team="pair">Register Now</a>
+                 <a href="#" class="nx-view-details openPopupBtn" data-src="technical.html">View Details</a>
+                 <a href="#" class="nx-register-button cta-btn register-trigger" data-event="Flashmob" data-fee="0" data-team="solo">Register Now</a>
               </div>
               </div>
             </div>
 
-            <!-- Hackathon -->
+            <!-- Game Bizarre -->
             <div class="event-card">
               <div class="event-image">
-                <img src="../assets/images/csehackathon.jpeg" alt="Hackathon" />
+                <img src="../assets/images/crosswordpuzzle.jpg" alt="Game Bizarre" />
               </div>
               <div class="event-content">
-                <h3 class="event-title">Hackathon</h3>
-                <ul class="event-stats" aria-label="Hackathon quick facts">
-                  <li class="stat"><i class="fas fa-clock"></i><div><span class="label">Time</span><span class="value">10 - 3 PM</span></div></li>
-                  <li class="stat"><i class="fas fa-user-friends"></i><div><span class="label">Team</span><span class="value">1 – 3</span></div></li>
-                  <li class="stat"><i class="fas fa-indian-rupee-sign"></i><div><span class="label">Fee</span><span class="value"><span class="rupee">₹</span>300</span></div></li>
+                <h3 class="event-title">Game Bizarre</h3>
+                <ul class="event-stats" aria-label="Game Bizarre quick facts">
+                  <li class="stat"><i class="fas fa-gamepad"></i><div><span class="label">Format</span><span class="value">Games</span></div></li>
+                  <li class="stat"><i class="fas fa-users"></i><div><span class="label">Participants</span><span class="value">100 max</span></div></li>
+                  <li class="stat"><i class="fas fa-indian-rupee-sign"></i><div><span class="label">Fee</span><span class="value"><span class="rupee">₹</span>100</span></div></li>
                 </ul>
-                <p class="event-description">Brainstorm, build, and present creative solutions under time pressure in a 5-hour coding sprint.</p>
-                <br>
-                <p><strong style="color: white;">Registration Fee:</strong> ₹300/-</p>
+                <p class="event-description">Enjoy a series of fun and exciting games designed to test quick thinking, creativity, and team spirit. Participation is limited to 100 students.</p>
+                <p><strong style="color: white;">Registration Fee:</strong> ₹100/-</p>
                 <div class="nx-button-group">
-                  <a href="#" class="nx-view-details openPopupBtn" data-src="hackathon.html">View Details</a>
-                  <a href="#" class="nx-register-button cta-btn register-trigger" data-event="Hackathon [5hrs]" data-fee="300" data-team="trio">Register Now</a>
+                  <a href="#" class="nx-view-details openPopupBtn" data-src="technical.html">View Details</a>
+                  <a href="#" class="nx-register-button cta-btn register-trigger" data-event="Game Bizarre" data-fee="100" data-team="solo">Register Now</a>
                 </div>
               </div>
             </div>
 
-            <!-- Crossword -->
+            <!-- Treasure Hunt -->
             <div class="event-card">
               <div class="event-image">
-                <img src="../assets/images/crosswordpuzzle.jpg" alt="Crossword Puzzle" />
+                <img src="../assets/images/cluecraft.jpg" alt="Treasure Hunt" />
               </div>
               <div class="event-content">
-                <h3 allign="center" class="event-title">Crossword Puzzle</h3>
-                <ul class="event-stats" aria-label="Crossword quick facts">
-                  <li class="stat"><i class="fas fa-clock"></i><div><span class="label">Time</span><span class="value">2 - 3 PM</span></div></li>
-                  <li class="stat"><i class="fas fa-user-friends"></i><div><span class="label">Team</span><span class="value">Solo</span></div></li>
+                <h3 class="event-title">Treasure Hunt</h3>
+                <ul class="event-stats" aria-label="Treasure Hunt quick facts">
+                  <li class="stat"><i class="fas fa-map-signs"></i><div><span class="label">Format</span><span class="value">Team challenge</span></div></li>
+                  <li class="stat"><i class="fas fa-users"></i><div><span class="label">Team size</span><span class="value">5 max</span></div></li>
                   <li class="stat"><i class="fas fa-indian-rupee-sign"></i><div><span class="label">Fee</span><span class="value"><span class="rupee">₹</span>100</span></div></li>
                 </ul>
-                <p class="event-description">Solve a technical crossword on programming, algorithms, and CS concepts for prizes.</p>
-                <br>
+                <p class="event-description">Work in teams of up to five, follow the clues, solve puzzles, and race together to uncover the hidden treasure.</p>
                 <p><strong style="color: white;">Registration Fee:</strong> ₹100/-</p>
                 <div class="nx-button-group">
-                  <a href="#" class="nx-view-details openPopupBtn" data-src="crosswordpuzzle.html">View Details</a>
-                  <a href="#" class="nx-register-button cta-btn register-trigger" data-event="Crossword Puzzle" data-fee="100" data-team="solo">Register Now</a>
+                  <a href="#" class="nx-view-details openPopupBtn" data-src="cluecraft.html">View Details</a>
+                  <a href="#" class="nx-register-button cta-btn register-trigger" data-event="Treasure Hunt" data-fee="100" data-team="trio">Register Now</a>
                 </div>
               </div>
             </div>
@@ -1250,7 +1279,7 @@ footer .copyright{
               <div class="form-group">
                 <label for="department">Department</label>
                 <select id="department" name="department" required>
-                  <option value="CSE" selected>CSE</option>
+                  <option value="Humanities and Sciences" selected>Humanities and Sciences</option>
                 </select>
               </div>
 
@@ -1258,9 +1287,9 @@ footer .copyright{
               <div class="form-group">
                 <label for="event">Event</label>
                 <select id="event" name="event" required>
-                  <option value="Paper Presentation">Paper Presentation</option>
-                  <option value="Hackathon [5hrs]">Hackathon [5hrs]</option>
-                  <option value="Crossword Puzzle">Crossword Puzzle</option>
+                  <option value="Flashmob">Flashmob</option>
+                  <option value="Game Bizarre">Game Bizarre</option>
+                  <option value="Treasure Hunt">Treasure Hunt</option>
                 </select>
               </div>
 
@@ -1280,12 +1309,12 @@ footer .copyright{
 
           <div id="hackathon" style="display:none; grid-column:1 / -1;">
             <div class="form-group">
-              <label for="hackMember1">Team Member 1 Name</label>
-              <input type="text" id="hackMember1" name="hackMember1" placeholder="Enter Team Member 1 Name" />
+              <label for="treasureMember1">Team Member 1 Name</label>
+              <input type="text" id="treasureMember1" name="treasureMember1" placeholder="Enter Team Member 1 Name" />
             </div>
             <div class="form-group">
-              <label for="hackMember2">Team Member 2 Name</label>
-              <input type="text" id="hackMember2" name="hackMember2" placeholder="Enter Team Member 2 Name" />
+              <label for="treasureMember2">Team Member 2 Name</label>
+              <input type="text" id="treasureMember2" name="treasureMember2" placeholder="Enter Team Member 2 Name" />
             </div>
             </div>
 
@@ -1323,15 +1352,15 @@ footer .copyright{
             <div class="timeline-item">
               <div class="timeline-time">11:00 AM</div>
               <div class="timeline-content">
-                <h3 class="timeline-title">Paper Presentation</h3>
-                <p class="timeline-desc">Parallel sessions for research and innovative projects.</p>
+                <h3 class="timeline-title">Flashmob</h3>
+                <p class="timeline-desc">A lively group performance featuring up to 60 participants.</p>
               </div>
             </div>
             <div class="timeline-item">
               <div class="timeline-time">10:00 AM</div>
               <div class="timeline-content">
-                <h3 class="timeline-title">Hackathon Kickoff</h3>
-                <p class="timeline-desc">The 5-hour coding marathon begins.</p>
+                <h3 class="timeline-title">Game Bizarre</h3>
+                <p class="timeline-desc">A fun challenge built around creativity, teamwork, and quick thinking.</p>
               </div>
             </div>
             <div class="timeline-item">
@@ -1344,8 +1373,8 @@ footer .copyright{
             <div class="timeline-item">
               <div class="timeline-time">2:00 PM</div>
               <div class="timeline-content">
-                <h3 class="timeline-title">Crossword Puzzle</h3>
-                <p class="timeline-desc">Mind-bending challenge to test wit.</p>
+                <h3 class="timeline-title">Treasure Hunt</h3>
+                <p class="timeline-desc">Follow clues and solve puzzles as a team to uncover the treasure.</p>
               </div>
             </div>
             <div class="timeline-item">
@@ -1406,7 +1435,7 @@ footer .copyright{
         <div class="footer">
           <div>
             <img src="../assets/images/SRIT-LOGO.png" alt="SRIT Logo" class="logo-small"/>
-            <p>Department of Computer Science and Engineering<br/>Srinivasa Ramanujan Institute of Technology (Autonomous)</p>
+            <p>Department of Humanities and Sciences<br/>Srinivasa Ramanujan Institute of Technology (Autonomous)</p>
           </div>
           <div>
             <h4 style="color: #187aad;">Quick Links</h4>
@@ -1418,7 +1447,7 @@ footer .copyright{
             </ul>
           </div>
         </div>
-        <div class="copyright" style="color: black;">Designed by Digital Team, © NextGen 2K25 CSE & Allied Dept, SRIT. All Rights Reserved.</div>
+        <div class="copyright" style="color: black;">Designed by Digital Team, © NextGen 2K25 Humanities and Sciences Dept, SRIT. All Rights Reserved.</div>
       </div>
     </footer> -->
 <script type="module">
@@ -1445,14 +1474,14 @@ const SUPABASE_URL = "https://jkqxisgkngxqlwuojuul.supabase.co";
 
     // Event config
     const fees = {
-      'Paper Presentation': 200,
-      'Hackathon [5hrs]': 300,
-      'Crossword Puzzle': 100
+      'Flashmob': 0,
+      'Game Bizarre': 100,
+      'Treasure Hunt': 100
     };
     const teamMode = {
-      'Paper Presentation': 'pair',
-      'Hackathon [5hrs]': 'trio',
-      'Crossword Puzzle': 'solo'
+      'Flashmob': 'solo',
+      'Game Bizarre': 'solo',
+      'Treasure Hunt': 'trio'
     };
 
     // Open modal
@@ -1588,11 +1617,9 @@ const SUPABASE_URL = "https://jkqxisgkngxqlwuojuul.supabase.co";
 
       const event = form.querySelector('[name="event"]').value;
       let members = {};
-      if (event === 'Paper Presentation') {
-        members.member1_name = form.querySelector('[name="paperMember1"]')?.value || null;
-      } else if (event === 'Hackathon [5hrs]') {
-        members.member1_name = form.querySelector('[name="hackMember1"]')?.value || null;
-        members.member2_name = form.querySelector('[name="hackMember2"]')?.value || null;
+      if (event === 'Treasure Hunt') {
+        members.member1_name = form.querySelector('[name="treasureMember1"]')?.value || null;
+        members.member2_name = form.querySelector('[name="treasureMember2"]')?.value || null;
       } else {
         members = null;
       }
