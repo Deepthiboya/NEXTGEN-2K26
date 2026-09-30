@@ -16,7 +16,7 @@
   });
     
     // Set the date for the event countdown
-    const countdownDate = new Date("October 15, 2025 00:00:00").getTime();
+    const countdownDate = new Date("October 15, 2026 00:00:00").getTime();
 
     // Update the timer every second
     const timerInterval = setInterval(function() {
