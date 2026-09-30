@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>NextGen 2K25 — Winners (CSE & Allied)</title>
+    <title>NextGen 2K26 — Winners Announced Soon</title>
 
     <link
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap"
@@ -307,6 +307,206 @@ tbody tr.event-end td{
         }
       }
       .winner-header{   position:sticky; top:0; z-index:1000;   background: rgba(255,255,255,.85);   backdrop-filter: blur(10px) saturate(130%);   border-bottom: 1px solid rgba(15,23,42,.06);   padding: 14px 0;   box-shadow: 0 6px 14px rgba(16,24,40,.06); } .winner-header .container{ display:flex; justify-content:center; align-items:center; gap:12px; } .brand{ text-decoration:none; color:#111; display:flex; align-items:center; gap:10px; } .logo{ width:52px; height:auto; filter: drop-shadow(0 2px 6px rgba(16,24,40,.15)); } .brand h1{ font-weight:900; font-size:1.55rem; color:var(--ink); letter-spacing:.2px; } .brand span{ color:var(--gold); text-shadow:0 0 16px rgba(243,156,18,.35); }
+
+      /* NextGen 2K26 announcement view; historical tables remain below for later reuse. */
+      :root {
+        --ink: #f4f0df;
+        --gold: #f0c66e;
+        --muted: #b9c9bd;
+      }
+      body {
+        min-height: 100%;
+        height: auto;
+        padding: 0;
+        overflow-x: hidden;
+        color: var(--muted);
+        background-color: #12251f;
+        background-image:
+          linear-gradient(rgba(244, 240, 223, .025) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(244, 240, 223, .025) 1px, transparent 1px),
+          linear-gradient(145deg, #172d25 0%, #10221d 55%, #1b3027 100%);
+        background-size: 42px 42px, 42px 42px, cover;
+      }
+      .winner-header {
+        position: relative;
+        top: auto;
+        background: rgba(18, 37, 31, .92);
+        border-bottom: 1px solid rgba(240, 198, 110, .2);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, .16);
+        backdrop-filter: blur(12px);
+      }
+      .winner-header .brand { color: var(--ink); }
+      .winner-header .brand h1 {
+        margin: 0;
+        font-family: "Manrope", sans-serif;
+        font-size: 1.35rem;
+        color: var(--ink);
+      }
+      .winner-header .brand span {
+        color: var(--gold);
+        text-shadow: none;
+      }
+      .winner-header .logo {
+        border-radius: 50%;
+        object-fit: contain;
+        background: #fff;
+        padding: 3px;
+      }
+      .back-btn {
+        top: 19px;
+        left: 20px;
+        padding: 8px 12px;
+        border: 1px solid rgba(240, 198, 110, .35);
+        border-radius: 4px;
+        background: #1a332a;
+        color: var(--ink);
+        box-shadow: none;
+        font-size: .85rem;
+      }
+      .back-btn:hover { background: #244336; }
+      .wrap { display: none; }
+      .announcement-view {
+        position: relative;
+        display: grid;
+        min-height: calc(100svh - 82px);
+        place-items: center;
+        padding: 64px 24px 40px;
+        overflow: hidden;
+      }
+      .announcement-view::before,
+      .announcement-view::after {
+        position: absolute;
+        top: 50%;
+        width: min(22vw, 260px);
+        height: 1px;
+        content: "";
+        background: linear-gradient(90deg, transparent, rgba(240, 198, 110, .5), transparent);
+      }
+      .announcement-view::before { left: 0; }
+      .announcement-view::after { right: 0; }
+      .announcement-content {
+        position: relative;
+        z-index: 1;
+        width: min(100%, 780px);
+        padding: 50px 28px 44px;
+        text-align: center;
+        animation: arrive .75s ease-out both;
+      }
+      .announcement-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 0 32px;
+        color: var(--gold);
+        font-size: .76rem;
+        font-weight: 800;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+      }
+      .announcement-kicker::before,
+      .announcement-kicker::after {
+        width: 26px;
+        height: 1px;
+        content: "";
+        background: currentColor;
+        opacity: .65;
+      }
+      .medal-mark {
+        position: relative;
+        display: grid;
+        width: 88px;
+        height: 88px;
+        margin: 0 auto 27px;
+        place-items: center;
+        border: 1px solid rgba(240, 198, 110, .72);
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(240, 198, 110, .18), rgba(240, 198, 110, .025) 68%);
+        color: var(--gold);
+        box-shadow: 0 0 0 8px rgba(240, 198, 110, .045), 0 0 44px rgba(240, 198, 110, .08);
+      }
+      .medal-mark::before {
+        position: absolute;
+        inset: 8px;
+        border: 1px solid rgba(240, 198, 110, .25);
+        border-radius: 50%;
+        content: "";
+      }
+      .medal-mark span { font-size: 2.5rem; line-height: 1; }
+      .announcement-content h2 {
+        margin: 0;
+        color: var(--ink);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 5rem;
+        font-weight: 500;
+        line-height: 1.02;
+      }
+      .announcement-content h2 span {
+        display: block;
+        margin-top: 8px;
+        color: var(--gold);
+        font-style: italic;
+      }
+      .announcement-copy {
+        max-width: 520px;
+        margin: 24px auto 0;
+        color: #bdcbbf;
+        font-size: 1rem;
+        line-height: 1.8;
+      }
+      .announcement-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        margin-top: 32px;
+        padding: 10px 14px;
+        border: 1px solid rgba(185, 201, 189, .2);
+        border-radius: 3px;
+        color: #d5dfd3;
+        font-size: .78rem;
+        font-weight: 700;
+        letter-spacing: .04em;
+      }
+      .announcement-status::before {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--gold);
+        box-shadow: 0 0 10px rgba(240, 198, 110, .55);
+        content: "";
+      }
+      .announcement-footer {
+        position: absolute;
+        right: 20px;
+        bottom: 18px;
+        left: 20px;
+        color: rgba(185, 201, 189, .65);
+        font-size: .72rem;
+        text-align: center;
+      }
+      @keyframes arrive {
+        from { opacity: 0; transform: translateY(12px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @media (max-width: 620px) {
+        .winner-header { padding: 13px 12px; }
+        .winner-header .container { justify-content: flex-end; }
+        .winner-header .brand { gap: 8px; }
+        .winner-header .logo { width: 42px; height: 42px; }
+        .winner-header .brand h1 { font-size: 1rem; }
+        .back-btn { top: 18px; left: 10px; padding: 7px 9px; font-size: .76rem; }
+        .announcement-view { min-height: calc(100svh - 68px); padding: 35px 14px 54px; }
+        .announcement-view::before, .announcement-view::after { width: 10vw; }
+        .announcement-content { padding: 36px 10px; }
+        .announcement-kicker { margin-bottom: 27px; font-size: .65rem; }
+        .medal-mark { width: 74px; height: 74px; margin-bottom: 24px; }
+        .announcement-content h2 { font-size: 3.05rem; }
+        .announcement-copy { margin-top: 20px; font-size: .93rem; }
+        .announcement-status { margin-top: 25px; font-size: .7rem; }
+        .announcement-footer { font-size: .65rem; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .announcement-content { animation: none; }
+      }
     </style>
   </head>
   <body>
@@ -316,16 +516,30 @@ tbody tr.event-end td{
     <!-- Header -->
     <header class="winner-header" style="justify-content: center;">
       <div class="container">
-        <a href="index.html" class="brand" >
+        <a href="../index.html" class="brand">
           <img 
             src="../assets/images/SRIT-LOGO.png"
             alt="SRIT Logo"
             class="logo"
           />
-          <h1>NextGen 2K25 <span>Winners</span></h1>
+          <h1>NextGen 2K26 <span>Winners</span></h1>
         </a>
       </div>
     </header>
+
+    <main class="announcement-view">
+      <section class="announcement-content" aria-labelledby="announcement-title">
+        <p class="announcement-kicker">NextGen 2K26 · Awards</p>
+        <div class="medal-mark" aria-hidden="true"><span>✦</span></div>
+        <h2 id="announcement-title">Winners <span>announced soon</span></h2>
+        <p class="announcement-copy">
+          The celebrations are just around the corner. We are putting the finishing touches on the results;
+          check back here soon to celebrate this year's achievers.
+        </p>
+        <div class="announcement-status">Results are being finalized</div>
+      </section>
+      <footer class="announcement-footer">Designed by Unfazed Digital Team · © NextGen 2K26, SRIT</footer>
+    </main>
 
     <main class="wrap">
       <section class="card" aria-labelledby="cse-table">
