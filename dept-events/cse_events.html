@@ -1067,10 +1067,149 @@ footer .copyright{
   }
 }
 
+/* CSE department image and glass theme */
+.cse-tech .hero{padding-top:2cm}
+.cse-tech .hero-wrap{margin-top:0}
+.cse-tech{
+  --fg-strong:#f1f7ff;
+  --fg:#dcecff;
+  --fg-muted:#c0d5ee;
+  --fg-soft:#a9c7e2;
+  --fg-link:#eaf4ff;
+  --fg-link-h:#ffd166;
+  --glass-bg:rgba(5,25,57,.78);
+  --glass-brd:rgba(134,218,255,.3);
+  --glass-glow:0 20px 50px rgba(1,12,31,.32),0 0 20px rgba(255,177,65,.12);
+  background-color:#061632;
+  background-image:linear-gradient(180deg,rgba(5,20,47,.18),rgba(5,20,47,.36)),url("../assets/images/cse_background.png");
+  background-position:center center;
+  background-size:cover;
+  background-attachment:fixed;
+  background-repeat:no-repeat;
+}
+.cse-tech header[role="banner"]{
+  background:rgba(8,42,84,.7);
+  -webkit-backdrop-filter:saturate(140%) blur(10px);
+  backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid rgba(255,209,102,.42);
+  box-shadow:0 12px 30px rgba(1,12,31,.3);
+}
+.cse-tech .brand-title{color:#f1f7ff}
+.cse-tech .year{background:linear-gradient(100deg,#ffd166,#ff982d);color:#071b39}
+.cse-tech .nx-nav .nx-link{
+  background:none;
+  -webkit-background-clip:border-box;
+  background-clip:border-box;
+  color:#eaf4ff;
+  animation:none;
+  text-shadow:none;
+  transition:color .22s ease;
+}
+.cse-tech .nx-nav .nx-link:hover{color:#ffd166}
+.cse-tech .nx-nav .nx-link::after{
+  background:#ffd166;
+  background-size:auto;
+  animation:none;
+  box-shadow:0 0 10px rgba(255,209,102,.35);
+}
+.cse-tech .cse-mesh,
+.cse-tech .cse-hex,
+.cse-tech .cse-sheen,
+.cse-tech .cse-trace,
+.cse-tech .cse-glints{opacity:.16}
+.cse-tech .nx-hero-v2.nx-warm{
+  max-width:1080px;
+  margin:clamp(24px,4vw,48px) auto;
+  padding:clamp(22px,4vw,42px);
+  border:1px solid rgba(191,231,255,.58);
+  box-shadow:0 18px 60px rgba(0,0,0,.32),0 0 24px rgba(255,177,65,.2),inset 0 1px 0 rgba(255,255,255,.55);
+}
+.cse-tech .nx-hero-v2.nx-warm .halo{
+  background:
+    radial-gradient(1200px 420px at 18% 0%,rgba(255,170,64,.28),transparent 70%),
+    radial-gradient(1400px 520px at 82% 0%,rgba(38,151,230,.3),transparent 75%);
+}
+.cse-tech .nx-hero-v2.nx-warm .vignette{
+  background:
+    radial-gradient(90% 70% at 50% 50%,rgba(12,42,79,.62),rgba(13,54,96,.44) 45%,rgba(11,75,123,.18) 70%,transparent 100%),
+    linear-gradient(180deg,rgba(5,24,54,.24),rgba(9,42,79,.2));
+  box-shadow:inset 0 0 120px rgba(255,177,65,.15),inset 0 0 300px rgba(40,163,235,.14);
+}
+.cse-tech .nx-hero-v2.nx-warm .sweep{
+  background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.22) 50%,transparent 70%);
+}
+.cse-tech .nx-hero-v2.nx-warm .wg-card{
+  max-width:min(900px,94vw);
+  padding:clamp(16px,3.2vw,24px);
+  background:linear-gradient(145deg,rgba(7,31,67,.58),rgba(11,63,105,.42));
+  -webkit-backdrop-filter:blur(14px) saturate(135%);
+  backdrop-filter:blur(14px) saturate(135%);
+  border:1px solid rgba(134,218,255,.52);
+  box-shadow:0 28px 80px rgba(1,12,31,.32),0 0 24px rgba(255,177,65,.17),inset 0 1px 0 rgba(255,255,255,.36),inset 0 -1px 0 rgba(255,177,65,.36);
+}
+.cse-tech .nx-hero-v2.nx-warm .wg-kicker{color:#d8efff}
+.cse-tech .nx-hero-v2.nx-warm .wg-title{color:#f4f9ff;text-shadow:0 3px 16px rgba(0,0,0,.3)}
+.cse-tech .nx-hero-v2.nx-warm .wg-title .gold{
+  background:linear-gradient(90deg,#ff982d,#ffd166,#67d5ff,#ff982d);
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.cse-tech .nx-hero-v2.nx-warm .wg-sub{color:#e0efff}
+.cse-tech .nx-hero-v2.nx-warm .badge{
+  background:rgba(7,31,67,.72);
+  color:#f4f9ff;
+  border-color:rgba(255,190,89,.68);
+  box-shadow:0 8px 20px rgba(1,12,31,.2),0 0 14px rgba(255,177,65,.18);
+}
+.cse-tech .nx-hero-v2.nx-warm .wg-cta .cta-strong{
+  color:#071b39;
+  background:linear-gradient(90deg,#ffd166,#ff982d);
+  border:1px solid rgba(255,255,255,.46);
+  box-shadow:0 12px 28px rgba(255,157,45,.35);
+}
+.cse-tech .event-card,
+.cse-tech .coordinator-card{
+  background:linear-gradient(180deg,rgba(5,25,57,.78),rgba(8,47,86,.66));
+  border:1px solid rgba(134,218,255,.3);
+  -webkit-backdrop-filter:saturate(140%) blur(8px);
+  backdrop-filter:saturate(140%) blur(8px);
+}
+.cse-tech .event-title,
+.cse-tech .coordinator-card h4,
+.cse-tech .timeline-title{color:#ffd166}
+.cse-tech .event-card p,
+.cse-tech .coordinator-card p,
+.cse-tech .timeline-desc{color:#e0efff}
+.cse-tech .event-card p strong{color:#fff}
+.cse-tech .event-stats .stat{background:rgba(4,24,54,.78);border-color:rgba(134,218,255,.22)}
+.cse-tech .event-stats i{color:#ffd166;background:rgba(255,177,65,.12);box-shadow:0 4px 10px rgba(255,177,65,.14)}
+.cse-tech .timeline-content{background:rgba(7,31,67,.72);border-color:rgba(134,218,255,.2)}
+.cse-tech .timeline-time,
+.cse-tech .timeline::before{background:linear-gradient(90deg,#168bd2,#ffd166)}
+.cse-tech .cta-btn,
+.cse-tech .register-btn{
+  color:#071b39;
+  background:linear-gradient(90deg,#ffd166,#ff982d);
+  box-shadow:0 10px 24px rgba(255,177,65,.3);
+}
+.cse-tech footer{background:linear-gradient(90deg,rgba(6,22,50,.96),rgba(10,48,87,.96));border-top:1px solid rgba(255,209,102,.55)}
+.cse-tech footer .footer h4{color:#ffd166}
+.cse-tech footer .footer a,
+.cse-tech footer .footer p,
+.cse-tech footer .copyright{color:#eaf4ff}
+.cse-tech footer .copyright{background:rgba(7,30,62,.88);border-top-color:rgba(255,209,102,.42)}
+
+@media (max-width:640px){
+  .cse-tech .nx-hero-v2.nx-warm{padding:18px}
+  .cse-tech .nx-hero-v2.nx-warm .wg-card{padding:18px}
+}
 
     </style>
 
 
+  <link rel="stylesheet" href="../assets/css/department-mobile.css" />
   </head>
   <body class="cse-tech">
     <div class="cse-mesh" aria-hidden="true"></div>

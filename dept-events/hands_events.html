@@ -1098,12 +1098,124 @@ nav a{ color:#d5e6f7; }
   }
 }
 
+/* Humanities & Sciences image-backed department theme */
+.hands-page {
+  --fg-strong: #f3f8ff;
+  --fg: #e2edf8;
+  --fg-muted: #c1d1e2;
+  --fg-soft: #b1c4d8;
+  --fg-link: #9cddff;
+  --fg-link-h: #ffd782;
+  --glass-bg: rgba(8, 42, 84, 0.74);
+  --glass-brd: rgba(180, 215, 244, 0.24);
+  --glass-glow: 0 24px 60px rgba(0, 14, 34, 0.32);
+  background:
+    linear-gradient(rgba(5, 24, 48, 0.48), rgba(5, 24, 48, 0.62)),
+    url("../assets/images/hands_background.png") center / cover fixed !important;
+  color: var(--fg);
+}
+
+.hands-page header {
+  background: rgba(8, 42, 84, 0.7) !important;
+  backdrop-filter: saturate(140%) blur(10px);
+  border-bottom: 1px solid rgba(196, 222, 246, 0.2);
+  box-shadow: 0 12px 30px rgba(0, 14, 34, 0.28);
+}
+
+.hands-page .brand-title { color: #f3f8ff; }
+.hands-page nav a,
+.hands-page .nx-nav .nx-link {
+  color: #edf6ff !important;
+  background: none !important;
+  animation: none !important;
+  text-decoration: none;
+}
+.hands-page .nx-nav .nx-link::after {
+  background: #ffd782;
+  animation: none;
+}
+.hands-page nav a:hover,
+.hands-page .nx-nav .nx-link:hover { color: #ffd782 !important; }
+.hands-page .nx-login {
+  color: #f3f8ff !important;
+  background: rgba(12, 60, 110, 0.78);
+  border: 1px solid rgba(196, 222, 246, 0.3);
+  box-shadow: 0 8px 22px rgba(0, 14, 34, 0.28);
+}
+
+.hands-page main > .hero-wrap {
+  margin-top: 2cm;
+}
+.hands-page .nx-hero-v2.nx-warm {
+  padding: clamp(16px, 3vw, 28px);
+  background: rgba(8, 42, 84, 0.24);
+  border: 1px solid rgba(196, 222, 246, 0.2);
+  box-shadow: 0 18px 48px rgba(0, 14, 34, 0.3);
+}
+.hands-page .nx-hero-v2.nx-warm .halo,
+.hands-page .nx-hero-v2.nx-warm .vignette {
+  background: radial-gradient(ellipse at center, rgba(8, 42, 84, 0.3), rgba(8, 42, 84, 0.06) 70%);
+  box-shadow: none;
+}
+.hands-page .nx-hero-v2.nx-warm .sweep { opacity: 0.12; }
+.hands-page .nx-hero-v2.nx-warm .wg-card {
+  max-width: min(900px, 94vw);
+  padding: clamp(16px, 3.2vw, 24px);
+  background: rgba(8, 42, 84, 0.76);
+  border: 1px solid rgba(190, 220, 246, 0.32);
+  box-shadow: 0 18px 48px rgba(0, 14, 34, 0.36);
+  backdrop-filter: saturate(140%) blur(8px);
+}
+.hands-page .nx-hero-v2.nx-warm .wg-kicker,
+.hands-page .nx-hero-v2.nx-warm .wg-title,
+.hands-page .nx-hero-v2.nx-warm .wg-sub { color: #f3f8ff; }
+.hands-page .nx-hero-v2.nx-warm .badge {
+  color: #f3f8ff;
+  background: rgba(12, 60, 110, 0.72);
+  border-color: rgba(255, 215, 130, 0.45);
+}
+.hands-page .nx-hero-v2.nx-warm .wg-cta .cta-strong {
+  color: #082a54;
+  background: linear-gradient(90deg, #ffd782, #ffe9b0);
+  box-shadow: 0 10px 26px rgba(0, 14, 34, 0.28);
+}
+
+.hands-page .event-card,
+.hands-page .timeline,
+.hands-page .timeline-content,
+.hands-page .coordinator-card {
+  background: linear-gradient(180deg, rgba(8, 42, 84, 0.82), rgba(8, 42, 84, 0.66));
+  border: 1px solid rgba(190, 220, 246, 0.24);
+  color: #e2edf8;
+  backdrop-filter: saturate(140%) blur(8px);
+}
+.hands-page .timeline-title,
+.hands-page .coordinator-card h4,
+.hands-page .event-card p strong { color: #f3f8ff; }
+.hands-page .timeline-desc,
+.hands-page .coordinator-card p,
+.hands-page .event-card p { color: #c1d1e2; }
+.hands-page .timeline-time {
+  color: #082a54;
+  background: linear-gradient(90deg, #ffd782, #ffe9b0);
+  box-shadow: 0 4px 14px rgba(0, 14, 34, 0.3);
+}
+.hands-page footer .footer h4,
+.hands-page footer .footer a,
+.hands-page footer .footer p { color: #e2edf8 !important; }
+.hands-page footer .copyright {
+  color: #edf6ff;
+  background: rgba(8, 42, 84, 0.82);
+  border-top-color: rgba(196, 222, 246, 0.2);
+}
+
 
     </style>
 
 
+  <link rel="stylesheet" href="../assets/css/department-mobile.css" />
   </head>
-  <body class="cse-tech">
+  <body class="cse-tech hands-page">
     <div class="cse-mesh" aria-hidden="true"></div>
      <div class="cse-hex" aria-hidden="true"></div>
       <div class="cse-sheen" aria-hidden="true"></div>

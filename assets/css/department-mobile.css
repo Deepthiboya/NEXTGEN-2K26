@@ -1,0 +1,403 @@
+@media (max-width: 768px) {
+  body.civil-page,
+  body.cse-tech,
+  body.ece-page,
+  body.eee-page,
+  body.mech-page {
+    overflow-x: clip;
+    background-attachment: scroll;
+  }
+
+  body.civil-page header .container.nav,
+  body.cse-tech header .container.nav,
+  body.ece-page header .container.nav,
+  body.eee-page header .container.nav,
+  body.mech-page header .container.nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 12px;
+    padding: 8px 12px;
+  }
+
+  body.civil-page .spacer,
+  body.cse-tech .spacer,
+  body.ece-page .spacer,
+  body.eee-page .spacer,
+  body.mech-page .spacer {
+    display: none;
+  }
+
+  body.civil-page .brand,
+  body.cse-tech .brand,
+  body.ece-page .brand,
+  body.eee-page .brand,
+  body.mech-page .brand {
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: 8px;
+  }
+
+  body.civil-page .brand img,
+  body.cse-tech .brand img,
+  body.ece-page .brand img,
+  body.eee-page .brand img,
+  body.mech-page .brand img {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+  }
+
+  body.civil-page .brand-title,
+  body.cse-tech .brand-title,
+  body.ece-page .brand-title,
+  body.eee-page .brand-title,
+  body.mech-page .brand-title {
+    min-width: 0;
+    gap: 6px;
+    font-size: clamp(18px, 5vw, 22px);
+  }
+
+  body.civil-page .year,
+  body.cse-tech .year,
+  body.ece-page .year,
+  body.eee-page .year,
+  body.mech-page .year {
+    padding: 3px 8px;
+    font-size: 11px;
+  }
+
+  body.civil-page header .nx-login,
+  body.cse-tech header .nx-login,
+  body.ece-page header .nx-login,
+  body.eee-page header .nx-login,
+  body.mech-page header .nx-login {
+    min-height: 44px;
+    padding: 8px 13px;
+  }
+
+  body.civil-page .nx-nav,
+  body.cse-tech .nx-nav,
+  body.ece-page .nx-nav,
+  body.eee-page .nx-nav,
+  body.mech-page .nx-nav {
+    order: 3;
+    flex: 1 0 100%;
+    width: 100%;
+    min-width: 0;
+  }
+
+  body.civil-page .nx-nav .nx-menu,
+  body.cse-tech .nx-nav .nx-menu,
+  body.ece-page .nx-nav .nx-menu,
+  body.eee-page .nx-nav .nx-menu,
+  body.mech-page .nx-nav .nx-menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 4px;
+    transform: none;
+  }
+
+  body.civil-page .nx-nav .nx-link,
+  body.cse-tech .nx-nav .nx-link,
+  body.ece-page .nx-nav .nx-link,
+  body.eee-page .nx-nav .nx-link,
+  body.mech-page .nx-nav .nx-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 8px 10px;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  body.civil-page .hero.section,
+  body.cse-tech .hero.section,
+  body.ece-page .hero.section,
+  body.eee-page .hero.section,
+  body.mech-page .hero.section {
+    padding-block: 20px 28px;
+  }
+
+  body.civil-page .hero-wrap,
+  body.cse-tech main > .hero-wrap,
+  body.ece-page .hero-wrap,
+  body.eee-page .hero-wrap,
+  body.mech-page .hero-wrap {
+    width: calc(100% - 24px);
+    max-width: 100%;
+    margin: 0 auto 24px;
+    padding: 16px;
+  }
+
+  body.civil-page .nx-hero-v2 .wg-card,
+  body.cse-tech .nx-hero-v2 .wg-card,
+  body.ece-page .nx-hero-v2 .wg-card,
+  body.eee-page .nx-hero-v2 .wg-card,
+  body.mech-page .nx-hero-v2 .wg-card {
+    width: 100%;
+    max-width: 100%;
+    padding: 16px;
+  }
+
+  body.civil-page .nx-hero-v2 .wg-title,
+  body.cse-tech .nx-hero-v2 .wg-title,
+  body.ece-page .nx-hero-v2 .wg-title,
+  body.eee-page .nx-hero-v2 .wg-title,
+  body.mech-page .nx-hero-v2 .wg-title {
+    font-size: clamp(24px, 7vw, 36px);
+    line-height: 1.12;
+    overflow-wrap: anywhere;
+  }
+
+  body.civil-page .nx-hero-v2 .wg-sub,
+  body.cse-tech .nx-hero-v2 .wg-sub,
+  body.ece-page .nx-hero-v2 .wg-sub,
+  body.eee-page .nx-hero-v2 .wg-sub,
+  body.mech-page .nx-hero-v2 .wg-sub {
+    font-size: 15px;
+  }
+
+  body.civil-page .events-grid,
+  body.cse-tech .events-grid,
+  body.ece-page .events-grid,
+  body.eee-page .events-grid,
+  body.mech-page .events-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  body.civil-page .event-card,
+  body.cse-tech .event-card,
+  body.ece-page .event-card,
+  body.eee-page .event-card,
+  body.mech-page .event-card {
+    min-width: 0;
+  }
+
+  body.civil-page .event-image img,
+  body.cse-tech .event-image img,
+  body.ece-page .event-image img,
+  body.eee-page .event-image img,
+  body.mech-page .event-image img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  body.civil-page .timeline,
+  body.cse-tech .timeline,
+  body.ece-page .timeline,
+  body.eee-page .timeline,
+  body.mech-page .timeline {
+    width: 100%;
+    padding: 16px 12px;
+  }
+
+  body.civil-page .timeline-item,
+  body.cse-tech .timeline-item,
+  body.ece-page .timeline-item,
+  body.eee-page .timeline-item,
+  body.mech-page .timeline-item {
+    padding-left: 76px;
+    margin-bottom: 24px;
+  }
+
+  body.civil-page .timeline-time,
+  body.cse-tech .timeline-time,
+  body.ece-page .timeline-time,
+  body.eee-page .timeline-time,
+  body.mech-page .timeline-time {
+    max-width: 70px;
+    padding: 6px 7px;
+    font-size: 12px;
+    white-space: normal;
+    text-align: center;
+  }
+
+  body.civil-page .timeline-content,
+  body.cse-tech .timeline-content,
+  body.ece-page .timeline-content,
+  body.eee-page .timeline-content,
+  body.mech-page .timeline-content {
+    min-width: 0;
+    padding: 12px;
+    overflow-wrap: anywhere;
+  }
+
+  body.civil-page .section,
+  body.cse-tech .section,
+  body.ece-page .section,
+  body.eee-page .section,
+  body.mech-page .section {
+    padding-inline: 0;
+  }
+
+  body.civil-page .container,
+  body.cse-tech .container,
+  body.ece-page .container,
+  body.eee-page .container,
+  body.mech-page .container {
+    width: 100%;
+    padding-inline: 12px;
+  }
+
+  body.civil-page :is(button, input, select, textarea),
+  body.cse-tech :is(button, input, select, textarea),
+  body.ece-page :is(button, input, select, textarea),
+  body.eee-page :is(button, input, select, textarea),
+  body.mech-page :is(button, input, select, textarea) {
+    max-width: 100%;
+    font-size: 16px;
+  }
+
+  body.civil-page :is(.cta-btn, .register-btn, .nx-view-details, .nx-register-button, .nx-button-group > a, .nx-button-group > button, .modal .close),
+  body.cse-tech :is(.cta-btn, .register-btn, .nx-view-details, .nx-register-button, .nx-button-group > a, .nx-button-group > button, .modal .close),
+  body.ece-page :is(.cta-btn, .register-btn, .nx-view-details, .nx-register-button, .nx-button-group > a, .nx-button-group > button, .modal .close),
+  body.eee-page :is(.cta-btn, .register-btn, .nx-view-details, .nx-register-button, .nx-button-group > a, .nx-button-group > button, .modal .close),
+  body.mech-page :is(.cta-btn, .register-btn, .nx-view-details, .nx-register-button, .nx-button-group > a, .nx-button-group > button, .modal .close) {
+    min-height: 44px;
+  }
+
+  body.civil-page .modal,
+  body.cse-tech .modal,
+  body.ece-page .modal,
+  body.eee-page .modal,
+  body.mech-page .modal {
+    padding: 12px;
+    overscroll-behavior: contain;
+  }
+
+  body.civil-page .modal-content,
+  body.cse-tech .modal-content,
+  body.ece-page .modal-content,
+  body.eee-page .modal-content,
+  body.mech-page .modal-content {
+    width: 100%;
+    max-width: 520px;
+    max-height: calc(100dvh - 24px);
+    overflow: hidden;
+  }
+
+  body.civil-page .modal-body,
+  body.cse-tech .modal-body,
+  body.ece-page .modal-body,
+  body.eee-page .modal-body,
+  body.mech-page .modal-body {
+    max-height: calc(100dvh - 110px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  body.civil-page .copyright,
+  body.cse-tech .copyright,
+  body.ece-page .copyright,
+  body.eee-page .copyright,
+  body.mech-page .copyright {
+    padding: 8px 12px;
+    padding-bottom: calc(8px + env(safe-area-inset-bottom));
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  body.civil-page,
+  body.cse-tech,
+  body.ece-page,
+  body.eee-page,
+  body.mech-page {
+    padding-bottom: calc(50px + env(safe-area-inset-bottom));
+  }
+
+  body.civil-page :is(.civil-bg, .civil-bg *),
+  body.cse-tech :is(.cse-mesh, .cse-hex, .cse-sheen, .cse-trace, .cse-glints),
+  body.ece-page :is(.ece-bg, .ece-bg *),
+  body.eee-page :is(.ece-bg, .ece-bg *),
+  body.mech-page :is(.mech-bg, .mech-bg *) {
+    animation: none !important;
+  }
+
+  body.civil-page .nx-hero-v2 .sweep,
+  body.cse-tech .nx-hero-v2 .sweep,
+  body.ece-page .nx-hero-v2 .sweep,
+  body.eee-page .nx-hero-v2 .sweep,
+  body.mech-page .nx-hero-v2 .sweep,
+  body.civil-page .nx-hero-v2 .wg-title .gold,
+  body.cse-tech .nx-hero-v2 .wg-title .gold,
+  body.ece-page .nx-hero-v2 .wg-title .gold,
+  body.eee-page .nx-hero-v2 .wg-title .gold,
+  body.mech-page .nx-hero-v2 .wg-title .gold {
+    animation: none !important;
+  }
+}
+
+@media (max-width: 380px) {
+  body.civil-page header .container.nav,
+  body.cse-tech header .container.nav,
+  body.ece-page header .container.nav,
+  body.eee-page header .container.nav,
+  body.mech-page header .container.nav {
+    gap: 6px 8px;
+    padding-inline: 8px;
+  }
+
+  body.civil-page .brand img,
+  body.cse-tech .brand img,
+  body.ece-page .brand img,
+  body.eee-page .brand img,
+  body.mech-page .brand img {
+    width: 36px;
+    height: 36px;
+    flex-basis: 36px;
+  }
+
+  body.civil-page .brand-title,
+  body.cse-tech .brand-title,
+  body.ece-page .brand-title,
+  body.eee-page .brand-title,
+  body.mech-page .brand-title {
+    font-size: 18px;
+  }
+
+  body.civil-page .nx-nav .nx-link,
+  body.cse-tech .nx-nav .nx-link,
+  body.ece-page .nx-nav .nx-link,
+  body.eee-page .nx-nav .nx-link,
+  body.mech-page .nx-nav .nx-link {
+    padding-inline: 8px;
+    font-size: 13px;
+  }
+
+  body.civil-page .hero-wrap,
+  body.cse-tech main > .hero-wrap,
+  body.ece-page .hero-wrap,
+  body.eee-page .hero-wrap,
+  body.mech-page .hero-wrap {
+    width: calc(100% - 16px);
+    padding: 12px;
+  }
+}
+
+@media (hover: none) {
+  body.civil-page .event-card:hover,
+  body.cse-tech .event-card:hover,
+  body.ece-page .event-card:hover,
+  body.eee-page .event-card:hover,
+  body.mech-page .event-card:hover,
+  body.civil-page .coordinator-card:hover,
+  body.cse-tech .coordinator-card:hover,
+  body.ece-page .coordinator-card:hover,
+  body.eee-page .coordinator-card:hover,
+  body.mech-page .coordinator-card:hover,
+  body.civil-page .nx-login:hover,
+  body.cse-tech .nx-login:hover,
+  body.ece-page .nx-login:hover,
+  body.eee-page .nx-login:hover,
+  body.mech-page .nx-login:hover {
+    transform: none;
+  }
+}
