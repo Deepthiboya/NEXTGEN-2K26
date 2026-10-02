@@ -836,7 +836,7 @@ img { image-rendering: -webkit-optimize-contrast; }
   pointer-events: none;
   background:
     linear-gradient(180deg, rgba(7, 15, 30, .18), rgba(7, 15, 30, .42)),
-    url("assets/images/Futuristic Campus and AI Cyborg Horizon.png") center / cover no-repeat;
+    url("assets/images/Futuristic Campus and AI Cyborg Horizon.jpg") center / cover no-repeat;
 }
 
 /* 1) Isometric grid (no bubbles) */

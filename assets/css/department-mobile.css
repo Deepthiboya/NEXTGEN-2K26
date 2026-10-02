@@ -1,4 +1,8 @@
 @media (max-width: 768px) {
+  html {
+    overflow-x: clip;
+  }
+
   body.civil-page,
   body.cse-tech,
   body.ece-page,
@@ -131,6 +135,10 @@
     max-width: 100%;
     margin: 0 auto 24px;
     padding: 16px;
+  }
+
+  body.hands-page main > .hero-wrap {
+    margin-top: 20px;
   }
 
   body.civil-page .nx-hero-v2 .wg-card,

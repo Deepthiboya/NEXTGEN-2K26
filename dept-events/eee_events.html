@@ -526,7 +526,7 @@ footer .copyright{
   --glass-brd:rgba(134,218,255,.3);
   --glass-glow:0 20px 50px rgba(1,12,31,.32),0 0 20px rgba(255,177,65,.12);
   background-color:#061632;
-  background-image:linear-gradient(180deg,rgba(5,20,47,.18),rgba(5,20,47,.36)),url("../assets/images/ece_background.png");
+  background-image:linear-gradient(180deg,rgba(5,20,47,.18),rgba(5,20,47,.36)),url("../assets/images/ece_background.jpg");
   background-position:center center;
   background-size:cover;
   background-attachment:fixed;
@@ -1034,11 +1034,10 @@ footer .copyright{
     const form = document.getElementById('registrationForm');
     const eventSelect = document.getElementById('event');
     const feeInput = document.getElementById('fee');
-    const teamWrap = document.getElementById('teamMembers');
     const eventNote = document.getElementById('eventNote');
     const paperDiv = document.getElementById('paperPresentation');
-    const mindDiv = document.getElementById('MindSpark');
-    const tinkerDiv = document.getElementById('Project Expo');
+    const mindDiv = document.getElementById('MindSpak');
+    const tinkerDiv = document.getElementById('Tinker Cad Master');
     const closeBtn = modal.querySelector('[data-close]');
     const triggers = document.querySelectorAll('.register-trigger');
     let lastFocused = null;
@@ -1046,12 +1045,12 @@ footer .copyright{
     const fees = {
       'Paper Presentation': 200,
       'Technical Quiz': 200,
-      'Project Expo': 300
+      'Tinker Cad Master': 300
     };
     const teamMode = {
       'Paper Presentation': 'pair',
       'Technical Quiz': 'trio',
-      'Project Expo': 'trio'
+      'Tinker Cad Master': 'trio'
     };
 
     function openModal(prefillEvent){
@@ -1180,16 +1179,17 @@ modal.addEventListener('click', (e) => { if (e.target === modal) { closeModal();
       mindDiv.style.display = 'none';
       tinkerDiv.style.display = 'none';
 
-      eventNote.style.display = 'block';
+      eventNote.style.display = 'none';
 
       if(ev === 'Paper Presentation'){
         paperDiv.style.display = 'grid';
+        eventNote.style.display = 'block';
       } else if(ev === 'Technical Quiz'){
         mindDiv.style.display = 'grid';
-      } else if(ev === 'Project Expo'){
+        eventNote.style.display = 'block';
+      } else if(ev === 'Tinker Cad Master'){
         tinkerDiv.style.display = 'grid';
-      } else {
-        eventNote.style.display = 'none';
+        eventNote.style.display = 'block';
       }
     }
 
