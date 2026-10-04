@@ -73,7 +73,7 @@
       text-align:center; margin:0 0 10px;
       text-shadow: 0 0 10px rgba(255, 138, 30, 0.4);
       transition: text-shadow 0.3s ease;
-    }
+    }opa
     .section-title:hover {
       text-shadow: 0 0 20px rgba(255, 138, 30, 0.7);
     }
@@ -361,7 +361,7 @@
     .card p{ margin:0; color: var(--muted) }
 
     /* Enhanced Departments Section */
-    .dept{ background: linear-gradient(180deg, #fffef9, #ffffff) }
+    .dept{ background: transparent }
     .dept-grid{
       display:grid; gap: var(--gap);
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -529,7 +529,7 @@
     .leader p{ margin:0; color:var(--muted); font-size:14px }
     
     /* Contact */
-    .contact{ background: linear-gradient(90deg, #ebfff5, #f3d6ff) }
+    .contact{ background: linear-gradient(90deg, #dee9e3, #d4c8d9) }
     .contact-grid{
       display:grid; gap: var(--gap);
       grid-template-columns: 1fr 1fr; max-width: 860px; margin-inline: auto;
@@ -1570,4 +1570,17 @@ body {
   .panel:hover {
     transform: none;
   }
+}
+
+.section {
+  padding-block: 1cm;
+}
+
+.section > .container {
+  margin-block: 0;
+}
+
+.timeline,
+.contact {
+  background: rgba(255, 255, 255, .5);
 }
