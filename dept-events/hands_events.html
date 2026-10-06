@@ -54,7 +54,7 @@
       .hero-sub{font-size:clamp(1rem,2.5vw,1.15rem);color:var(--muted);max-width:700px;margin:6px auto 0}
 
       /* Event Cards */
-      .events-grid{display:grid;gap:var(--gap);column-gap:32px;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),min(100%,330px)));justify-content:center}
+      .events-grid{display:grid;gap:var(--gap);grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
       .event-card{background:var(--card);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);overflow:hidden;display:flex;flex-direction:column;transition:transform .3s ease,box-shadow .3s ease}
       .event-card:hover{transform:translateY(-10px);box-shadow:0 20px 50px rgba(16,24,40,.12)}
       .event-image img{width:100%;height:220px;object-fit:cover}
@@ -1288,7 +1288,7 @@ nav a{ color:#d5e6f7; }
             <!-- Flashmob -->
             <div class="event-card">
               <div class="event-image">
-                <img src="../assets/images/Flashmob.png" alt="Flashmob" />
+                <img src="../assets/images/flash_mob.jpg" alt="Flashmob" />
               </div>
               <div class="event-content">
                 <h3 class="event-title">Flashmob</h3>
@@ -1306,23 +1306,25 @@ nav a{ color:#d5e6f7; }
               </div>
             </div>
 
-            <!-- Slow Bike Riding -->
+            <!-- Slow Bike RIding -->
             <div class="event-card">
               <div class="event-image">
-                <img src="../assets/images/crosswordpuzzle.jpg" alt="Slow Bike Riding" />
+                <img src="../assets/images/slow-bike-riding.jpg" alt="Game Bizarre" />
               </div>
               <div class="event-content">
                 <h3 class="event-title">Slow Bike Riding</h3>
-                <ul class="event-stats" aria-label="Slow Bike Riding quick facts">
-                  <li class="stat"><i class="fas fa-bicycle"></i><div><span class="label">Format</span><span class="value">Individual</span></div></li>
+                <ul class="event-stats" aria-label="Game Bizarre quick facts">
+                  <li class="stat"><i class="fas fa-gamepad"></i><div><span class="label">Format</span><span class="value">Games</span></div></li>
                   <li class="stat"><i class="fas fa-users"></i><div><span class="label">Participants</span><span class="value">100 max</span></div></li>
                   <li class="stat"><i class="fas fa-indian-rupee-sign"></i><div><span class="label">Fee</span><span class="value"><span class="rupee">₹</span>100</span></div></li>
                 </ul>
-                <p class="event-description"><br>Enjoy a series of fun and exciting games designed to test quick thinking, creativity, and team spirit. Participation is limited to 100 students.</p>
+                <p class="event-description"><br> Slow Bike Riding is a skill-based race where participants must ride
+                    their bikes at the slowest possible speed while keeping the bike
+                    continuously moving.</p>
                 <p><strong style="color: white;">Registration Fee:</strong> ₹100/-</p>
                 <div class="nx-button-group">
                   <a href="#" class="nx-view-details openPopupBtn" data-src="technical.html">View Details</a>
-                  <a href="#" class="nx-register-button cta-btn register-trigger" data-event="Slow Bike Riding" data-fee="100" data-team="solo">Register Now</a>
+                  <a href="#" class="nx-register-button cta-btn register-trigger" data-event="Game Bizarre" data-fee="100" data-team="solo">Register Now</a>
                 </div>
               </div>
             </div>
@@ -1330,7 +1332,7 @@ nav a{ color:#d5e6f7; }
             <!-- Treasure Hunt -->
             <div class="event-card">
               <div class="event-image">
-                <img src="../assets/images/cluecraft.jpg" alt="Treasure Hunt" />
+                <img src="../assets/images/treasurehunt.jpg" alt="Treasure Hunt" />
               </div>
               <div class="event-content">
                 <h3 class="event-title">Treasure Hunt</h3>
