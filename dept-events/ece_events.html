@@ -196,7 +196,7 @@
       @keyframes sineRun{ 0%{ transform: translateX(-8%) rotate(var(--angle, -10deg)) } 100%{ transform: translateX(8%) rotate(var(--angle, -10deg)) } }
 
       /* Events grid */
-      .events-grid{ display:grid; gap: var(--gap); column-gap:32px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), min(100%, 330px))); justify-content:center; }
+      .events-grid{ display:grid; gap: var(--gap); column-gap:clamp(32px,5vw,64px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), min(100%, 330px))); justify-content:center; }
       .event-card{
         background: linear-gradient(180deg, rgba(15,23,42,.55), rgba(15,23,42,.35));
         border: 1px solid rgba(148,163,184,.18);
@@ -939,10 +939,10 @@ footer .copyright{
               </div>
             </div>
             <div class="timeline-item">
-              <div class="timeline-time">2:00 PM</div>
+              <div class="timeline-time">1:00 PM</div>
               <div class="timeline-content">
-                <h3 class="timeline-title">IoT Hackathon</h3>
-                <p class="timeline-desc">Collaborate to create innovative IoT solutions.</p>
+                <h3 class="timeline-title">Lunch Break</h3>
+                <p class="timeline-desc">Enjoy a break and network with fellow participants.</p>
               </div>
             </div>
             <div class="timeline-item">
