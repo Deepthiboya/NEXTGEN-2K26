@@ -54,7 +54,7 @@
       .hero-sub{font-size:clamp(1rem,2.5vw,1.15rem);color:var(--muted);max-width:700px;margin:6px auto 0}
 
       /* Event Cards */
-      .events-grid{display:grid;gap:var(--gap);grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+      .events-grid{display:grid;gap:var(--gap);column-gap:32px;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),min(100%,330px)));justify-content:center}
       .event-card{background:var(--card);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);overflow:hidden;display:flex;flex-direction:column;transition:transform .3s ease,box-shadow .3s ease}
       .event-card:hover{transform:translateY(-10px);box-shadow:0 20px 50px rgba(16,24,40,.12)}
       .event-image img{width:100%;height:220px;object-fit:cover}
@@ -1306,13 +1306,13 @@ nav a{ color:#d5e6f7; }
               </div>
             </div>
 
-            <!-- Slow Bike RIding -->
+            <!-- Game Bizarre -->
             <div class="event-card">
               <div class="event-image">
-                <img src="../assets/images/slow-bike-riding.jpg" alt="Game Bizarre" />
+                <img src="../assets/images/crosswordpuzzle.jpg" alt="Game Bizarre" />
               </div>
               <div class="event-content">
-                <h3 class="event-title">Slow Bike Riding</h3>
+                <h3 class="event-title">Game Bizarre</h3>
                 <ul class="event-stats" aria-label="Game Bizarre quick facts">
                   <li class="stat"><i class="fas fa-gamepad"></i><div><span class="label">Format</span><span class="value">Games</span></div></li>
                   <li class="stat"><i class="fas fa-users"></i><div><span class="label">Participants</span><span class="value">100 max</span></div></li>
@@ -1324,7 +1324,7 @@ nav a{ color:#d5e6f7; }
                 <p><strong style="color: white;">Registration Fee:</strong> ₹100/-</p>
                 <div class="nx-button-group">
                   <a href="#" class="nx-view-details openPopupBtn" data-src="technical.html">View Details</a>
-                  <a href="#" class="nx-register-button cta-btn register-trigger" data-event="Game Bizarre" data-fee="100" data-team="solo">Register Now</a>
+                  <a href="#" class="nx-register-button cta-btn register-trigger" data-event="Slow Bike Riding" data-fee="100" data-team="solo">Register Now</a>
                 </div>
               </div>
             </div>
