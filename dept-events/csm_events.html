@@ -54,11 +54,11 @@
       .hero-sub{font-size:clamp(1rem,2.5vw,1.15rem);color:var(--muted);max-width:700px;margin:6px auto 0}
 
       /* Event Cards */
-      .events-grid{display:grid;gap:var(--gap);grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+      .events-grid{display:grid;gap:var(--gap);column-gap:32px;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),min(100%,330px)));justify-content:center}
       .event-card{background:var(--card);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);overflow:hidden;display:flex;flex-direction:column;transition:transform .3s ease,box-shadow .3s ease}
       .event-card:hover{transform:translateY(-10px);box-shadow:0 20px 50px rgba(16,24,40,.12)}
       .event-image img{width:100%;height:220px;object-fit:cover}
-      .event-content{padding:24px;display:flex;flex-direction:column;flex-grow:1}
+      .event-content{padding:18px;display:flex;flex-direction:column;flex-grow:1}
       .event-title{font-family:"Plus Jakarta Sans";font-size:1.5rem;font-weight:800;margin:0 0 12px;color:var(--blue-dark); text-align:center;}
       .event-description{text-align:justify;text-justify:inter-word;margin-bottom:20px}
       .event-card p{margin:0 0 12px;color:var(--muted);font-size:1rem}
@@ -1319,28 +1319,6 @@ footer .copyright{
                 <div class="nx-button-group">
                   <a href="#" class="nx-view-details openPopupBtn" data-src="hackathon.html">View Details</a>
                   <a href="#" class="nx-register-button cta-btn register-trigger" data-event="Hackathon [5hrs]" data-fee="300" data-team="trio">Register Now</a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Crossword -->
-            <div class="event-card">
-              <div class="event-image">
-                <img src="../assets/images/crosswordpuzzle.jpg" alt="Crossword Puzzle" />
-              </div>
-              <div class="event-content">
-                <h3 allign="center" class="event-title">Quiz</h3>
-                <ul class="event-stats" aria-label="Quick facts">
-                  <li class="stat"><i class="fas fa-clock"></i><div><span class="label">Time</span><span class="value">2 - 3 PM</span></div></li>
-                  <li class="stat"><i class="fas fa-user-friends"></i><div><span class="label">Team</span><span class="value">Solo</span></div></li>
-                  <li class="stat"><i class="fas fa-indian-rupee-sign"></i><div><span class="label">Fee</span><span class="value"><span class="rupee">₹</span>100</span></div></li>
-                </ul>
-                <p class="event-description">Solve a technical quiz on programming, algorithms, and CS concepts for prizes.</p><br>
-                <br>
-                <p><strong style="color: white;">Registration Fee:</strong> ₹100/-</p>
-                <div class="nx-button-group">
-                  <a href="#" class="nx-view-details openPopupBtn" data-src="crosswordpuzzle.html">View Details</a>
-                  <a href="#" class="nx-register-button cta-btn register-trigger" data-event="Crossword Puzzle" data-fee="100" data-team="solo">Register Now</a>
                 </div>
               </div>
             </div>
